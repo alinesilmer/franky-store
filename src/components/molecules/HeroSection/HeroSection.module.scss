@@ -1,0 +1,80 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.heroSection {
+position: relative;
+width: 100%;
+height: 80vh; // Ajusta la altura según sea necesario
+@include m.flex-center;
+overflow: hidden;
+text-align: center;
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.overlay {
+  @include m.overlay;
+  background: rgba(v.$color-primary, 0.6); // Oscurece la imagen/video
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$spacing-lg;
+}
+
+.title {
+  font-family: v.$font-accent; // Fuente de graffiti
+  font-size: v.$font-size-hero;
+  color: v.$color-accent;
+  @include m.text-shadow(rgba(v.$color-primary, 0.8));
+  letter-spacing: 5px;
+
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
+    font-size: 2.5rem;
+  }
+}
+
+.playButton {
+  background-color: rgba(v.$color-secondary, 0.2);
+  border: 2px solid v.$color-secondary;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  @include m.flex-center;
+  cursor: pointer;
+  transition: background-color v.$transition-speed v.$transition-ease;
+
+  &:hover {
+    background-color: rgba(v.$color-secondary, 0.4);
+  }
+
+  svg {
+    margin-left: 5px; // Ajuste para centrar el triángulo de play
+  }
+}
+
+.uniteButton {
+  padding: v.$spacing-md v.$spacing-xl;
+  font-size: v.$font-size-lg;
+  border: 2px solid v.$color-accent;
+  background-color: transparent;
+  color: v.$color-accent;
+
+  &:hover {
+    background-color: v.$color-accent;
+    color: v.$color-primary;
+  }
+}
+}

@@ -1,0 +1,32 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.logo {
+@include m.flex-center;
+gap: v.$spacing-xs;
+font-family: v.$font-heading;
+color: v.$color-accent;
+text-transform: uppercase;
+font-weight: bold;
+
+.image {
+  filter: drop-shadow(0 0 5px v.$color-accent);
+}
+
+.text {
+  font-size: v.$font-size-xl;
+  @include m.text-shadow(rgba(v.$color-accent, 0.5));
+}
+
+&.small {
+  .text { font-size: v.$font-size-lg; }
+}
+
+&.medium {
+  .text { font-size: v.$font-size-xl; }
+}
+
+&.large {
+  .text { font-size: v.$font-size-xxl; }
+}
+}

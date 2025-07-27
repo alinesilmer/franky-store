@@ -1,0 +1,78 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+
+.section {
+background-color: v.$color-primary;
+color: v.$color-text-light;
+padding: v.$spacing-xl v.$spacing-md;
+text-align: center;
+border-top: 1px solid v.$color-border;
+
+@include m.media-breakpoint-up(v.$breakpoint-md) {
+  padding: v.$spacing-xxl v.$spacing-lg;
+}
+}
+
+.sectionTitle {
+font-family: v.$font-heading;
+font-size: v.$font-size-xxl;
+color: v.$color-accent;
+margin-bottom: v.$spacing-md;
+text-transform: uppercase;
+@include m.text-shadow(rgba(v.$color-primary, 0.5));
+
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  font-size: v.$font-size-xl;
+}
+}
+
+.sectionDescription {
+font-size: v.$font-size-lg;
+max-width: 700px;
+margin: 0 auto v.$spacing-xl auto;
+color: v.$color-text-light;
+}
+
+.productGrid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: v.$spacing-lg;
+justify-items: center;
+}
+
+.whyChooseUs, .shippingPayment {
+background-color: v.$color-primary;
+border-top: 1px solid v.$color-border;
+}
+
+.featuresGrid, .infoGrid {
+display: grid;
+grid-template-columns: 1fr;
+gap: v.$spacing-lg;
+margin-top: v.$spacing-xl;
+
+@include m.media-breakpoint-up(v.$breakpoint-md) {
+  grid-template-columns: repeat(3, 1fr);
+}
+}
+
+.featureItem, .infoItem {
+background-color: v.$color-border;
+padding: v.$spacing-lg;
+border-radius: 8px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+text-align: center;
+
+h3 {
+  font-family: v.$font-heading;
+  font-size: v.$font-size-xl;
+  color: v.$color-accent;
+  margin-bottom: v.$spacing-sm;
+}
+
+p {
+  font-size: v.$font-size-md;
+  color: v.$color-text-light;
+}
+}

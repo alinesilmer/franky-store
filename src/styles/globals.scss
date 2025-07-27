@@ -1,0 +1,75 @@
+@use './_variables' as v;
+@use './_mixins' as m;
+
+/* Importar fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Permanent+Marker&display=swap');
+
+body {
+margin: 0;
+padding: 0;
+font-family: v.$font-body;
+color: v.$color-text-light;
+background-color: v.$color-primary;
+line-height: 1.6;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+color: inherit;
+text-decoration: none;
+}
+
+ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-family: v.$font-heading;
+color: v.$color-secondary;
+margin-top: 0;
+margin-bottom: v.$spacing-sm;
+text-transform: uppercase;
+}
+
+h1 { font-size: v.$font-size-xxl; }
+h2 { font-size: v.$font-size-xl; }
+h3 { font-size: v.$font-size-lg; }
+
+section {
+padding: v.$spacing-xl v.$spacing-md;
+
+@include m.media-breakpoint-up(v.$breakpoint-md) {
+  padding: v.$spacing-xxl v.$spacing-lg;
+}
+}
+
+.container {
+max-width: v.$breakpoint-xl;
+margin: 0 auto;
+padding: 0 v.$spacing-md;
+
+@include m.media-breakpoint-up(v.$breakpoint-md) {
+  padding: 0 v.$spacing-lg;
+}
+}
+
+/* Estilos para el scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+}
+
+::-webkit-scrollbar-track {
+background: v.$color-primary;
+}
+
+::-webkit-scrollbar-thumb {
+background: v.$color-accent;
+border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: darken(v.$color-accent, 10%);
+}

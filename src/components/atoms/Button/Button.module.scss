@@ -1,0 +1,60 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.button {
+@include m.button-style(v.$color-accent, v.$color-primary);
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: v.$spacing-xs;
+padding: v.$spacing-sm v.$spacing-md;
+border-radius: 4px;
+font-weight: bold;
+text-transform: uppercase;
+cursor: pointer;
+transition: all v.$transition-speed v.$transition-ease;
+
+&:hover {
+  transform: translateY(-2px);
+}
+
+&:active {
+  transform: translateY(0);
+}
+
+&:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+}
+
+.primary {
+background-color: v.$color-accent;
+color: v.$color-primary;
+
+&:hover {
+  background-color: darken(v.$color-accent, 10%);
+}
+}
+
+.secondary {
+background-color: v.$color-primary;
+color: v.$color-accent;
+border: 1px solid v.$color-accent;
+
+&:hover {
+  background-color: v.$color-accent;
+  color: v.$color-primary;
+}
+}
+
+.outline {
+background-color: transparent;
+color: v.$color-accent;
+border: 1px solid v.$color-accent;
+
+&:hover {
+  background-color: v.$color-accent;
+  color: v.$color-primary;
+}
+}

@@ -1,0 +1,71 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.productCard {
+background-color: v.$color-primary;
+border: 1px solid v.$color-border;
+border-radius: 8px;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+transition: transform v.$transition-speed v.$transition-ease, box-shadow v.$transition-speed v.$transition-ease;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+&:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.imageLink {
+  display: block;
+  width: 100%;
+  height: 250px; // Altura fija para las imágenes
+  overflow: hidden;
+  @include m.flex-center;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform v.$transition-speed v.$transition-ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.info {
+  padding: v.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.productName {
+  font-family: v.$font-heading;
+  font-size: v.$font-size-lg;
+  color: v.$color-secondary;
+  margin-bottom: v.$spacing-xs;
+  text-transform: uppercase;
+
+  a {
+    &:hover {
+      color: v.$color-accent;
+    }
+  }
+}
+
+.productPrice {
+  font-family: v.$font-body;
+  font-size: v.$font-size-xl;
+  color: v.$color-accent;
+  font-weight: bold;
+  margin-bottom: v.$spacing-md;
+}
+
+.addToCartButton {
+  width: 100%;
+}
+}

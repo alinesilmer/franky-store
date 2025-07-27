@@ -1,0 +1,115 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.navbar {
+background-color: v.$color-primary;
+color: v.$color-secondary;
+padding: v.$spacing-sm v.$spacing-md;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid v.$color-border;
+position: sticky;
+top: 0;
+z-index: 1000;
+
+@include m.media-breakpoint-up(v.$breakpoint-md) {
+  padding: v.$spacing-sm v.$spacing-lg;
+}
+
+.logoLink {
+  flex-shrink: 0;
+}
+
+.leftSection, .rightSection {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-sm;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: v.$color-secondary;
+  cursor: pointer;
+  padding: v.$spacing-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color v.$transition-speed v.$transition-ease;
+
+  &:hover {
+    color: v.$color-accent;
+  }
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-xs;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  .searchInput {
+    width: 180px; // Ajusta el ancho según sea necesario
+    background-color: v.$color-border;
+    border: 1px solid v.$color-accent;
+    color: v.$color-secondary;
+    padding: v.$spacing-xs v.$spacing-sm;
+    border-radius: 4px;
+    font-size: v.$font-size-sm;
+
+    &::placeholder {
+      color: v.$color-text-light;
+    }
+  }
+
+  .searchButton {
+    @extend .iconButton; // Hereda estilos del botón de icono
+    background-color: v.$color-accent;
+    color: v.$color-primary;
+    border-radius: 4px;
+    padding: v.$spacing-xs;
+
+    &:hover {
+      background-color: darken(v.$color-accent, 10%);
+      color: v.$color-primary;
+    }
+  }
+}
+
+.mobileMenu {
+  @include m.overlay;
+  background-color: v.$color-primary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: v.$spacing-xl;
+
+  .closeMenuButton {
+    position: absolute;
+    top: v.$spacing-md;
+    right: v.$spacing-md;
+    @extend .iconButton;
+  }
+
+  .menuList {
+    text-align: center;
+    li {
+      margin-bottom: v.$spacing-md;
+      a {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-xxl;
+        color: v.$color-secondary;
+        transition: color v.$transition-speed v.$transition-ease;
+
+        &:hover {
+          color: v.$color-accent;
+        }
+      }
+    }
+  }
+}
+}

@@ -1,0 +1,145 @@
+@use '../../../styles/_variables' as v;
+@use '../../../styles/_mixins' as m;
+
+.promotionSection {
+background-color: v.$color-secondary; // Fondo blanco para esta sección
+color: v.$color-text-dark;
+padding: v.$spacing-xl v.$spacing-md;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: v.$spacing-lg;
+
+.horizontalLine {
+  width: 80%;
+  height: 1px;
+  background-color: v.$color-border;
+  margin: v.$spacing-md 0;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$spacing-lg;
+  width: 100%;
+  max-width: v.$breakpoint-lg;
+
+  @include m.media-breakpoint-up(v.$breakpoint-md) {
+    flex-direction: row;
+    justify-content: center;
+    gap: v.$spacing-xxl;
+  }
+}
+
+.modelImage {
+  display: none; // Ocultar por defecto en móvil
+  @include m.media-breakpoint-up(v.$breakpoint-md) {
+    display: block;
+    flex-shrink: 0;
+    width: 40%;
+    max-width: 400px;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.promotionCarousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative; // Para posicionar los botones de navegación
+  min-height: 400px; // Asegura espacio para el contenido
+
+  @include m.media-breakpoint-up(v.$breakpoint-md) {
+    width: 60%;
+  }
+}
+
+.navButton {
+  background: none;
+  border: none;
+  color: v.$color-text-dark;
+  cursor: pointer;
+  padding: v.$spacing-xs;
+  transition: color v.$transition-speed v.$transition-ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  &:hover {
+    color: v.$color-accent;
+  }
+
+  &:first-child {
+    left: 0;
+  }
+
+  &:last-child {
+    right: 0;
+  }
+}
+
+.promotionItem {
+  position: absolute; // Para la animación de Framer Motion
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-md;
+  background-color: v.$color-secondary;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.productName {
+  font-family: v.$font-heading;
+  font-size: v.$font-size-xl;
+  color: v.$color-primary;
+  margin-bottom: v.$spacing-sm;
+}
+
+.productImageContainer {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border: 1px solid v.$color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: v.$spacing-sm;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.originalPrice {
+  font-size: v.$font-size-lg;
+  color: v.$color-text-dark;
+  text-decoration: line-through;
+  margin: 0;
+}
+
+.discountedPrice {
+  font-family: v.$font-heading;
+  font-size: v.$font-size-xxl;
+  color: v.$color-accent;
+  margin: 0;
+  @include m.text-shadow(rgba(v.$color-primary, 0.2));
+}
+
+.addToCartButton {
+  margin-top: v.$spacing-md;
+  width: 80%;
+}
+}
