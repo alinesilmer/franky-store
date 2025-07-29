@@ -1,0 +1,129 @@
+
+
+.productDetail {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-lg;
+
+  @include m.media-breakpoint-up(v.$breakpoint-md) {
+    flex-direction: row;
+  }
+
+  .imageContainer {
+    flex: 1;
+    min-width: 250px;
+    max-width: 100%;
+    @include m.flex-center; // Center image if it's smaller than container
+
+    .image {
+      width: 100%;
+      height: auto;
+      max-height: 400px; // Limit image height
+      object-fit: contain; // Ensure image fits without cropping
+      border-radius: 8px;
+    }
+  }
+
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .name {
+      font-family: v.$font-heading;
+      font-size: v.$font-size-xl;
+      color: v.$color-secondary;
+      margin-bottom: v.$spacing-xs;
+    }
+
+    .price {
+      font-family: v.$font-body;
+      font-size: v.$font-size-lg;
+      color: v.$color-accent;
+      margin-bottom: v.$spacing-sm;
+      font-weight: bold;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-xs;
+      color: v.$color-accent; // Star color
+      margin-bottom: v.$spacing-md;
+
+      .ratingText {
+        font-size: v.$font-size-sm;
+        color: v.$color-text-light;
+      }
+    }
+
+    .description {
+      font-family: v.$font-body;
+      font-size: v.$font-size-sm;
+      color: v.$color-text-light;
+      margin-bottom: v.$spacing-lg;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: v.$spacing-md;
+      margin-bottom: v.$spacing-lg;
+
+      .optionGroup {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-xs;
+
+        .optionLabel {
+          font-family: v.$font-heading;
+          font-size: v.$font-size-sm;
+          color: v.$color-secondary;
+          text-transform: uppercase;
+        }
+
+        .optionValues {
+          display: flex;
+          flex-wrap: wrap;
+          gap: v.$spacing-xs;
+
+          .optionValue {
+            background-color: v.$color-border;
+            color: v.$color-text-light;
+            padding: v.$spacing-xs v.$spacing-sm;
+            border-radius: 4px;
+            font-size: v.$font-size-sm;
+            cursor: pointer;
+            transition: background-color v.$transition-speed;
+
+            &:hover {
+              background-color: white;
+            }
+          }
+
+          .colorSwatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid v.$color-border;
+            cursor: pointer;
+            transition: transform v.$transition-speed;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+    }
+
+    .addToCartBtn {
+      @include m.button-style(v.$color-accent, v.$color-primary);
+      width: 100%;
+      padding: v.$spacing-sm;
+      font-size: v.$font-size-lg;
+    }
+  }
+}

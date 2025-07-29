@@ -1,23 +1,34 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+} from "lucide-react";
 import { Input } from "../../../components/atoms/Input/Input";
 import { Button } from "../../../components/atoms/Button/Button";
-import { Mail, Phone, MapPin } from "lucide-react";
 import styles from "./Contact.module.scss";
 
-export const Contact: React.FC = () => {
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    interestedIn: "",
+    phoneNumber: "",
     message: "",
   });
   const [status, setStatus] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -25,81 +36,126 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulación de envío de formulario
-    console.log("Formulario de contacto enviado:", formData);
+    console.log("Enviando formulario:", formData);
     setStatus("¡Mensaje enviado con éxito! Te responderemos pronto.");
-    setFormData({ name: "", email: "", message: "" });
+    setFormData({
+      name: "",
+      email: "",
+      interestedIn: "",
+      phoneNumber: "",
+      message: "",
+    });
   };
 
   return (
-    <div className={styles.contactPage}>
-      <section className={styles.hero}>
-        <div className="container">
-          <h1>CONTACTO</h1>
-          <p>
-            ¿Tienes alguna pregunta o comentario? ¡Estamos aquí para ayudarte!
-          </p>
-        </div>
-      </section>
+    <div className={styles.pageWrapper}>
+      <section className={styles.contactSection}>
+        <h1 className={styles.sectionTitle}>Contáctanos</h1>
+        <div className={styles.contactGrid}>
+          {/* ➤ Form */}
+          <div className={styles.formColumn}>
+            <h2 className={styles.formSubtitle}>
+              ¿Tienes una duda? Envíanos un Mensaje
+            </h2>
+            <p className={styles.formDescription}>
+              Responderemos tu consulta lo más breve posible. En caso de no
+              estar registrado, por favor, déjanos tu dirección de gmail o
+              número de teléfono para aclarar tus dudas.
+            </p>
+            <form onSubmit={handleSubmit} className={styles.contactForm}>
+              <div className={styles.row2}>
+                <Input
+                  name="name"
+                  placeholder="Nombre"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="Correo Electrónico"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className={styles.row2}>
+                <select
+                  name="interestedIn"
+                  value={formData.interestedIn}
+                  onChange={handleChange}
+                  className={styles.select}
+                >
+                  <option value="product">Producto</option>
+                  <option value="product">Envío</option>
+                  <option value="support">Ayuda</option>
+                  <option value="other">Otro</option>
+                </select>
+                <Input
+                  name="phoneNumber"
+                  placeholder="Teléfono"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                />
+              </div>
+              <textarea
+                name="message"
+                placeholder="Mensaje"
+                rows={6}
+                value={formData.message}
+                onChange={handleChange}
+                className={styles.textarea}
+                required
+              />
+              <Button type="submit" className={styles.submitButton}>
+                Enviar
+              </Button>
+              {status && <p className={styles.status}>{status}</p>}
+            </form>
+          </div>
 
-      <section className={styles.contactInfoSection}>
-        <div className="container">
-          <div className={styles.infoGrid}>
-            <div className={styles.infoItem}>
-              <Mail size={48} className={styles.icon} />
-              <h3>Correo Electrónico</h3>
-              <p>info@frankycrew.com</p>
+          {/* ➤ Info */}
+          <div className={styles.infoColumn}>
+            <div className={styles.accentSquareTop} />
+            <h2 className={styles.infoTitle}>Info</h2>
+            <ul className={styles.infoList}>
+              <li>
+                <Mail size={20} /> <span>info@getintouch.we</span>
+              </li>
+              <li>
+                <Phone size={20} /> <span>+3794129951</span>
+              </li>
+              <li>
+                <MapPin size={20} />{" "}
+                <span>Av. 3 de Abril 1619, W3400 Corrientes</span>
+              </li>
+              <li>
+                <Clock size={20} />{" "}
+                <span>lun-sab de 09:30-12:30 y de 17:00-20:00 </span>
+              </li>
+            </ul>
+            <div className={styles.social}>
+              <Facebook size={20} />
+              <Twitter size={20} />
+              <Instagram size={20} />
+              <Youtube size={20} />
             </div>
-            <div className={styles.infoItem}>
-              <Phone size={48} className={styles.icon} />
-              <h3>Teléfono</h3>
-              <p>+54 9 11 1234-5678</p>
-            </div>
-            <div className={styles.infoItem}>
-              <MapPin size={48} className={styles.icon} />
-              <h3>Dirección</h3>
-              <p>Calle Ficticia 123, Ciudad Urbana, País</p>
-            </div>
+            <div className={styles.accentSquareBottom} />
           </div>
         </div>
       </section>
 
-      <section className={styles.contactFormSection}>
-        <div className="container">
-          <h2>ENVÍANOS UN MENSAJE</h2>
-          <form onSubmit={handleSubmit} className={styles.contactForm}>
-            <Input
-              type="text"
-              name="name"
-              placeholder="Tu Nombre"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <Input
-              type="email"
-              name="email"
-              placeholder="Tu Correo Electrónico"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              name="message"
-              placeholder="Tu Mensaje"
-              rows={6}
-              value={formData.message}
-              onChange={handleChange}
-              required
-              className={styles.textarea}
-            ></textarea>
-            <Button type="submit" className={styles.submitButton}>
-              Enviar Mensaje
-            </Button>
-            {status && <p className={styles.statusMessage}>{status}</p>}
-          </form>
-        </div>
+      {/* ➤ Map */}
+      <section className={styles.mapSection}>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.773692953311!2d-58.8309055!3d-27.476304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94456d0b46539721%3A0xf0832902e1cb9921!2sFranky%20Store!5e0!3m2!1ses!2sar!4v1753756155184!5m2!1ses!2sar"
+          title="Our Location"
+          className={styles.map}
+        ></iframe>
       </section>
     </div>
   );
 };
+
+export default Contact;

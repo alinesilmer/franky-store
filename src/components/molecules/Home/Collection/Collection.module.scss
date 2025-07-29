@@ -1,0 +1,80 @@
+
+
+.section {
+  background: v.$color-secondary;
+  padding: v.$spacing-xxl 0;
+  text-align: center;
+  border-top: 1px solid v.$color-border;
+  border-bottom: 1px solid v.$color-border;
+}
+
+.title {
+  font-family: v.$font-heading;
+  font-size: 2rem;
+  color: v.$color-text-dark;
+  margin-bottom: v.$spacing-sm;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-family: v.$font-body;
+  font-size: v.$font-size-md;
+  color: v.$color-text-dark;
+  margin-bottom: v.$spacing-lg;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sliderWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.productGrid {
+  display: flex;
+  gap: v.$spacing-lg;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: v.$spacing-sm v.$spacing-md;
+  margin: 0;
+  
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: v.$color-border;
+    border-radius: 3px;
+  }
+
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
+    gap: v.$spacing-md;
+  }
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: none;
+  padding: v.$spacing-xs;
+  border-radius: 50%;
+  cursor: pointer;
+  color: v.$color-text-dark;
+  transition: background v.$transition-speed;
+
+  &:hover {
+    background: rgba(255,255,255,1);
+  }
+}
+
+.left {
+  left: v.$spacing-md;
+}
+
+.right {
+  right: v.$spacing-md;
+}

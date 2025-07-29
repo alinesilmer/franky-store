@@ -1,7 +1,13 @@
+"use client";
+
 import type React from "react";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import styles from "./FAQ.module.scss";
 
 export const FAQ: React.FC = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const faqs = [
     {
       question: "¿Cuáles son los métodos de pago aceptados?",
@@ -35,25 +41,85 @@ export const FAQ: React.FC = () => {
     },
   ];
 
-  return (
-    <div className={styles.faqPage}>
-      <section className={styles.hero}>
-        <div className="container">
-          <h1>PREGUNTAS FRECUENTES</h1>
-          <p>Encuentra respuestas a tus dudas más comunes sobre Franky Crew.</p>
-        </div>
-      </section>
+  const toggleFAQ = (index: number) =>
+    setOpenIndex((prev) => (prev === index ? null : index));
 
-      <section className={styles.faqListSection}>
-        <div className="container">
-          {faqs.map((faq, index) => (
-            <div key={index} className={styles.faqItem}>
-              <h2 className={styles.question}>{faq.question}</h2>
-              <p className={styles.answer}>{faq.answer}</p>
+  return (
+    <section className={styles.faqSection}>
+      <div className="container">
+        <div className={styles.faqContent}>
+          {/* Intro + Image */}
+          <div className={styles.faqIntro}>
+            <h1 className={styles.sectionTitle}>
+              Preguntas <span className={styles.highlight}>Frecuentes</span>
+            </h1>
+            <p className={styles.sectionDescription}>
+              Encuentra respuestas a tus dudas más comunes sobre Franky Crew.
+              Nuestro objetivo es brindarte toda la información necesaria para
+              una experiencia de compra sin complicaciones.
+            </p>
+
+            <div className={styles.imageCluster}>
+              <div className={styles.imageWrapper}>
+                <img
+                  src="https://i.pinimg.com/1200x/71/71/2b/71712bec7bc3567e4758e8624c5193c5.jpg"
+                  alt="Cliente explorando preguntas frecuentes"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Items */}
+          <div className={styles.faqItems}>
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
+              const headerId = `faq-header-${index}`;
+              const panelId = `faq-panel-${index}`;
+
+              return (
+                <div
+                  key={index}
+                  className={`${styles.faqItem} ${
+                    isOpen ? styles.faqItemOpen : ""
+                  }`}
+                >
+                  <h2 className={styles.questionHeading} id={headerId}>
+                    <button
+                      className={styles.questionHeader}
+                      onClick={() => toggleFAQ(index)}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      aria-labelledby={headerId}
+                      id={`${headerId}-btn`}
+                      type="button"
+                    >
+                      <span className={styles.question}>{faq.question}</span>
+                      <ChevronDown
+                        size={24}
+                        className={styles.icon}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </h2>
+
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={`${headerId}-btn`}
+                    className={styles.answerWrapper}
+                  >
+                    <div className={styles.answerContent}>
+                      <p className={styles.answer}>{faq.answer}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };

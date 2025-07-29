@@ -1,0 +1,184 @@
+
+
+.promotionSection {
+  background-color: v.$color-secondary;
+  color: v.$color-primary;
+  padding: v.$spacing-xl v.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$spacing-lg;
+  overflow: hidden;
+  height: 100vh;
+
+  .horizontalLine {
+    width: 88%;
+    height: 1px;
+    background-color: v.$color-border;
+  }
+
+  .contentWrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$spacing-xl;
+    height: 100%;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: clamp(3rem, 6vw, 8rem);
+    }
+  }
+
+  .modelImage {
+    display: none;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      display: block;
+      width: 48%;
+      max-width: 680px;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+    }
+  }
+
+  .promotionCardWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+    row-gap: v.$spacing-sm;
+    height: 90%;
+  }
+
+  .productName {
+    font-family: v.$font-heading;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    font-size: clamp(1.25rem, 2.6vw, 2rem);
+    color: v.$color-primary;
+    margin: 0 0 v.$spacing-sm 0;
+  }
+
+  .promotionCard {
+    background-color: v.$color-secondary;
+    border: 1px solid v.$color-border;
+    width: 100%;
+    max-width: 360px;
+    height: 550px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden; // keep spin inside
+  }
+
+  /* Thin rail behind the hanger */
+  .rail {
+    position: absolute;
+    top: 54px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(v.$color-primary, 0) 0%,
+      rgba(v.$color-primary, .35) 12%,
+      rgba(v.$color-primary, .35) 88%,
+      rgba(v.$color-primary, 0) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hangerImage {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Stage where only the product animates */
+  .productStage {
+    position: absolute;
+    height: 50vh;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    perspective: 1200px;
+    z-index: 2;
+  }
+
+  .productImage {
+    width: 66%;
+    height: auto;
+    object-fit: contain;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    margin-top: 58px; // hang below the rail/hanger
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,.12));
+  }
+
+  .originalPrice {
+    position: absolute;
+    bottom: v.$spacing-sm;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: v.$font-size-sm;
+    color: rgba(v.$color-primary, .75);
+    text-decoration: line-through;
+    margin: 0;
+  }
+
+  .discountedPrice {
+    font-family: v.$font-heading;
+    font-weight: 700;
+    font-size: clamp(2rem, 5.5vw, 3.25rem);
+    letter-spacing: .01em;
+    color: v.$color-primary;
+    margin: 0;
+  }
+
+  .navButton {
+    position: absolute;
+    top: calc(50% + 10px);
+    transform: translateY(-50%);
+    background: none;
+    border: 0;
+    color: v.$color-primary;
+    cursor: pointer;
+    padding: v.$spacing-xs;
+    line-height: 1;
+    transition: transform .2s ease, color .2s ease;
+
+    &:hover {
+      color: v.$color-accent;
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    &.left { left: calc(50% - 230px); }   // slightly outside card
+    &.right { right: calc(50% - 230px); } // symmetric
+  }
+
+  /* Mobile: bring arrows closer */
+  @media (max-width: 768px) {
+    .navButton.left { left: 1rem; }
+    .navButton.right { right: 1rem; }
+    .promotionCard { max-width: 320px; height: 300px; }
+    .productImage { width: 70%; margin-top: 54px; }
+  }
+}

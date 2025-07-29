@@ -1,0 +1,86 @@
+
+.section {
+  background-color: v.$color-primary;
+  color: v.$color-text-light;
+  padding: v.$spacing-xxl v.$spacing-lg;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-family: v.$font-heading;
+  font-size: v.$font-size-xxl;
+  color: v.$color-accent;
+  margin-bottom: v.$spacing-md;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.sectionDescription {
+    text-align: center;
+  font-size: v.$font-size-md;
+  margin-bottom: v.$spacing-xl;
+  color: v.$color-text-light;
+}
+
+.infoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: v.$spacing-xl;
+  margin-bottom: v.$spacing-xl;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.infoItem {
+  background-color: #111;
+  padding: v.$spacing-lg;
+  border-radius: 12px;
+  border: 1px solid v.$color-border;
+  transition: transform v.$transition-speed ease;
+  width: 250px;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(v.$color-accent, 0.3);
+  }
+
+  h3 {
+    color: v.$color-accent;
+    font-family: v.$font-heading;
+    margin: v.$spacing-sm 0;
+  }
+
+  p {
+    font-size: v.$font-size-sm;
+    color: v.$color-text-light;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+    color: v.$color-accent;
+    margin-bottom: v.$spacing-sm;
+  }
+}
+
+.paymentIcons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: v.$spacing-md;
+
+  img {
+    height: 40px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

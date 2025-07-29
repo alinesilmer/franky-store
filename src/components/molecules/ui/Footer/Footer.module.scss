@@ -1,0 +1,110 @@
+@use "sass:color";
+
+.footer {
+background-color: v.$color-primary;
+color: v.$color-text-light;
+padding: v.$spacing-xl v.$spacing-lg 0 v.$spacing-lg;
+border-top: 1px solid v.$color-border;
+font-size: v.$font-size-sm;
+
+.container {
+  display: flex;
+  gap: v.$spacing-lg;
+  justify-content: space-evenly;
+  align-items: flex-;
+
+}
+
+.title {
+font-weight: 600;
+color: white;
+margin-top: 1rem;
+}
+
+.brandInfo {
+  p {
+    margin: v.$spacing-xs 0;
+  }
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+}
+.linksGroup {
+  h3 {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-lg;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-sm;
+  }
+
+  ul {
+    li {
+      margin-bottom: v.$spacing-xs;
+      a {
+        transition: color v.$transition-speed v.$transition-ease;
+        &:hover {
+          color: v.$color-accent;
+        }
+      }
+    }
+  }
+}
+
+.socialMedia {
+  h3 {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-lg;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-sm;
+  }
+
+  .socialIcons {
+    display: flex;
+    gap: v.$spacing-md;
+
+    a {
+      color: v.$color-secondary;
+      transition: color v.$transition-speed v.$transition-ease;
+      &:hover {
+        color: v.$color-accent;
+      }
+    }
+  }
+}
+}
+
+ .subFooter {
+    margin-top: v.$spacing-lg;
+    padding-top: v.$spacing-md;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: v.$spacing-sm;
+      text-align: center;
+    }
+
+    .credits {
+      font-size: v.$font-size-sm;
+      color: gray;
+    }
+
+    .madeIn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: gray;
+      font-size: v.$font-size-sm;
+
+      img {
+        width: 20px;
+        height: auto;
+      }
+    }
+  }

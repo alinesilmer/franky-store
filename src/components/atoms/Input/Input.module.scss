@@ -1,23 +1,24 @@
-@use '../../../styles/_variables' as v;
+
 
 .input {
-width: 100%;
-padding: v.$spacing-sm;
-border: 1px solid v.$color-border;
-border-radius: 4px;
-background-color: v.$color-primary;
-color: v.$color-text-light;
-font-family: v.$font-body;
-font-size: v.$font-size-md;
-outline: none;
-transition: border-color v.$transition-speed v.$transition-ease;
-
-&:focus {
-  border-color: v.$color-accent;
-}
-
-&::placeholder {
+  width: 100%;
+  padding: v.$spacing-sm v.$spacing-md;
+  border: 1px solid v.$color-border;
+  border-radius: 8px; // Slightly more rounded
+  background-color: v.$color-primary; // Dark background for input
   color: v.$color-text-light;
-  opacity: 0.7;
-}
+  font-family: v.$font-body;
+  font-size: v.$font-size-md;
+  outline: none;
+  transition: border-color v.$transition-speed v.$transition-ease, box-shadow v.$transition-speed v.$transition-ease;
+
+  &:focus {
+    border-color: v.$color-accent;
+    box-shadow: 0 0 0 2px rgba(v.$color-accent, 0.5); // Accent glow on focus
+  }
+
+  &::placeholder {
+    color: v.$color-text-light;
+    opacity: 0.6; // Slightly more transparent placeholder
+  }
 }

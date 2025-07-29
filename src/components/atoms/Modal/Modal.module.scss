@@ -1,0 +1,81 @@
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000, 0.7);
+  @include m.flex-center;
+  z-index: 9999;
+  padding: v.$spacing-md; // Add padding for smaller screens
+}
+
+.modal {
+  background: v.$color-primary; // Changed to primary color for consistency
+  padding: v.$spacing-lg;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; // Increased max-width for better content display
+  width: 95%; // Adjusted width for responsiveness
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  color: v.$color-text-light; // Ensure text inside modal is light
+
+  @include m.media-breakpoint-up(v.$breakpoint-md) {
+    padding: v.$spacing-xl;
+    max-width: 800px; // Even wider on larger screens
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: v.$spacing-sm;
+    right: v.$spacing-sm;
+    background: none;
+    border: none;
+    color: v.$color-text-light;
+    cursor: pointer;
+    padding: v.$spacing-xs;
+    border-radius: 50%;
+    transition: background-color v.$transition-speed;
+
+    &:hover {
+      background-color: rgba(v.$color-text-light, 0.1);
+    }
+
+    svg {
+      display: block; // Ensure icon is centered
+    }
+  }
+
+  .modalTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xl;
+    color: v.$color-accent;
+    margin-bottom: v.$spacing-md;
+    text-align: center;
+    padding-right: v.$spacing-lg; // Make space for close button
+  }
+
+  .modalContent {
+    flex-grow: 1;
+    overflow-y: auto; // Allow scrolling if content is too long
+    padding-right: v.$spacing-xs; // Small padding for scrollbar
+    
+    // Custom scrollbar for modal content
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: v.$color-border;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: v.$color-accent;
+      border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: white;
+    }
+  }
+}

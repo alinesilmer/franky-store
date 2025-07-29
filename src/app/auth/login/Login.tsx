@@ -1,8 +1,6 @@
-"use client";
-
 import type React from "react";
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "../../../components/atoms/Input/Input";
 import { Button } from "../../../components/atoms/Button/Button";
 import {
@@ -13,11 +11,8 @@ import {
 } from "../../../lib/auth";
 import styles from "./Login.module.scss";
 
-interface LoginProps {
-  onNavigate: (path: string) => void;
-}
-
-export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
+const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,10 +23,10 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       localStorage.setItem("userRole", "admin");
-      onNavigate("/auth/dashboard");
+      navigate("/auth/dashboard");
     } else if (username === CLIENT_USERNAME && password === CLIENT_PASSWORD) {
       localStorage.setItem("userRole", "client");
-      onNavigate("/auth/dashboard");
+      navigate("/auth/dashboard");
     } else {
       setError("Usuario o contraseña incorrectos.");
     }
@@ -57,24 +52,28 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
             required
           />
           {error && <p className={styles.errorMessage}>{error}</p>}
-          <Button type="submit" className={styles.loginButton}>
+          <Button
+            variant="primary"
+            type="submit"
+            className={styles.loginButton}
+          >
             Entrar
           </Button>
         </form>
         <p className={styles.registerLink}>
           ¿No tienes cuenta?{" "}
-          <a href="#" onClick={() => onNavigate("/auth/register")}>
+          <a href="#" onClick={() => navigate("/auth/register")}>
             Regístrate aquí
           </a>
         </p>
         <div className={styles.testCredentials}>
           <h3>Credenciales de Prueba:</h3>
           <p>
-            Admin: usuario: <strong>{ADMIN_USERNAME}</strong>, pass:{" "}
+            Admin: <strong>{ADMIN_USERNAME}</strong> /{" "}
             <strong>{ADMIN_PASSWORD}</strong>
           </p>
           <p>
-            Cliente: usuario: <strong>{CLIENT_USERNAME}</strong>, pass:{" "}
+            Cliente: <strong>{CLIENT_USERNAME}</strong> /{" "}
             <strong>{CLIENT_PASSWORD}</strong>
           </p>
         </div>
@@ -82,3 +81,5 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
     </div>
   );
 };
+
+export default Login;

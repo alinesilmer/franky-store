@@ -1,65 +1,122 @@
-@use '../../../styles/_variables' as v;
-@use '../../../styles/_mixins' as m;
 
 .registerPage {
-@include m.flex-center;
-min-height: calc(100vh - 140px); // Ajusta para el navbar y footer
-background-color: v.$color-primary;
-padding: v.$spacing-xl;
+  @include m.flex-center;
+  min-height: calc(100vh - 140px);
+  position: relative;
+  background-color: v.$color-primary;
+  padding: v.$spacing-xl;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("https://i.pinimg.com/1200x/df/f1/bf/dff1bf332909d67af57bdfa9d7962ee8.jpg");
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    z-index: 0;
+  }
 }
 
 .registerCard {
-background-color: v.$color-border;
-padding: v.$spacing-xl;
-border-radius: 8px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-text-align: center;
-max-width: 400px;
-width: 100%;
-
-h1 {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-xxl;
-  color: v.$color-accent;
-  margin-bottom: v.$spacing-xl;
-}
-
-.registerForm {
-  display: flex;
-  flex-direction: column;
-  gap: v.$spacing-md;
-  margin-bottom: v.$spacing-md;
-}
-
-.errorMessage {
-  color: red;
-  font-size: v.$font-size-sm;
-  margin-top: v.$spacing-xs;
-}
-
-.successMessage {
-  color: green;
-  font-size: v.$font-size-sm;
-  margin-top: v.$spacing-xs;
-}
-
-.registerButton {
+  position: relative;
+  z-index: 1;
+  background-color: v.$color-primary;
+  padding: v.$spacing-xl;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 500px;
   width: 100%;
-  padding: v.$spacing-md;
-  font-size: v.$font-size-lg;
-}
 
-.loginLink {
-  font-size: v.$font-size-sm;
-  color: v.$color-text-light;
-  margin-top: v.$spacing-md;
-
-  a {
+  h1 {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
     color: v.$color-accent;
-    text-decoration: underline;
+    margin-bottom: v.$spacing-xl;
+  }
+
+  .registerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$spacing-lg;
+    margin-bottom: v.$spacing-lg;
+
+    input,
+    select {
+      width: 100%;
+      max-width: 300px;
+      padding: v.$spacing-sm v.$spacing-md;
+      background-color: v.$color-border;
+      border: none;
+      border-radius: 6px;
+      font-family: v.$font-body;
+      font-size: v.$font-size-md;
+      color: v.$color-text-light;
+      text-align: left;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    select:disabled {
+      opacity: 0.6;
+    }
+  }
+
+  .errorMessage {
+    color: #e53935;
+    font-size: v.$font-size-sm;
+    margin-top: v.$spacing-sm;
+  }
+
+  .successMessage {
+    color: #4caf50;
+    font-size: v.$font-size-sm;
+    margin-top: v.$spacing-sm;
+  }
+
+  .registerButton {
+    width: 80%;
+    padding: v.$spacing-sm;
+    font-size: v.$font-size-lg;
+    background-color: v.$color-accent;
+    color: v.$color-primary;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color v.$transition-speed v.$transition-ease,
+      transform 0.2s v.$transition-ease;
+
     &:hover {
-      color: lighten(v.$color-accent, 10%);
+      background-color: white;
+      transform: translateY(-2px);
+    }
+  }
+
+  .loginLink {
+    font-size: v.$font-size-sm;
+    color: v.$color-text-light;
+    margin-top: v.$spacing-md;
+
+    a {
+      color: v.$color-accent;
+      text-decoration: underline;
+      transition: color v.$transition-speed v.$transition-ease;
+
+      &:hover {
+        color: v.$color-accent;
+      }
     }
   }
 }
+
+@include m.media-breakpoint-down(v.$breakpoint-sm) {
+  .registerCard {
+    padding: v.$spacing-xl v.$spacing-md;
+
+    h1 {
+      font-size: v.$font-size-xl;
+    }
+  }
 }

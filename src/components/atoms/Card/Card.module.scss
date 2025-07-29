@@ -1,0 +1,50 @@
+
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  min-width: 260px;
+  max-width: 260px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform v.$transition-speed, box-shadow v.$transition-speed;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; // Ensures content doesn't spill out of rounded corners
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  }
+
+  .image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .content {
+    padding: v.$spacing-sm;
+    text-align: left;
+    color: v.$color-text-dark; // Default text color for content
+    flex-grow: 1; // Allows content to take available space
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-family: v.$font-heading;
+      font-size: v.$font-size-md;
+      color: v.$color-text-dark;
+      margin: 0 0 v.$spacing-xs 0;
+    }
+
+    p {
+      font-family: v.$font-body;
+      font-size: v.$font-size-sm;
+      color: v.$color-accent;
+      margin: 0;
+    }
+  }
+}

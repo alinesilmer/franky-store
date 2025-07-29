@@ -23,7 +23,7 @@ export const NewsletterForm: React.FC = () => {
 
   return (
     <div className={styles.newsletterForm}>
-      <h2>Únete a la Crew Franky</h2>
+      <h2>Únete a la Franky Crew</h2>
       <p>
         Sé el primero en enterarte de nuestras nuevas colecciones, ofertas
         exclusivas y eventos.

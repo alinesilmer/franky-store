@@ -1,79 +1,89 @@
-@use '../../../styles/_variables' as v;
-@use '../../../styles/_mixins' as m;
+
 
 .loginPage {
-@include m.flex-center;
-min-height: calc(100vh - 140px); // Ajusta para el navbar y footer
-background-color: v.$color-primary;
-padding: v.$spacing-xl;
+  @include m.flex-center;
+  min-height: calc(100vh - 140px);
+  background-color: v.$color-primary;
+  padding: v.$spacing-xl;
+  background-image: url("https://i.pinimg.com/1200x/52/b4/cb/52b4cb0a7b36cfb8cef7e89a66d3365a.jpg");
+  background-size: cover;
 }
 
 .loginCard {
-background-color: v.$color-border;
-padding: v.$spacing-xl;
-border-radius: 8px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-text-align: center;
-max-width: 400px;
-width: 100%;
-
-h1 {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-xxl;
-  color: v.$color-accent;
-  margin-bottom: v.$spacing-xl;
-}
-
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: v.$spacing-md;
-  margin-bottom: v.$spacing-md;
-}
-
-.errorMessage {
-  color: red;
-  font-size: v.$font-size-sm;
-  margin-top: v.$spacing-xs;
-}
-
-.loginButton {
+  background-color: v.$color-primary;
+  padding: v.$spacing-xl;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 400px;
   width: 100%;
-  padding: v.$spacing-md;
-  font-size: v.$font-size-lg;
-}
 
-.registerLink {
-  font-size: v.$font-size-sm;
-  color: v.$color-text-light;
-  margin-top: v.$spacing-md;
-
-  a {
+  h1 {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
     color: v.$color-accent;
-    text-decoration: underline;
-    &:hover {
-      color: lighten(v.$color-accent, 10%);
+    margin-bottom: v.$spacing-xl;
+  }
+
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* centra los inputs */
+    gap: v.$spacing-lg;
+    margin-bottom: v.$spacing-lg;
+
+    /* ajusta ancho máximo de los inputs */
+    input {
+      width: 100%;
+      max-width: 300px;
+      background-color: v.$color-border;
     }
   }
-}
 
-.testCredentials {
-  margin-top: v.$spacing-xl;
-  padding-top: v.$spacing-md;
-  border-top: 1px dashed v.$color-text-light;
-  text-align: left;
-  font-size: v.$font-size-sm;
-  color: v.$color-text-light;
-
-  h3 {
-    font-family: v.$font-body;
-    font-size: v.$font-size-md;
-    color: v.$color-secondary;
-    margin-bottom: v.$spacing-xs;
+  .errorMessage {
+    color: red;
+    font-size: v.$font-size-sm;
+    margin-top: v.$spacing-xs;
   }
 
-  p {
-    margin: v.$spacing-xs 0;
+  .loginButton {
+    width: 70%;
+    padding: v.$spacing-sm;
+    font-size: v.$font-size-lg;
   }
-}
+
+  .registerLink {
+    font-size: v.$font-size-sm;
+    color: v.$color-text-light;
+    margin-top: v.$spacing-md;
+
+    a {
+      color: v.$color-accent;
+      text-decoration: underline;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .testCredentials {
+    margin-top: v.$spacing-xl;
+    padding-top: v.$spacing-md;
+    border-top: 1px dashed v.$color-text-light;
+    text-align: left;
+    font-size: v.$font-size-sm;
+    color: v.$color-text-light;
+
+    h3 {
+      font-family: v.$font-body;
+      font-size: v.$font-size-md;
+      color: v.$color-secondary;
+      margin-bottom: v.$spacing-xs;
+    }
+
+    p {
+      margin: v.$spacing-xs 0;
+    }
+  }
 }

@@ -1,5 +1,4 @@
-@use '../../../styles/_variables' as v;
-@use '../../../styles/_mixins' as m;
+@use "sass:color";
 
 .newsletterForm {
 background-color: v.$color-primary;
@@ -47,6 +46,7 @@ p {
 }
 
 .subscribeButton {
+  font-size: v.$font-size-lg;
   flex-shrink: 0;
   width: 100%;
 

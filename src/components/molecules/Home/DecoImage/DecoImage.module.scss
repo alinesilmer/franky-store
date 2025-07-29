@@ -1,0 +1,79 @@
+
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;   /* fallback */
+  height: 100dvh;  /* mobile-safe */
+  overflow: hidden;
+  z-index: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* Container that masks the moving track */
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  /* tuning variables */
+  --duration: 32s;
+  --bg-zoom: 110%;
+  --brightness: 0.9;
+  --contrast: 1.05;
+
+  @media (max-width: 1024px) {
+    --duration: 28s;
+    --bg-zoom: 112%;
+  }
+
+  @media (max-width: 640px) {
+    --duration: 24s;
+    --bg-zoom: 115%;
+  }
+}
+
+/* The track that slides horizontally */
+.scroller {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200%;            /* two slides of 50% each */
+  display: flex;
+  will-change: transform;
+  animation: slideLoop var(--duration) linear infinite;
+}
+
+/* Each half holds the same image, creating a seamless loop */
+.slide {
+  flex: 0 0 50%;
+  width: 50%;
+  height: 100%;
+  background-image: url("../../../../assets/images/WhyUsBackground.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: var(--bg-zoom);
+  filter: brightness(var(--brightness)) contrast(var(--contrast));
+}
+
+/* Reduced motion: stop sliding but keep visual */
+@media (prefers-reduced-motion: reduce) {
+  .scroller {
+    animation: none;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Move exactly one slide width so the second copy aligns to start */
+    transform: translateX(-50%);
+  }
+}

@@ -1,5 +1,4 @@
-@use '../../../styles/_variables' as v;
-@use '../../../styles/_mixins' as m;
+
 
 .aboutUsPage {
 background-color: v.$color-primary;
@@ -94,7 +93,7 @@ p {
   font-size: v.$font-size-lg;
 
   &:hover {
-    background-color: lighten(v.$color-primary, 10%);
+    background-color: white;
   }
 }
 }

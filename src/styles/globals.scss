@@ -1,5 +1,4 @@
-@use './_variables' as v;
-@use './_mixins' as m;
+@use "sass:color";
 
 /* Importar fuentes de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Permanent+Marker&display=swap');
@@ -71,5 +70,6 @@ border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-background: darken(v.$color-accent, 10%);
+background: white;
 }
+

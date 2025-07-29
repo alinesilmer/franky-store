@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
     <motion.button
       className={`${styles.button} ${styles[variant]} ${styles[size]} ${className}`}
       whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      whileTap={{ scale: 0.3 }}
       onClick={onClick}
       type={type}
       disabled={disabled}

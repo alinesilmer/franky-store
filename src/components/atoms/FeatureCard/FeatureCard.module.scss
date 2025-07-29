@@ -1,0 +1,53 @@
+
+
+.featureCard {
+  background-color: v.$color-border; // Solid dark background for the card
+  border: 1px solid white;
+  border-radius: 16px; // Rounded corners
+  padding: v.$spacing-lg; // Generous padding
+  text-align: left; // Align text to left as per image
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); // Clean shadow
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Align items to start
+  gap: v.$spacing-sm; // Space between elements
+  color: v.$color-text-light;
+  transition: all v.$transition-speed v.$transition-ease; // For non-framer motion properties
+  overflow: hidden;
+
+  .iconWrapper {
+    background-color: transparent; // No background for icon wrapper
+    border-radius: 0; // No border radius
+    width: auto; // Auto width
+    height: auto; // Auto height
+    @include m.flex-center; // Still center icon within its wrapper
+    margin-bottom: v.$spacing-sm; // Space below icon
+    box-shadow: none; // No shadow for icon wrapper
+    border: none; // No border
+    overflow: visible; // Allow icon to overflow if needed
+
+    .icon {
+      color: v.$color-accent; // Accent color for the icon
+      filter: none; // No shadow for icon
+    }
+  }
+
+  .cardTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xl; // Larger title
+    color: v.$color-secondary; // White title
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: none; // No text shadow
+  }
+
+  .cardDescription {
+    font-family: v.$font-body;
+    font-size: v.$font-size-sm;
+    color: v.$color-text-light;
+    margin: 0;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+}

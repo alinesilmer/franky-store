@@ -1,0 +1,23 @@
+
+
+.dashboardCard {
+  background-color: v.$color-border; // Darker background for cards
+  border-radius: 12px;
+  padding: v.$spacing-md;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  color: v.$color-text-light;
+  display: flex;
+  flex-direction: column;
+
+  .cardTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-lg;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-sm;
+    text-transform: uppercase;
+  }
+
+  .cardContent {
+    flex-grow: 1;
+  }
+}

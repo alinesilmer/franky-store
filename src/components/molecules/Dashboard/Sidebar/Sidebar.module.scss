@@ -1,0 +1,90 @@
+
+.sidebar {
+  width: 250px;
+  background-color: v.$color-primary; // Dark background
+  color: v.$color-text-light;
+  padding: v.$spacing-lg v.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid v.$color-border;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid v.$color-border;
+    padding: v.$spacing-md;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .navigation {
+      display: none; // Hide full navigation on small screens
+    }
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-sm;
+    margin-bottom: v.$spacing-xl;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-lg;
+    color: v.$color-accent;
+    text-transform: uppercase;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      margin-bottom: 0;
+    }
+  }
+
+  .navigation {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: v.$spacing-xs;
+    }
+
+    .navItem {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      padding: v.$spacing-sm v.$spacing-md;
+      border-radius: 8px;
+      color: v.$color-text-light;
+      text-decoration: none;
+      transition: background-color v.$transition-speed, color v.$transition-speed;
+      font-size: v.$font-size-md;
+
+      &:hover {
+        background-color: white;
+        color: v.$color-accent;
+      }
+
+      &.active {
+        background-color: v.$color-accent;
+        color: v.$color-primary;
+        font-weight: bold;
+
+        svg {
+          color: v.$color-primary; // Ensure icon color matches text
+        }
+      }
+
+      svg {
+        color: v.$color-text-light; // Default icon color
+        transition: color v.$transition-speed;
+      }
+    }
+  }
+}

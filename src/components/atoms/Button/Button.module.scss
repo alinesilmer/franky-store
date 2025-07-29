@@ -1,5 +1,4 @@
-@use '../../../styles/_variables' as v;
-@use '../../../styles/_mixins' as m;
+
 
 .button {
 @include m.button-style(v.$color-accent, v.$color-primary);
@@ -33,9 +32,11 @@ background-color: v.$color-accent;
 color: v.$color-primary;
 
 &:hover {
-  background-color: darken(v.$color-accent, 10%);
+  background-color: white;
 }
 }
+
+
 
 .secondary {
 background-color: v.$color-primary;

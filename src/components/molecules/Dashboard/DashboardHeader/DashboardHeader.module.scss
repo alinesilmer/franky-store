@@ -1,0 +1,115 @@
+
+
+.dashboardHeader {
+  background-color: v.$color-primary; // Dark background
+  padding: v.$spacing-md v.$spacing-lg;
+  border-bottom: 1px solid v.$color-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: v.$spacing-md;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: v.$spacing-sm v.$spacing-md;
+  }
+
+  .searchBar {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px; // Limit search bar width
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      width: 100%;
+      max-width: none;
+      margin-bottom: v.$spacing-sm;
+    }
+
+    .searchIcon {
+      position: absolute;
+      left: v.$spacing-sm;
+      top: 50%;
+      transform: translateY(-50%);
+      color: v.$color-text-light;
+    }
+
+    input {
+      width: 100%;
+      padding: v.$spacing-xs v.$spacing-sm v.$spacing-xs v.$spacing-xl; // Left padding for icon
+      background-color: v.$color-border; // Darker input background
+      border: 1px solid white;
+      border-radius: 8px;
+      color: v.$color-text-light;
+      font-size: v.$font-size-sm;
+      outline: none;
+      transition: border-color v.$transition-speed;
+
+      &:focus {
+        border-color: v.$color-accent;
+      }
+
+      &::placeholder {
+        color: v.$color-text-light;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .userActions {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-md;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .iconButton {
+      background: none;
+      border: none;
+      color: v.$color-text-light;
+      cursor: pointer;
+      padding: v.$spacing-xs;
+      border-radius: 50%;
+      transition: background-color v.$transition-speed;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+
+    .userInfo {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+
+      .avatar {
+        width: 36px;
+        height: 36px;
+        background-color: v.$color-accent; // Accent color for avatar background
+        border-radius: 50%;
+        @include m.flex-center;
+        color: v.$color-primary; // Dark icon color
+      }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        font-size: v.$font-size-sm;
+
+        .userName {
+          font-weight: bold;
+          color: v.$color-secondary;
+        }
+
+        .userEmail {
+          color: v.$color-text-light;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
