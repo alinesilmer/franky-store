@@ -1,0 +1,273 @@
+
+.outfitCarousel {
+  background: v.$color-secondary;
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 v.$spacing-lg;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      padding: 0 v.$spacing-md;
+    }
+  }
+
+  .carouselHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: v.$spacing-lg; 
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      flex-direction: column;
+      gap: v.$spacing-lg;
+      text-align: center;
+    }
+
+    .headerContent {
+      .carouselTitle {
+        font-family: v.$font-heading;
+        font-size: 5rem;
+        text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+        color: v.$color-accent;
+        margin: 0 0 v.$spacing-xs 0;
+        text-transform: uppercase;
+        background: none;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .carouselSubtitle {
+        font-size: v.$font-size-lg;
+        color: v.$color-text-dark;
+        opacity: 0.8;
+        margin: 0;
+      }
+    }
+
+    .collectionTabs {
+      display: flex;
+      gap: v.$spacing-sm;
+      background: v.$color-primary;
+      padding: 3px;
+      border-radius: 12px;
+      border: 1px solid rgba(v.$color-accent, 0.1);
+
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .collectionTab {
+        padding: v.$spacing-md;
+        border: none;
+        background: transparent;
+        color: v.$color-text-light;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all v.$transition-speed;
+        font-size: v.$font-size-sm;
+        font-weight: 500;
+        white-space: nowrap;
+
+        &:hover {
+          background: rgba(v.$color-accent, 0.1);
+          color: v.$color-secondary;
+        }
+
+        &.active {
+          background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
+          color: v.$color-primary;
+          font-weight: bold;
+          box-shadow: 0 4px 15px rgba(v.$color-accent, 0.3);
+        }
+      }
+    }
+  }
+
+  .collectionSection {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: v.$spacing-xl;
+     align-items: center;
+        justify-content: center;
+
+    @include m.media-breakpoint-down(v.$breakpoint-lg) {
+      grid-template-columns: 1fr;
+      gap: v.$spacing-lg;
+    }
+
+    .collectionInfo {
+      .collectionImage {
+        position: relative;
+        height: 500px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .collectionOverlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(transparent, rgba(v.$color-primary, 0.9));
+          padding: v.$spacing-xl v.$spacing-lg v.$spacing-lg;
+          color: v.$color-text-light;
+
+          .collectionName {
+            font-family: v.$font-heading;
+            font-size: v.$font-size-xxl;
+            color: v.$color-secondary;
+            margin: 0 0 v.$spacing-sm 0;
+            text-transform: uppercase;
+          }
+
+          .collectionDescription {
+            font-size: v.$font-size-md;
+            margin: 0 0 v.$spacing-lg 0;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+
+      .outfitsCarousel {
+        display: flex;
+        gap: v.$spacing-lg;
+        overflow-x: auto;
+        padding: v.$spacing-md 0;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(v.$color-border, 0.3);
+          border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: v.$color-accent;
+          border-radius: 3px;
+        }
+
+        .outfitCard {
+          flex: 0 0 280px;
+          height: 470px;
+          background: v.$color-primary;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(v.$color-accent, 0.1);
+          transition: all v.$transition-speed;
+
+          &:hover {
+            transform: translateY(-8px);
+            border-color: rgba(v.$color-accent, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+
+            .outfitOverlay {
+              opacity: 1;
+            }
+          }
+
+          .outfitImage {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform v.$transition-speed;
+            }
+
+            .outfitOverlay {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: v.$color-primary;
+              opacity: 0;
+              transition: opacity v.$transition-speed;
+
+              .viewOutfitBtn {
+                display: flex;
+                align-items: center;
+                gap: v.$spacing-xs;
+                background: v.$color-accent;
+                color: v.$color-primary;
+                border: none;
+                padding: v.$spacing-sm v.$spacing-md;
+                border-radius: 25px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: transform v.$transition-speed;
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
+            }
+          }
+
+          .outfitInfo {
+            padding: v.$spacing-md;
+
+            .outfitName {
+              font-family: v.$font-heading;
+              font-size: v.$font-size-lg;
+              color: v.$color-secondary;
+              margin: 0 0 v.$spacing-xs 0;
+              text-transform: uppercase;
+            }
+
+            .outfitPrice {
+              margin: 0 0 v.$spacing-sm 0;
+
+              .totalPrice {
+                font-size: v.$font-size-xl;
+                font-weight: bold;
+                color: v.$color-accent;
+                @include m.text-shadow(rgba(v.$color-secondary, 1));
+              }
+
+              .originalPrice {
+                font-size: v.$font-size-sm;
+                color: v.$color-text-light;
+                opacity: 0.6;
+                text-decoration: line-through;
+                margin-left: v.$spacing-xs;
+              }
+            }
+
+            .outfitItems {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 8px;
+
+              .itemTag {
+                font-size: v.$font-size-xs;
+                background: rgba(v.$color-accent, 0.1);
+                color: v.$color-accent;
+                padding: 2px 6px;
+                border-radius: 10px;
+                border: 1px solid rgba(v.$color-accent, 0.2);
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }

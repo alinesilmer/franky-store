@@ -1,51 +1,74 @@
 
+
 .productsPage {
+  min-height: 100vh;
   background-color: v.$color-primary;
-  color: v.$color-text-light;
-}
 
-.hero {
-  background-color: v.$color-primary;
-  padding: v.$spacing-xxl v.$spacing-md;
-  text-align: center;
-  border-bottom: 1px solid v.$color-border;
-
-  h1 {
-    font-family: v.$font-heading;
-    font-size: v.$font-size-xxl;
-    color: v.$color-accent;
-    margin-bottom: v.$spacing-md;
+  .categorySection {
+    padding: v.$spacing-xl 0;
+    background: linear-gradient(135deg, v.$color-primary, rgba(v.$color-border, 0.3));
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
   }
 
-  p {
-    font-size: v.$font-size-lg;
-    max-width: 700px;
-    margin: 0 auto;
+  .outfitSection {
+    background-color: v.$color-secondary;
   }
-}
 
-.productsGridSection {
-  padding: v.$spacing-xl v.$spacing-md;
+  .productsSection {
+    padding: v.$spacing-xl 0;
 
-  .productGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); // Adjusted minmax to match Card width
-    gap: v.$spacing-lg;
-    justify-items: center;
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 v.$spacing-lg;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        padding: 0 v.$spacing-md;
+      }
+    }
+
+    .productsLayout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: v.$spacing-xl;
+
+      @include m.media-breakpoint-down(v.$breakpoint-lg) {
+        grid-template-columns: 1fr;
+        gap: v.$spacing-lg;
+      }
+
+      .filtersAside {
+        @include m.media-breakpoint-down(v.$breakpoint-lg) {
+          order: 2;
+        }
+      }
+
+      .productsMain {
+        .productsHeader {
+          margin-bottom: v.$spacing-xl;
+          padding-bottom: v.$spacing-lg;
+          border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+          .resultsTitle {
+            font-family: v.$font-heading;
+            font-size: v.$font-size-xxl;
+            color: v.$color-secondary;
+            margin: 0 0 v.$spacing-xs 0;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+
+          .resultsCount {
+            color: v.$color-text-light;
+            opacity: 0.8;
+            font-size: v.$font-size-md;
+            margin: 0;
+          }
+        }
+      }
+    }
   }
-}
-
-// Styles for product name and price inside the generic Card
-.productName {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-lg;
-  color: v.$color-text-dark;
-  margin: 0 0 v.$spacing-xs 0;
-}
-
-.productPrice {
-  font-family: v.$font-body;
-  font-size: v.$font-size-md;
-  color: v.$color-accent;
-  margin: 0;
 }

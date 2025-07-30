@@ -1,57 +1,84 @@
 "use client";
-
 import React from "react";
-import Card from "../../atoms/Card/Card";
-import { Button } from "../../atoms/Button/Button";
-import type { Product } from "../../../types/models";
+import { ShoppingCart, Heart } from "lucide-react";
+import type { Product } from "../../../types/product";
 import styles from "./ProductCard.module.scss";
 
 interface ProductCardProps {
   product: Product;
-  onEdit: (productId: string) => void;
-  onDelete: (productId: string) => void;
+  onProductClick: (id: string) => void;
+  onAddToCart: (id: string) => void;
+  onToggleFavorite: (id: string) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
-  onEdit,
-  onDelete,
+  onProductClick,
+  onAddToCart,
+  onToggleFavorite,
 }) => {
-  const price =
-    typeof product.price === "number"
-      ? product.price
-      : Number(product.price ?? 0);
+  const discountPct = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
+    : 0;
 
   return (
-    <div className={styles.productCardWrapper}>
-      <Card imageSrc={product.image} imageAlt={product.name}>
-        <h3 className={styles.productName}>{product.name}</h3>
-        <p className={styles.productPrice}>${price.toFixed(2)}</p>
-      </Card>
+    <div
+      className={styles.productCard}
+      onClick={() => onProductClick(product.id)}
+    >
+      {/* Imagen */}
+      <div className={styles.imageWrapper}>
+        <img
+          src={product.images[0] ?? "/placeholder.svg"}
+          alt={product.name}
+          loading="lazy"
+        />
+        {discountPct > 0 && (
+          <span className={styles.discountBadge}>-{discountPct}%</span>
+        )}
+      </div>
 
-      <div className={styles.adminActions}>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => onEdit(String(product.id))}
-          aria-label={`Editar ${product.name}`}
-        >
-          Editar
-        </Button>
+      {/* Información */}
+      <div className={styles.info}>
+        <h3 className={styles.title}>{product.name}</h3>
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onDelete(String(product.id))}
-          aria-label={`Eliminar ${product.name}`}
-        >
-          Eliminar
-        </Button>
+        <div className={styles.price}>
+          <span className={styles.current}>${product.price.toFixed(2)}</span>
+          {product.originalPrice && (
+            <span className={styles.original}>
+              ${product.originalPrice.toFixed(2)}
+            </span>
+          )}
+        </div>
+
+        <div className={styles.actions}>
+          <button
+            className={styles.cartBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(product.id);
+            }}
+          >
+            <ShoppingCart size={16} />
+            <span>Comprar</span>
+          </button>
+          <button
+            className={`${styles.favBtn} ${
+              product.isFavorite ? styles.favActive : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFavorite(product.id);
+            }}
+          >
+            <Heart size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ProductCard;
-export { ProductCard };
-export type { ProductCardProps };

@@ -1,61 +1,121 @@
 
 
+$transition-speed: 0.15s;
+$transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
 .button {
-@include m.button-style(v.$color-accent, v.$color-primary);
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: v.$spacing-xs;
-padding: v.$spacing-sm v.$spacing-md;
-border-radius: 4px;
-font-weight: bold;
-text-transform: uppercase;
-cursor: pointer;
-transition: all v.$transition-speed v.$transition-ease;
+  @include m.flex-center;
+  gap: v.$spacing-xs;
+  border: none;
+  border-radius: 10px;
+  font-family: v.$font-heading;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition:
+    background $transition-speed $transition-ease,
+    color $transition-speed $transition-ease,
+    box-shadow $transition-speed ease,
+    transform $transition-speed ease;
+  will-change: transform, box-shadow;
 
-&:hover {
-  transform: translateY(-2px);
+  &:hover {
+    transform: translateY(-3px);
+  }
+  &:active {
+    transform: translateY(1px) scale(0.97);
+  }
+  &:focus-visible {
+    outline: 3px solid v.$color-accent;
+    outline-offset: 3px;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+  }
 }
 
-&:active {
-  transform: translateY(0);
+// Sizes
+.sm {
+  padding: v.$spacing-sm v.$spacing-md;
+  font-size: 0.875rem;
+}
+.md {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+}
+.lg {
+  padding: 1.25rem 3rem;
+  font-size: 1.125rem;
 }
 
-&:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-}
-
+// Primary: vibrant gradient, soft shadow
 .primary {
-background-color: v.$color-accent;
-color: v.$color-primary;
+  background: linear-gradient(135deg, v.$color-accent, rgba(v.$color-accent, 0.85));
+  color: v.$color-primary;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.18),
+    inset 0 -3px rgba(0, 0, 0, 0.1);
 
-&:hover {
-  background-color: white;
+  &:hover {
+    background: linear-gradient(135deg, rgba(v.$color-accent, 0.85), v.$color-accent);
+    box-shadow:
+      0 8px 28px rgba(0, 0, 0, 0.22),
+      inset 0 -2px rgba(0, 0, 0, 0.08);
+  }
 }
-}
 
-
-
+// Secondary: inverse style with bold border
 .secondary {
-background-color: v.$color-primary;
-color: v.$color-accent;
-border: 1px solid v.$color-accent;
+  background: v.$color-primary;
+  color: v.$color-accent;
+  border: 2px solid v.$color-accent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
-&:hover {
-  background-color: v.$color-accent;
-  color: v.$color-primary;
-}
+  &:hover {
+    background: v.$color-accent;
+    color: v.$color-primary;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  }
 }
 
+// Outline: glass effect
 .outline {
-background-color: transparent;
-color: v.$color-accent;
-border: 1px solid v.$color-accent;
+  background: rgba(255, 255, 255, 0.08);
+  color: v.$color-accent;
+  border: 2px solid v.$color-accent;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
-&:hover {
-  background-color: v.$color-accent;
-  color: v.$color-primary;
+  &:hover {
+    background: v.$color-accent;
+    color: v.$color-primary;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    text-shadow: none;
+  }
 }
+
+.third {
+  background: rgba(0, 0, 0, 0.3);
+  color: v.$color-secondary;
+  border: 0.5px solid white;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: v.$color-accent;
+    border-color: rgba(v.$color-accent, 0.6);
+    transform: translateY(-1px) scale(1.02);
+  }
 }

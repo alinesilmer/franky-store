@@ -1,90 +1,266 @@
 
 .sidebar {
-  width: 250px;
-  background-color: v.$color-primary; // Dark background
+  width: 280px;
+  background: linear-gradient(180deg, v.$color-primary 0%, rgba(v.$color-primary, 0.95) 100%);
   color: v.$color-text-light;
-  padding: v.$spacing-lg v.$spacing-md;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid v.$color-border;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(v.$color-accent, 0.1);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, v.$color-accent, transparent);
+  }
 
   @include m.media-breakpoint-down(v.$breakpoint-md) {
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid v.$color-border;
-    padding: v.$spacing-md;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: v.$spacing-md;
+
     .navigation {
-      display: none; // Hide full navigation on small screens
+      display: none;
     }
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: v.$spacing-sm;
-    margin-bottom: v.$spacing-xl;
-    font-family: v.$font-heading;
-    font-size: v.$font-size-lg;
-    color: v.$color-accent;
-    text-transform: uppercase;
+  .sidebarHeader {
+    padding: v.$spacing-xl v.$spacing-lg v.$spacing-lg;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
 
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-md;
 
-    @include m.media-breakpoint-down(v.$breakpoint-md) {
-      margin-bottom: 0;
+      .logoIcon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
+        border-radius: 12px;
+        @include m.flex-center;
+        font-family: v.$font-heading;
+        font-size: v.$font-size-xl;
+        color: v.$color-primary;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(v.$color-accent, 0.3);
+      }
+
+      .logoText {
+        h2 {
+          font-family: v.$font-heading;
+          font-size: v.$font-size-lg;
+          color: v.$color-secondary;
+          margin: 0 0 4px 0;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        p {
+          font-size: v.$font-size-xs;
+          color: v.$color-accent;
+          margin: 0;
+          text-transform: uppercase;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+        }
+      }
     }
   }
 
   .navigation {
-    ul {
+    flex: 1;
+    padding: v.$spacing-lg 0;
+    overflow-y: auto;
+
+    .navList {
       list-style: none;
       padding: 0;
       margin: 0;
-    }
 
-    li {
-      margin-bottom: v.$spacing-xs;
-    }
+      .navListItem {
+        margin-bottom: v.$spacing-xs;
+        padding: 0 v.$spacing-md;
 
-    .navItem {
+        .navItem {
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-md;
+          padding: v.$spacing-md;
+          border-radius: 12px;
+          color: v.$color-text-light;
+          text-decoration: none;
+          transition: all v.$transition-speed;
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(v.$color-accent, 0.1), transparent);
+            transition: left 0.5s ease;
+          }
+
+          &:hover {
+            background: linear-gradient(135deg, rgba(v.$color-accent, 0.1), rgba(v.$color-accent, 0.05));
+            transform: translateX(4px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+            &::before {
+              left: 100%;
+            }
+
+            .navItemIcon {
+              transform: scale(1.1);
+              color: v.$color-accent;
+            }
+
+            .navItemName {
+              color: v.$color-secondary;
+            }
+          }
+
+          &.active {
+            background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
+            color: v.$color-primary;
+            transform: translateX(8px);
+            box-shadow: 0 6px 20px rgba(v.$color-accent, 0.4);
+
+            .navItemIcon {
+              color: v.$color-primary;
+              transform: scale(1.1);
+            }
+
+            .navItemName {
+              color: v.$color-primary;
+              font-weight: bold;
+            }
+
+            .navItemDescription {
+              color: rgba(v.$color-primary, 0.8);
+            }
+
+            .activeIndicator {
+              position: absolute;
+              right: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 4px;
+              height: 20px;
+              background-color: v.$color-primary;
+              border-radius: 2px;
+            }
+          }
+
+          .navItemIcon {
+            width: 24px;
+            height: 24px;
+            @include m.flex-center;
+            color: v.$color-text-light;
+            transition: all v.$transition-speed;
+            flex-shrink: 0;
+          }
+
+          .navItemContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .navItemName {
+              font-size: v.$font-size-md;
+              font-weight: 500;
+              color: v.$color-text-light;
+              transition: color v.$transition-speed;
+            }
+
+            .navItemDescription {
+              font-size: v.$font-size-xs;
+              color: rgba(v.$color-text-light, 0.6);
+              transition: color v.$transition-speed;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .sidebarFooter {
+    padding: v.$spacing-lg;
+    border-top: 1px solid rgba(v.$color-accent, 0.1);
+
+    .userRole {
       display: flex;
       align-items: center;
       gap: v.$spacing-sm;
-      padding: v.$spacing-sm v.$spacing-md;
+      padding: v.$spacing-sm;
+      background: rgba(v.$color-accent, 0.05);
       border-radius: 8px;
-      color: v.$color-text-light;
-      text-decoration: none;
-      transition: background-color v.$transition-speed, color v.$transition-speed;
-      font-size: v.$font-size-md;
+      border: 1px solid rgba(v.$color-accent, 0.1);
 
-      &:hover {
-        background-color: white;
+      .roleIndicator {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, rgba(v.$color-accent, 0.2), rgba(v.$color-accent, 0.1));
+        border-radius: 50%;
+        @include m.flex-center;
+        font-family: v.$font-heading;
+        font-size: v.$font-size-sm;
         color: v.$color-accent;
+        font-weight: bold;
+        border: 1px solid rgba(v.$color-accent, 0.3);
       }
 
-      &.active {
-        background-color: v.$color-accent;
-        color: v.$color-primary;
-        font-weight: bold;
+      .roleText {
+        span {
+          font-size: v.$font-size-sm;
+          color: v.$color-secondary;
+          font-weight: 500;
+          display: block;
+        }
 
-        svg {
-          color: v.$color-primary; // Ensure icon color matches text
+        p {
+          font-size: v.$font-size-xs;
+          color: v.$color-accent;
+          margin: 0;
+          opacity: 0.8;
         }
       }
-
-      svg {
-        color: v.$color-text-light; // Default icon color
-        transition: color v.$transition-speed;
-      }
     }
+  }
+}
+
+// Custom scrollbar for navigation
+.navigation {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(v.$color-accent, 0.3);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(v.$color-accent, 0.5);
   }
 }

@@ -1,5 +1,4 @@
 
-
 .section {
   background: v.$color-secondary;
   padding: v.$spacing-xxl 0;
@@ -10,7 +9,7 @@
 
 .title {
   font-family: v.$font-heading;
-  font-size: 2rem;
+  font-size: 3rem;
   color: v.$color-text-dark;
   margin-bottom: v.$spacing-sm;
   letter-spacing: 1px;
@@ -35,46 +34,36 @@
 
 .productGrid {
   display: flex;
-  gap: v.$spacing-lg;
+  gap: v.$spacing-xl;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: v.$spacing-sm v.$spacing-md;
+  padding: v.$spacing-lg v.$spacing-md;
   margin: 0;
-  
+
   &::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
   }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(v.$color-border, 0.3);
+    border-radius: 4px;
+  }
+
   &::-webkit-scrollbar-thumb {
-    background: v.$color-border;
-    border-radius: 3px;
+    background: v.$color-accent;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: darken(v.$color-accent, 10%);
   }
 
   @include m.media-breakpoint-down(v.$breakpoint-md) {
+    gap: v.$spacing-lg;
+    padding: v.$spacing-md;
+  }
+
+  @include m.media-breakpoint-down(v.$breakpoint-sm) {
     gap: v.$spacing-md;
   }
-}
-
-.navBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.9);
-  border: none;
-  padding: v.$spacing-xs;
-  border-radius: 50%;
-  cursor: pointer;
-  color: v.$color-text-dark;
-  transition: background v.$transition-speed;
-
-  &:hover {
-    background: rgba(255,255,255,1);
-  }
-}
-
-.left {
-  left: v.$spacing-md;
-}
-
-.right {
-  right: v.$spacing-md;
 }

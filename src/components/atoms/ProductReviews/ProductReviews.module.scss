@@ -1,0 +1,331 @@
+
+
+.productReviews {
+  margin: v.$spacing-xxl 0;
+
+  .reviewsHeader {
+    margin-bottom: v.$spacing-xl;
+
+    .reviewsTitle {
+      font-family: v.$font-heading;
+      font-size: v.$font-size-xxl;
+      color: v.$color-secondary;
+      margin: 0;
+      text-transform: uppercase;
+    }
+  }
+
+  .reviewsLayout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: v.$spacing-xxl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-lg) {
+      grid-template-columns: 1fr;
+      gap: v.$spacing-xl;
+    }
+
+    .ratingSummary {
+      .overallRating {
+        text-align: center;
+        padding: v.$spacing-xl;
+        background: linear-gradient(135deg, rgba(v.$color-accent, 0.05), rgba(v.$color-secondary, 0.05));
+        border-radius: 16px;
+        border: 1px solid rgba(v.$color-accent, 0.1);
+        margin-bottom: v.$spacing-lg;
+
+        .ratingScore {
+          margin-bottom: v.$spacing-sm;
+
+          .ratingNumber {
+            font-family: v.$font-heading;
+            font-size: 4rem;
+            font-weight: bold;
+            color: v.$color-accent;
+            line-height: 1;
+          }
+
+          .ratingMax {
+            font-size: v.$font-size-lg;
+            color: v.$color-text-light;
+            opacity: 0.6;
+          }
+        }
+
+        .ratingStars {
+          display: flex;
+          justify-content: center;
+          gap: 4px;
+          margin-bottom: v.$spacing-sm;
+        }
+
+        .reviewCount {
+          font-size: v.$font-size-sm;
+          color: v.$color-text-light;
+          opacity: 0.8;
+        }
+      }
+
+      .ratingBreakdown {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-xs;
+
+        .ratingBar {
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-sm;
+          padding: v.$spacing-xs;
+          background: none;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all v.$transition-speed;
+
+          &:hover {
+            background: rgba(v.$color-accent, 0.05);
+          }
+
+          &.active {
+            background: rgba(v.$color-accent, 0.1);
+          }
+
+          .ratingBarLabel {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 30px;
+            font-size: v.$font-size-sm;
+            color: v.$color-text-light;
+          }
+
+          .ratingBarTrack {
+            flex: 1;
+            height: 6px;
+            background: rgba(v.$color-border, 0.5);
+            border-radius: 3px;
+            overflow: hidden;
+
+            .ratingBarFill {
+              height: 100%;
+              background: v.$color-accent;
+              border-radius: 3px;
+              transition: width 0.3s ease;
+            }
+          }
+
+          .ratingBarCount {
+            min-width: 20px;
+            text-align: right;
+            font-size: v.$font-size-sm;
+            color: v.$color-text-light;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    .reviewsList {
+      .reviewsControls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: v.$spacing-lg;
+        padding-bottom: v.$spacing-md;
+        border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          flex-direction: column;
+          gap: v.$spacing-sm;
+          align-items: flex-start;
+        }
+
+        .sortControls {
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-sm;
+
+          svg {
+            color: v.$color-accent;
+          }
+
+          .sortSelect {
+            background: rgba(v.$color-border, 0.3);
+            border: 1px solid rgba(v.$color-accent, 0.2);
+            border-radius: 6px;
+            padding: v.$spacing-xs v.$spacing-sm;
+            color: v.$color-text-light;
+            font-size: v.$font-size-sm;
+
+            &:focus {
+              outline: none;
+              border-color: v.$color-accent;
+            }
+          }
+        }
+
+        .clearFilter {
+          background: none;
+          border: none;
+          color: v.$color-accent;
+          cursor: pointer;
+          font-size: v.$font-size-sm;
+          text-decoration: underline;
+
+          &:hover {
+            color: v.$color-secondary;
+          }
+        }
+      }
+
+      .reviewsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-lg;
+        margin-bottom: v.$spacing-xl;
+
+        .reviewCard {
+          background: linear-gradient(135deg, rgba(v.$color-border, 0.3), rgba(v.$color-border, 0.1));
+          border: 1px solid rgba(v.$color-accent, 0.1);
+          border-radius: 12px;
+          padding: v.$spacing-lg;
+          transition: all v.$transition-speed;
+
+          &:hover {
+            border-color: rgba(v.$color-accent, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+          }
+
+          .reviewHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: v.$spacing-sm;
+
+            .reviewerInfo {
+              display: flex;
+              align-items: center;
+              gap: v.$spacing-sm;
+
+              .reviewerAvatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+              }
+
+              .reviewerDetails {
+                .reviewerName {
+                  display: flex;
+                  align-items: center;
+                  gap: v.$spacing-xs;
+                  font-weight: 500;
+                  color: v.$color-secondary;
+                  font-size: v.$font-size-sm;
+
+                }
+
+                .reviewDate {
+                  font-size: v.$font-size-xs;
+                  color: v.$color-text-light;
+                  opacity: 0.7;
+                }
+              }
+            }
+
+            .reviewMenu {
+              background: none;
+              border: none;
+              color: v.$color-text-light;
+              cursor: pointer;
+              padding: v.$spacing-xs;
+              border-radius: 4px;
+              transition: all v.$transition-speed;
+
+              &:hover {
+                background: rgba(v.$color-accent, 0.1);
+                color: v.$color-accent;
+              }
+            }
+          }
+
+          .reviewRating {
+            display: flex;
+            gap: 2px;
+            margin-bottom: v.$spacing-sm;
+          }
+
+          .reviewContent {
+            margin-bottom: v.$spacing-md;
+
+            .reviewTitle {
+              font-family: v.$font-heading;
+              font-size: v.$font-size-md;
+              color: v.$color-secondary;
+              margin: 0 0 v.$spacing-xs 0;
+            }
+
+            .reviewComment {
+              color: v.$color-text-light;
+              line-height: 1.6;
+              margin: 0 0 v.$spacing-sm 0;
+            }
+
+            .reviewImages {
+              display: flex;
+              gap: v.$spacing-sm;
+              margin-top: v.$spacing-sm;
+
+              .reviewImage {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 1px solid rgba(v.$color-accent, 0.1);
+                cursor: pointer;
+                transition: transform v.$transition-speed;
+
+                &:hover {
+                  transform: scale(1.05);
+                }
+              }
+            }
+          }
+
+          .reviewActions {
+            .helpfulBtn {
+              display: flex;
+              align-items: center;
+              gap: v.$spacing-xs;
+              background: none;
+              border: 1px solid rgba(v.$color-accent, 0.2);
+              border-radius: 20px;
+              padding: v.$spacing-xs v.$spacing-sm;
+              color: v.$color-text-light;
+              cursor: pointer;
+              font-size: v.$font-size-sm;
+              transition: all v.$transition-speed;
+
+              &:hover {
+                background: rgba(v.$color-accent, 0.1);
+                border-color: v.$color-accent;
+                color: v.$color-accent;
+              }
+            }
+          }
+        }
+      }
+
+      .reviewsFooter {
+        display: flex;
+        gap: v.$spacing-md;
+        justify-content: center;
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

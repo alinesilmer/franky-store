@@ -20,11 +20,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     <header className={styles.dashboardHeader}>
       <div className={styles.searchBar}>
         <Search size={20} className={styles.searchIcon} />
-        <input
-          type="text"
-          placeholder="Buscar cualquier punto de discusión..."
-          aria-label="Buscar"
-        />
+        <input type="text" placeholder="Buscar..." aria-label="Buscar" />
       </div>
       <div className={styles.userActions}>
         <button className={styles.iconButton} aria-label="Notificaciones">

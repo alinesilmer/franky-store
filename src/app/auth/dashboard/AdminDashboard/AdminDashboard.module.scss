@@ -1,0 +1,341 @@
+
+
+.adminDashboard {
+  .dashboardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: v.$spacing-xl;
+    padding-bottom: v.$spacing-lg;
+    border-bottom: 1px solid v.$color-border;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      flex-direction: column;
+      gap: v.$spacing-md;
+    }
+
+    .welcomeSection {
+      .pageTitle {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-xxl;
+        color: v.$color-secondary;
+        margin-bottom: v.$spacing-xs;
+        background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .welcomeText {
+        font-size: v.$font-size-lg;
+        color: v.$color-text-light;
+        opacity: 0.8;
+        margin: 0;
+      }
+    }
+
+    .timeframeSelector {
+      display: flex;
+      background-color: v.$color-border;
+      border-radius: 8px;
+      padding: 4px;
+      gap: 4px;
+
+      .timeframeBtn {
+        padding: v.$spacing-xs v.$spacing-sm;
+        border: none;
+        background: transparent;
+        color: v.$color-text-light;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all v.$transition-speed;
+        font-size: v.$font-size-sm;
+        font-weight: 500;
+
+        &:hover {
+          background-color: rgba(v.$color-accent, 0.1);
+        }
+
+        &.active {
+          background-color: v.$color-accent;
+          color: v.$color-primary;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .statsSection {
+    margin-bottom: v.$spacing-xl;
+
+    .statsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: v.$spacing-lg;
+
+      .statCard {
+        background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
+        border: 1px solid rgba(v.$color-accent, 0.1);
+        transition: all v.$transition-speed;
+
+        &:hover {
+          transform: translateY(-4px);
+          border-color: rgba(v.$color-accent, 0.3);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .statHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: v.$spacing-sm;
+
+          .statIcon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
+            border-radius: 12px;
+            @include m.flex-center;
+            color: v.$color-primary;
+          }
+
+          .statChange {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #4caf50;
+            font-size: v.$font-size-sm;
+            font-weight: bold;
+          }
+        }
+
+        .statContent {
+          .statValue {
+            font-family: v.$font-heading;
+            font-size: v.$font-size-xl;
+            color: v.$color-secondary;
+            margin: 0 0 v.$spacing-xs 0;
+          }
+
+          .statTitle {
+            font-size: v.$font-size-sm;
+            color: v.$color-text-light;
+            opacity: 0.8;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .mainContent {
+    .contentGrid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: v.$spacing-xl;
+
+      @include m.media-breakpoint-down(v.$breakpoint-lg) {
+        grid-template-columns: 1fr;
+      }
+
+      .leftColumn, .rightColumn {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-lg;
+      }
+
+      .productsCard {
+        .cardActions {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: v.$spacing-lg;
+
+          .sectionDescription {
+            font-size: v.$font-size-sm;
+            color: v.$color-text-light;
+            opacity: 0.8;
+            margin: 0;
+          }
+        }
+
+        .productGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: v.$spacing-md;
+          margin-bottom: v.$spacing-lg;
+        }
+
+        .viewAllProducts {
+          text-align: center;
+        }
+      }
+
+      .analyticsCard {
+        .chartContainer {
+          .chartPlaceholder {
+            height: 300px;
+            background: linear-gradient(135deg, v.$color-primary, v.$color-border);
+            border-radius: 12px;
+            @include m.flex-center;
+            flex-direction: column;
+            gap: v.$spacing-sm;
+            border: 2px dashed rgba(v.$color-accent, 0.3);
+
+            svg {
+              color: v.$color-accent;
+              opacity: 0.6;
+            }
+
+            p {
+              color: v.$color-text-light;
+              opacity: 0.8;
+              font-size: v.$font-size-sm;
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      .ordersCard {
+        .ordersList {
+          display: flex;
+          flex-direction: column;
+          gap: v.$spacing-sm;
+          margin-bottom: v.$spacing-lg;
+
+          .orderItem {
+            background-color: v.$color-primary;
+            padding: v.$spacing-sm;
+            border-radius: 8px;
+            border: 1px solid rgba(v.$color-accent, 0.1);
+            transition: all v.$transition-speed;
+
+            &:hover {
+              border-color: rgba(v.$color-accent, 0.3);
+              transform: translateX(4px);
+            }
+
+            .orderHeader {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: v.$spacing-xs;
+
+              .orderId {
+                font-family: v.$font-heading;
+                color: v.$color-accent;
+                font-weight: bold;
+              }
+
+              .orderStatus {
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: v.$font-size-xs;
+                font-weight: bold;
+                text-transform: uppercase;
+
+                &.pendiente {
+                  background-color: rgba(#ff9800, 0.2);
+                  color: #ff9800;
+                }
+
+                &.procesando {
+                  background-color: rgba(#2196f3, 0.2);
+                  color: #2196f3;
+                }
+
+                &.enviado {
+                  background-color: rgba(v.$color-accent, 0.2);
+                  color: v.$color-accent;
+                }
+
+                &.entregado {
+                  background-color: rgba(#4caf50, 0.2);
+                  color: #4caf50;
+                }
+              }
+            }
+
+            .orderDetails {
+              .customerName {
+                color: v.$color-secondary;
+                font-weight: 500;
+                margin: 0 0 v.$spacing-xs 0;
+                font-size: v.$font-size-sm;
+              }
+
+              .orderMeta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .orderAmount {
+                  color: v.$color-accent;
+                  font-weight: bold;
+                  font-size: v.$font-size-sm;
+                }
+
+                .orderDate {
+                  color: v.$color-text-light;
+                  opacity: 0.6;
+                  font-size: v.$font-size-xs;
+                }
+              }
+            }
+          }
+        }
+
+        .viewAllOrders {
+          text-align: center;
+        }
+      }
+
+      .activityCard {
+        .activityList {
+          display: flex;
+          flex-direction: column;
+          gap: v.$spacing-sm;
+
+          .activityItem {
+            display: flex;
+            align-items: center;
+            gap: v.$spacing-sm;
+            padding: v.$spacing-xs;
+            border-radius: 6px;
+            transition: background-color v.$transition-speed;
+
+            &:hover {
+              background-color: rgba(v.$color-accent, 0.05);
+            }
+
+            .activityIcon {
+              width: 32px;
+              height: 32px;
+              background-color: rgba(v.$color-accent, 0.1);
+              border-radius: 50%;
+              @include m.flex-center;
+              color: v.$color-accent;
+            }
+
+            .activityContent {
+              flex: 1;
+
+              p {
+                color: v.$color-text-light;
+                font-size: v.$font-size-sm;
+                margin: 0 0 2px 0;
+              }
+
+              span {
+                color: v.$color-text-light;
+                opacity: 0.6;
+                font-size: v.$font-size-xs;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

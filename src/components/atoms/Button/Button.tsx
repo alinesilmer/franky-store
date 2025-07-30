@@ -6,7 +6,7 @@ import styles from "./Button.module.scss";
 interface ButtonProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg";
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "blackBlur";
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
@@ -25,11 +25,12 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <motion.button
       className={`${styles.button} ${styles[variant]} ${styles[size]} ${className}`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.3 }}
-      onClick={onClick}
       type={type}
+      onClick={onClick}
       disabled={disabled}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.95 }}
+      whileFocus={{ outline: "2px solid #000" }}
     >
       {children}
     </motion.button>

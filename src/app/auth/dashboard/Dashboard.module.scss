@@ -1,124 +1,40 @@
 
+
 .loadingPage {
   @include m.flex-center;
   min-height: 100vh;
   background-color: v.$color-primary;
+
   .loading {
     font-size: v.$font-size-lg;
     color: v.$color-accent;
-  }
-}
-
-.pageTitle {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-xxl;
-  color: v.$color-secondary;
-  margin-bottom: v.$spacing-xl;
-  text-align: left; // Align title to left
-}
-
-.sectionDescription {
-  font-size: v.$font-size-sm;
-  color: v.$color-text-light;
-  margin-bottom: v.$spacing-lg;
-}
-
-.adminSection, .clientSection {
-  display: flex;
-  flex-direction: column;
-  gap: v.$spacing-xl; // Gap between main sections
-}
-
-.productManagementGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); // Match Card width
-  gap: v.$spacing-lg;
-  justify-items: center;
-}
-
-.adminStatsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: v.$spacing-lg;
-
-  .placeholderChart {
-    background-color: v.$color-primary; // Dark background for chart area
-    height: 200px;
-    border-radius: 8px;
-    @include m.flex-center;
-    color: v.$color-text-light;
-    font-size: v.$font-size-sm;
-    border: 1px dashed v.$color-border;
-  }
-
-  .orderList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-      background-color: v.$color-primary;
-      padding: v.$spacing-sm;
-      border-radius: 6px;
-      margin-bottom: v.$spacing-xs;
-      font-size: v.$font-size-sm;
-      color: v.$color-text-light;
-      border: 1px solid v.$color-border;
-    }
-  }
-}
-
-.orderHistory {
-  display: flex;
-  flex-direction: column;
-  gap: v.$spacing-md;
-}
-
-.orderItem {
-  background-color: v.$color-primary;
-  padding: v.$spacing-md;
-  border-radius: 6px;
-  border: 1px solid v.$color-border;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  h3 {
     font-family: v.$font-heading;
-    font-size: v.$font-size-lg;
-    color: v.$color-secondary;
-    margin-bottom: v.$spacing-xs;
-  }
-  p {
-    font-size: v.$font-size-sm;
-    margin-bottom: v.$spacing-xs;
-    color: v.$color-text-light;
-  }
-  ul {
-    margin-top: v.$spacing-sm;
-    margin-bottom: v.$spacing-sm;
-    li {
-      font-size: v.$font-size-sm;
-      margin-left: v.$spacing-md;
-      list-style: disc;
-      color: v.$color-text-light;
+    text-transform: uppercase;
+    
+    &::after {
+      content: "...";
+      animation: dots 1.5s infinite;
     }
-  }
-  .statusShipped {
-    color: v.$color-accent;
-    font-weight: bold;
-  }
-  .statusDelivered {
-    color: #28a745; // Green for delivered
-    font-weight: bold;
   }
 }
 
-.profileInfo {
-  display: flex;
-  flex-direction: column;
-  gap: v.$spacing-sm;
-  p {
-    font-size: v.$font-size-md;
-    color: v.$color-text-light;
-    strong {
-      color: v.$color-secondary;
-    }
+@keyframes dots {
+  0%, 20% {
+    color: rgba(v.$color-accent, 0.4);
+    text-shadow: 0.25em 0 0 rgba(v.$color-accent, 0.4),
+                 0.5em 0 0 rgba(v.$color-accent, 0.4);
+  }
+  40% {
+    color: v.$color-accent;
+    text-shadow: 0.25em 0 0 rgba(v.$color-accent, 0.4),
+                 0.5em 0 0 rgba(v.$color-accent, 0.4);
+  }
+  60% {
+    text-shadow: 0.25em 0 0 v.$color-accent,
+                 0.5em 0 0 rgba(v.$color-accent, 0.4);
+  }
+  80%, 100% {
+    text-shadow: 0.25em 0 0 v.$color-accent,
+                 0.5em 0 0 v.$color-accent;
   }
 }

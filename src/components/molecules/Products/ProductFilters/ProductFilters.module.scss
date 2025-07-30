@@ -1,0 +1,476 @@
+.productFilters {
+  background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
+  border-radius: 16px;
+  border: 1px solid rgba(v.$color-accent, 0.1);
+  overflow: hidden;
+  transition: all v.$transition-speed;
+  position: sticky;
+  top: v.$spacing-lg;
+
+  &.collapsed {
+    .filtersContent {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 v.$spacing-lg;
+    }
+  }
+
+  .filtersHeader {
+    padding: v.$spacing-lg;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+    background: linear-gradient(135deg, rgba(v.$color-accent, 0.05), rgba(v.$color-secondary, 0.05));
+
+    .headerContent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: v.$spacing-sm;
+
+      .headerTitle {
+        display: flex;
+        align-items: center;
+        gap: v.$spacing-sm;
+
+        svg {
+          color: v.$color-accent;
+        }
+
+        h3 {
+          font-family: v.$font-heading;
+          font-size: v.$font-size-lg;
+          color: v.$color-secondary;
+          margin: 0;
+          text-transform: uppercase;
+        }
+
+        .activeCount {
+          background: v.$color-accent;
+          color: v.$color-primary;
+          font-size: v.$font-size-xs;
+          font-weight: bold;
+          padding: 2px 6px;
+          border-radius: 10px;
+          min-width: 18px;
+          text-align: center;
+        }
+      }
+
+      .collapseBtn {
+        background: none;
+        border: none;
+        color: v.$color-text-light;
+        cursor: pointer;
+        padding: v.$spacing-xs;
+        border-radius: 4px;
+        transition: all v.$transition-speed;
+
+        &:hover {
+          background: rgba(v.$color-accent, 0.1);
+          color: v.$color-accent;
+        }
+      }
+    }
+
+    .resultsInfo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .resultsText {
+        font-size: v.$font-size-sm;
+        color: v.$color-text-light;
+        opacity: 0.8;
+      }
+
+      .clearAllBtn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: none;
+        border: none;
+        color: v.$color-accent;
+        cursor: pointer;
+        font-size: v.$font-size-xs;
+        padding: 4px 8px;
+        border-radius: 12px;
+        transition: all v.$transition-speed;
+
+        &:hover {
+          background: rgba(v.$color-accent, 0.1);
+        }
+      }
+    }
+  }
+
+  .filtersContent {
+    max-height: 1000px;
+    opacity: 1;
+    padding: v.$spacing-lg;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    .filterSection {
+      margin-bottom: v.$spacing-lg;
+      border: 1px solid rgba(v.$color-accent, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(v.$color-primary, 0.5);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .sectionHeader {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: v.$spacing-md;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all v.$transition-speed;
+
+        &:hover {
+          background: rgba(v.$color-accent, 0.05);
+        }
+
+        .sectionTitle {
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-sm;
+          color: v.$color-secondary;
+          font-weight: 500;
+
+          svg {
+            color: v.$color-accent;
+          }
+
+          .selectedCount {
+            color: v.$color-accent;
+            font-size: v.$font-size-xs;
+            font-weight: bold;
+          }
+        }
+
+        svg:last-child {
+          color: v.$color-text-light;
+          opacity: 0.7;
+        }
+      }
+
+      .sectionContent {
+        padding: 0 v.$spacing-md v.$spacing-md;
+        border-top: 1px solid rgba(v.$color-accent, 0.1);
+        animation: slideDown 0.3s ease;
+      }
+    }
+  }
+
+  // Opciones de ordenamiento
+  .sortOptions {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacing-xs;
+
+    .radioOption {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      padding: v.$spacing-xs;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background v.$transition-speed;
+
+      &:hover {
+        background: rgba(v.$color-accent, 0.05);
+      }
+
+      input[type="radio"] {
+        accent-color: v.$color-accent;
+      }
+
+      .radioLabel {
+        color: v.$color-text-light;
+        font-size: v.$font-size-sm;
+      }
+    }
+  }
+
+  // Rango de precio
+  .priceRange {
+    .priceInputs {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      margin-bottom: v.$spacing-md;
+
+      .priceInput {
+        flex: 1;
+
+        label {
+          display: block;
+          font-size: v.$font-size-xs;
+          color: v.$color-text-light;
+          margin-bottom: 4px;
+        }
+
+        input {
+          width: 100%;
+          padding: v.$spacing-xs;
+          border: 1px solid rgba(v.$color-accent, 0.2);
+          border-radius: 6px;
+          background: v.$color-primary;
+          color: v.$color-text-light;
+          font-size: v.$font-size-sm;
+
+          &:focus {
+            outline: none;
+            border-color: v.$color-accent;
+          }
+        }
+      }
+
+      .priceSeparator {
+        color: v.$color-text-light;
+        opacity: 0.6;
+        margin-top: 16px;
+      }
+    }
+
+    .priceSlider {
+      position: relative;
+      height: 20px;
+      margin-bottom: v.$spacing-sm;
+
+      input[type="range"] {
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        outline: none;
+        -webkit-appearance: none;
+
+        &::-webkit-slider-track {
+          height: 4px;
+          background: rgba(v.$color-accent, 0.2);
+          border-radius: 2px;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 16px;
+          height: 16px;
+          background: v.$color-accent;
+          border-radius: 50%;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        &::-moz-range-track {
+          height: 4px;
+          background: rgba(v.$color-accent, 0.2);
+          border-radius: 2px;
+          border: none;
+        }
+
+        &::-moz-range-thumb {
+          width: 16px;
+          height: 16px;
+          background: v.$color-accent;
+          border-radius: 50%;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
+    .priceLabels {
+      display: flex;
+      justify-content: space-between;
+      font-size: v.$font-size-xs;
+      color: v.$color-text-light;
+      opacity: 0.7;
+    }
+  }
+
+  // Colores
+  .colorGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: v.$spacing-sm;
+
+    .colorOption {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all v.$transition-speed;
+      background: none;
+      padding: 2px;
+
+      &:hover {
+        transform: scale(1.1);
+        border-color: rgba(v.$color-accent, 0.5);
+      }
+
+      &.selected {
+        border-color: v.$color-accent;
+        transform: scale(1.1);
+      }
+
+      .colorSwatch {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: var(--color);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .colorCheck {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: v.$font-size-xs;
+        font-weight: bold;
+      }
+      // Si el swatch es blanco, sobreescribimos a color primary
+      &[style*="#ffffff"] .colorCheck {
+        color: v.$color-primary;
+      }
+    }
+  }
+
+  // Tallas
+  .sizeGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: v.$spacing-xs;
+
+    .sizeOption {
+      padding: v.$spacing-xs;
+      border: 1px solid rgba(v.$color-accent, 0.2);
+      border-radius: 6px;
+      background: v.$color-primary;
+      color: v.$color-text-light;
+      cursor: pointer;
+      transition: all v.$transition-speed;
+      font-size: v.$font-size-sm;
+      text-align: center;
+
+      &:hover {
+        border-color: v.$color-accent;
+        background: rgba(v.$color-accent, 0.1);
+      }
+
+      &.selected {
+        background: v.$color-accent;
+        color: v.$color-primary;
+        border-color: v.$color-accent;
+        font-weight: bold;
+      }
+    }
+  }
+
+  // Marcas
+  .brandList {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacing-xs;
+
+    .checkboxOption {
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      padding: v.$spacing-xs;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background v.$transition-speed;
+
+      &:hover {
+        background: rgba(v.$color-accent, 0.05);
+      }
+
+      input[type="checkbox"] {
+        accent-color: v.$color-accent;
+      }
+
+      .checkboxLabel {
+        color: v.$color-text-light;
+        font-size: v.$font-size-sm;
+      }
+    }
+  }
+
+  // Filtros activos
+  .activeFilters {
+    padding: v.$spacing-lg;
+    border-top: 1px solid rgba(v.$color-accent, 0.1);
+    background: rgba(v.$color-accent, 0.02);
+
+    .activeFiltersTitle {
+      font-size: v.$font-size-sm;
+      color: v.$color-secondary;
+      margin: 0 0 v.$spacing-sm 0;
+      font-weight: 600;
+    }
+
+    .activeFiltersList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: v.$spacing-xs;
+
+      .activeFilter {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(v.$color-accent, 0.1);
+        color: v.$color-accent;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: v.$font-size-xs;
+        border: 1px solid rgba(v.$color-accent, 0.2);
+
+        button {
+          background: none;
+          border: none;
+          color: inherit;
+          cursor: pointer;
+          padding: 0;
+          margin-left: 4px;
+          border-radius: 50%;
+          width: 16px;
+          height: 16px;
+          @include m.flex-center;
+          transition: background v.$transition-speed;
+
+          &:hover {
+            background: rgba(v.$color-accent, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Responsive
+  @include m.media-breakpoint-down(v.$breakpoint-lg) {
+    position: static;
+    margin-bottom: v.$spacing-lg;
+  }
+}

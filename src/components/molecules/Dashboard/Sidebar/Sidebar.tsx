@@ -1,3 +1,4 @@
+"use client";
 import type React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -7,6 +8,11 @@ import {
   Settings,
   User,
   Bell,
+  BarChart3,
+  Users,
+  Heart,
+  FileText,
+  HelpCircle,
 } from "lucide-react";
 import styles from "./Sidebar.module.scss";
 
@@ -17,70 +23,159 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
   const location = useLocation();
 
-  const navItems = [
+  const adminNavItems = [
     {
-      name: "Inicio",
+      name: "Dashboard",
       icon: Home,
       path: "/dashboard",
-      roles: ["admin", "client"],
+      description: "Vista general del negocio",
     },
     {
       name: "Productos",
       icon: Package,
       path: "/dashboard/products",
-      roles: ["admin"],
+      description: "Gestionar inventario",
     },
     {
       name: "Pedidos",
       icon: ShoppingCart,
       path: "/dashboard/orders",
-      roles: ["admin", "client"],
+      description: "Administrar pedidos",
     },
     {
-      name: "Mi Perfil",
-      icon: User,
-      path: "/dashboard/profile",
-      roles: ["client"],
+      name: "Clientes",
+      icon: Users,
+      path: "/dashboard/customers",
+      description: "Base de clientes",
+    },
+    {
+      name: "Análisis",
+      icon: BarChart3,
+      path: "/dashboard/analytics",
+      description: "Reportes y estadísticas",
     },
     {
       name: "Notificaciones",
       icon: Bell,
       path: "/dashboard/notifications",
-      roles: ["admin", "client"],
+      description: "Alertas del sistema",
     },
     {
       name: "Configuración",
       icon: Settings,
       path: "/dashboard/settings",
-      roles: ["admin", "client"],
+      description: "Ajustes del sistema",
     },
   ];
 
+  const clientNavItems = [
+    {
+      name: "Dashboard",
+      icon: Home,
+      path: "/dashboard",
+      description: "Mi resumen personal",
+    },
+    {
+      name: "Mis Pedidos",
+      icon: ShoppingCart,
+      path: "/dashboard/orders",
+      description: "Historial de compras",
+    },
+    {
+      name: "Favoritos",
+      icon: Heart,
+      path: "/dashboard/favorites",
+      description: "Productos guardados",
+    },
+    {
+      name: "Mi Perfil",
+      icon: User,
+      path: "/dashboard/profile",
+      description: "Información personal",
+    },
+    {
+      name: "Facturas",
+      icon: FileText,
+      path: "/dashboard/invoices",
+      description: "Documentos de compra",
+    },
+    {
+      name: "Notificaciones",
+      icon: Bell,
+      path: "/dashboard/notifications",
+      description: "Mis alertas",
+    },
+    {
+      name: "Ayuda",
+      icon: HelpCircle,
+      path: "/dashboard/help",
+      description: "Soporte al cliente",
+    },
+    {
+      name: "Configuración",
+      icon: Settings,
+      path: "/dashboard/settings",
+      description: "Preferencias",
+    },
+  ];
+
+  const navItems = userRole === "admin" ? adminNavItems : clientNavItems;
+
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo}>
-        <img src="/placeholder.svg?height=40&width=40" alt="Logo" />
-        <span>Urban Hub</span>
+      <div className={styles.sidebarHeader}>
+        <div className={styles.logo}>
+          <div className={styles.logoIcon}>
+            <span>U</span>
+          </div>
+          <div className={styles.logoText}>
+            <h2>Urban Store</h2>
+            <p>{userRole === "admin" ? "Admin Panel" : "Mi Cuenta"}</p>
+          </div>
+        </div>
       </div>
+
       <nav className={styles.navigation}>
-        <ul>
-          {navItems.map((item) =>
-            item.roles.includes(userRole || "") ? (
-              <li key={item.name}>
+        <ul className={styles.navList}>
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <li key={item.name} className={styles.navListItem}>
                 <Link
                   to={item.path}
                   className={`${styles.navItem} ${
-                    location.pathname === item.path ? styles.active : ""
+                    isActive ? styles.active : ""
                   }`}
+                  title={item.description}
                 >
-                  <item.icon size={20} />
-                  <span>{item.name}</span>
+                  <div className={styles.navItemIcon}>
+                    <item.icon size={20} />
+                  </div>
+                  <div className={styles.navItemContent}>
+                    <span className={styles.navItemName}>{item.name}</span>
+                    <span className={styles.navItemDescription}>
+                      {item.description}
+                    </span>
+                  </div>
+                  {isActive && <div className={styles.activeIndicator} />}
                 </Link>
               </li>
-            ) : null
-          )}
+            );
+          })}
         </ul>
       </nav>
+
+      <div className={styles.sidebarFooter}>
+        <div className={styles.userRole}>
+          <div className={styles.roleIndicator}>
+            <span>{userRole === "admin" ? "A" : "C"}</span>
+          </div>
+          <div className={styles.roleText}>
+            <span>{userRole === "admin" ? "Administrador" : "Cliente"}</span>
+            <p>Sesión activa</p>
+          </div>
+        </div>
+      </div>
     </aside>
   );
 };
