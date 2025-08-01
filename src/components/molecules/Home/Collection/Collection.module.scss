@@ -55,7 +55,7 @@
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: darken(v.$color-accent, 10%);
+    background: v.$color-accent;
   }
 
   @include m.media-breakpoint-down(v.$breakpoint-md) {

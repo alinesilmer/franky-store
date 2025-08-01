@@ -43,7 +43,7 @@
     top: v.$spacing-sm;
     left: v.$spacing-sm;
     background: v.$color-accent;
-    color: v.$color-secondary;
+    color: v.$color-primary;
     padding: 2px 6px;
     border-radius: 8px;
     font-size: v.$font-size-xs;
@@ -57,14 +57,16 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  background-color: v.$color-primary;
+  border: 1px solid v.$color-border;
 }
 
 .title {
   font-family: v.$font-heading;
-  font-size: v.$font-size-md;
+  font-size: v.$font-size-lg;
   margin: 0 0 v.$spacing-sm 0;
   line-height: 1.2;
-  color: v.$color-text-dark;
+  color: v.$color-text-light;
   flex: 1;
 }
 
@@ -75,7 +77,7 @@
   margin-bottom: v.$spacing-md;
 
   .current {
-    font-size: v.$font-size-lg;
+    font-size: v.$font-size-xl;
     font-weight: bold;
     color: v.$color-accent;
   }
@@ -113,13 +115,15 @@
   transition: background v.$transition-speed, color v.$transition-speed;
 
   &:hover {
-    background: v.$color-accent;
-    color: v.$color-secondary;
+    background: #e91e63;
+    color: white;
+    border:1px solid #980033
   }
 
   &.favActive {
-    background: v.$color-accent;
-    color: v.$color-secondary;
+    background: #e91e63;
+    color: white;
+    border:#980033
   }
 }
 

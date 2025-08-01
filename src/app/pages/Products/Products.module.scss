@@ -18,9 +18,9 @@
     padding: v.$spacing-xl 0;
 
     .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 v.$spacing-lg;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
 
       @include m.media-breakpoint-down(v.$breakpoint-md) {
         padding: 0 v.$spacing-md;

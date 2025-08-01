@@ -62,7 +62,7 @@ export const FAQ: React.FC = () => {
             <div className={styles.imageCluster}>
               <div className={styles.imageWrapper}>
                 <img
-                  src="https://i.pinimg.com/1200x/71/71/2b/71712bec7bc3567e4758e8624c5193c5.jpg"
+                  src="https://i.pinimg.com/736x/c7/99/75/c79975e9cafed10bc41cfdbc13da66c3.jpg"
                   alt="Cliente explorando preguntas frecuentes"
                   loading="lazy"
                   decoding="async"

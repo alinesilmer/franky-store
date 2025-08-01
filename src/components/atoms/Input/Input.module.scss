@@ -1,11 +1,12 @@
 
 
 .input {
-  width: 100%;
+  width: 50%;
+  max-width: 200px;
+  background-color: v.$color-border;
   padding: v.$spacing-sm v.$spacing-md;
   border: 1px solid v.$color-border;
   border-radius: 8px; // Slightly more rounded
-  background-color: v.$color-primary; // Dark background for input
   color: v.$color-text-light;
   font-family: v.$font-body;
   font-size: v.$font-size-md;
@@ -14,11 +15,11 @@
 
   &:focus {
     border-color: v.$color-accent;
-    box-shadow: 0 0 0 2px rgba(v.$color-accent, 0.5); // Accent glow on focus
+    box-shadow: 0 0 0 2px rgba(v.$color-accent, 0.5); 
   }
 
   &::placeholder {
     color: v.$color-text-light;
-    opacity: 0.6; // Slightly more transparent placeholder
+    opacity: 0.6; 
   }
 }

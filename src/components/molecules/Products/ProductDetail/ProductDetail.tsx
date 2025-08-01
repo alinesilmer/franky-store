@@ -15,6 +15,8 @@ import {
   RotateCcw,
   ChevronDown,
   ChevronUp,
+  X,
+  Ruler,
 } from "lucide-react";
 import { Button } from "../../../atoms/Button/Button";
 import ProductImageGallery from "../../../atoms/ProductImageGallery/ProductImageGallery";
@@ -24,6 +26,44 @@ import { PRODUCTS_DATA } from "../../../../lib/productsData";
 import type { Product } from "../../../../types/product";
 import styles from "./ProductDetail.module.scss";
 
+// Size guide data
+const SIZE_GUIDE_DATA = {
+  clothing: {
+    title: "Guía de Tallas - Ropa",
+    headers: [
+      "Talla",
+      "Pecho (cm)",
+      "Cintura (cm)",
+      "Cadera (cm)",
+      "Largo (cm)",
+    ],
+    rows: [
+      ["XS", "86-91", "66-71", "91-96", "66"],
+      ["S", "91-96", "71-76", "96-101", "68"],
+      ["M", "96-101", "76-81", "101-106", "70"],
+      ["L", "101-106", "81-86", "106-111", "72"],
+      ["XL", "106-111", "86-91", "111-116", "74"],
+      ["XXL", "111-116", "91-96", "116-121", "76"],
+    ],
+  },
+  shoes: {
+    title: "Guía de Tallas - Calzado",
+    headers: ["Talla", "EU", "US", "UK", "Largo pie (cm)"],
+    rows: [
+      ["35", "35", "5", "2.5", "22.5"],
+      ["36", "36", "6", "3.5", "23"],
+      ["37", "37", "7", "4", "23.5"],
+      ["38", "38", "7.5", "5", "24"],
+      ["39", "39", "8.5", "6", "24.5"],
+      ["40", "40", "9", "6.5", "25"],
+      ["41", "41", "10", "7.5", "25.5"],
+      ["42", "42", "10.5", "8", "26"],
+      ["43", "43", "11.5", "9", "26.5"],
+      ["44", "44", "12", "9.5", "27"],
+    ],
+  },
+};
+
 const ProductDetail: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
@@ -32,6 +72,7 @@ const ProductDetail: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     description: true,
     shipping: false,
@@ -52,6 +93,34 @@ const ProductDetail: React.FC = () => {
     }
   }, [productId, navigate]);
 
+  // Close modal when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const modal = document.querySelector(`.${styles.sizeGuideModal}`);
+      const modalContent = document.querySelector(`.${styles.modalContent}`);
+
+      if (
+        modal &&
+        modalContent &&
+        !modalContent.contains(event.target as Node)
+      ) {
+        setShowSizeGuide(false);
+      }
+    };
+
+    if (showSizeGuide) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = "unset";
+    };
+  }, [showSizeGuide]);
+
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections((prev) => ({
       ...prev,
@@ -70,7 +139,6 @@ const ProductDetail: React.FC = () => {
       color: selectedColor,
       quantity,
     });
-    // Implementar lógica del carrito
   };
 
   const handleBuyNow = () => {
@@ -78,12 +146,23 @@ const ProductDetail: React.FC = () => {
       alert("Por favor selecciona una talla");
       return;
     }
-    // Implementar compra directa
     console.log("Comprar ahora:", product?.id);
   };
 
   const handleQuantityChange = (change: number) => {
     setQuantity((prev) => Math.max(1, prev + change));
+  };
+
+  const getSizeGuideData = () => {
+    if (!product) return SIZE_GUIDE_DATA.clothing;
+
+    // Determine if it's shoes or clothing based on category or product type
+    const isShoes =
+      product.category.toLowerCase().includes("zapato") ||
+      product.category.toLowerCase().includes("calzado") ||
+      product.name.toLowerCase().includes("zapato");
+
+    return isShoes ? SIZE_GUIDE_DATA.shoes : SIZE_GUIDE_DATA.clothing;
   };
 
   const discountPercentage = product?.originalPrice
@@ -100,8 +179,86 @@ const ProductDetail: React.FC = () => {
     );
   }
 
+  const sizeGuideData = getSizeGuideData();
+
   return (
     <div className={styles.productDetail}>
+      {/* Size Guide Modal */}
+      {showSizeGuide && (
+        <div className={styles.sizeGuideModal}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitleSection}>
+                <Ruler className={styles.modalIcon} size={24} />
+                <h2 className={styles.modalTitle}>{sizeGuideData.title}</h2>
+              </div>
+              <button
+                className={styles.closeBtn}
+                onClick={() => setShowSizeGuide(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className={styles.modalBody}>
+              <div className={styles.sizeGuideInfo}>
+                <p>
+                  Encuentra tu talla perfecta con nuestra guía de medidas. Todas
+                  las medidas están en centímetros.
+                </p>
+                <div className={styles.measurementTips}>
+                  <h4>💡 Consejos para medir:</h4>
+                  <ul>
+                    <li>Mide sobre ropa interior o ropa ajustada</li>
+                    <li>Mantén la cinta métrica paralela al suelo</li>
+                    <li>No aprietes demasiado la cinta</li>
+                    <li>Si estás entre dos tallas, elige la mayor</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className={styles.sizeTable}>
+                <table>
+                  <thead>
+                    <tr>
+                      {sizeGuideData.headers.map((header, index) => (
+                        <th key={index}>{header}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sizeGuideData.rows.map((row, rowIndex) => (
+                      <tr
+                        key={rowIndex}
+                        className={
+                          selectedSize === row[0] ? styles.selectedRow : ""
+                        }
+                      >
+                        {row.map((cell, cellIndex) => (
+                          <td
+                            key={cellIndex}
+                            className={cellIndex === 0 ? styles.sizeCell : ""}
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className={styles.modalFooter}>
+                <p className={styles.helpText}>
+                  ¿Necesitas ayuda? <a href="/contact">Contáctanos</a> y te
+                  ayudaremos a encontrar tu talla perfecta.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Breadcrumb */}
       <div className={styles.breadcrumb}>
         <div className={styles.container}>
@@ -198,18 +355,6 @@ const ProductDetail: React.FC = () => {
               )}
             </div>
 
-            {/* Delivery info */}
-            <div className={styles.deliveryInfo}>
-              <div className={styles.deliveryItem}>
-                <Truck size={16} />
-                <span>Entrega en 2-3 días laborables</span>
-              </div>
-              <div className={styles.deliveryItem}>
-                <Shield size={16} />
-                <span>Garantía de 30 días</span>
-              </div>
-            </div>
-
             {/* Selector de color */}
             <div className={styles.optionSection}>
               <h3 className={styles.optionTitle}>
@@ -265,7 +410,13 @@ const ProductDetail: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <button className={styles.sizeGuideBtn}>Guía de tallas</button>
+              <button
+                className={styles.sizeGuideBtn}
+                onClick={() => setShowSizeGuide(true)}
+              >
+                <Ruler size={16} />
+                Guía de tallas
+              </button>
             </div>
 
             {/* Cantidad */}
@@ -292,7 +443,7 @@ const ProductDetail: React.FC = () => {
             {/* Botones de acción */}
             <div className={styles.actionButtons}>
               <Button
-                variant="primary"
+                variant="third"
                 size="lg"
                 onClick={handleAddToCart}
                 className={styles.addToCartBtn}
@@ -301,7 +452,7 @@ const ProductDetail: React.FC = () => {
                 <span>Añadir al Carrito</span>
               </Button>
               <Button
-                variant="secondary"
+                variant="third"
                 size="lg"
                 onClick={handleBuyNow}
                 className={styles.buyNowBtn}

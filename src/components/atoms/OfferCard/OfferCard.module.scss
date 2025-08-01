@@ -1,326 +1,261 @@
 
 .offerCard {
   position: relative;
-  background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
+  background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(v.$color-accent, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &.visible {
     opacity: 1;
     transform: translateY(0);
-    animation: slideInUp 0.6s ease-out var(--animation-delay) both;
+    animation: slideInUp 0.6s ease var(--animation-delay) both;
   }
 
   &:hover {
-    transform: translateY(-12px) scale(1.02);
-    border-color: rgba(v.$color-accent, 0.4);
-    box-shadow: 
-      0 20px 40px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(v.$color-accent, 0.2),
-      inset 0 1px 0 rgba(v.$color-accent, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 
     .productImage {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
-    .productTitle {
-      color: v.$color-accent;
-    }
-  }
-
-  .badges {
-    position: absolute;
-    top: v.$spacing-sm;
-    left: v.$spacing-sm;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    gap: v.$spacing-xs;
-
-    .badge {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: v.$font-size-xs;
-      font-weight: bold;
-      text-transform: uppercase;
-      backdrop-filter: blur(10px);
-      animation: pulse 2s infinite;
-
-      &.newBadge {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-        color: white;
-        box-shadow: 0 4px 15px rgba(#ff6b6b, 0.4);
-      }
-
-      &.bestSellerBadge {
-        background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
-        color: v.$color-primary;
-        box-shadow: 0 4px 15px rgba(v.$color-accent, 0.4);
-      }
-
-      &.discountBadge {
-        background: linear-gradient(135deg, #4ecdc4, #44a08d);
-        color: white;
-        box-shadow: 0 4px 15px rgba(#4ecdc4, 0.4);
-        font-size: v.$font-size-sm;
-        font-weight: 900;
-      }
+    .addToCartBtn {
+      background: #2d3748;
     }
   }
 
   .imageContainer {
     position: relative;
-    height: 250px;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(v.$color-accent, 0.05), rgba(v.$color-secondary, 0.05));
+    background: #f7f8fa;
+    border-radius: 16px 16px 0 0;
+    padding: 20px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .productImage {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      height: 200px;
+      padding: 16px;
     }
 
-    .imageOverlay {
+    @include m.media-breakpoint-down(v.$breakpoint-sm) {
+      height: 180px;
+      padding: 12px;
+    }
+
+    .discountBadge {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(v.$color-primary, 0.8),
-        rgba(v.$color-primary, 0.6)
-      );
-      @include m.flex-center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      top: 16px;
+      left: 16px;
+      background: #2d5016;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 2;
 
-      &.visible {
-        opacity: 1;
-      }
-
-      .quickViewBtn {
-        display: flex;
-        align-items: center;
-        gap: v.$spacing-xs;
-        background: v.$color-accent;
-        color: v.$color-primary;
-        border: none;
-        padding: v.$spacing-sm v.$spacing-md;
-        border-radius: 25px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        transform: translateY(20px);
-        animation: slideInUp 0.3s ease 0.1s both;
-
-        &:hover {
-          transform: translateY(0) scale(1.05);
-          box-shadow: 0 8px 25px rgba(v.$color-accent, 0.4);
-        }
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        top: 12px;
+        left: 12px;
+        padding: 4px 8px;
+        font-size: 11px;
       }
     }
 
     .favoriteBtn {
       position: absolute;
-      top: v.$spacing-sm;
-      right: v.$spacing-sm;
-      width: 36px;
-      height: 36px;
-      background: rgba(v.$color-primary, 0.9);
-      border: 1px solid rgba(v.$color-accent, 0.2);
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 50%;
-      color: v.$color-text-light;
+      color: #64748b;
       cursor: pointer;
       @include m.flex-center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
       z-index: 2;
 
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
+      }
+
       &:hover {
-        background: rgba(v.$color-accent, 0.1);
-        border-color: v.$color-accent;
-        color: v.$color-accent;
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        color: #475569;
         transform: scale(1.1);
       }
 
       &.active {
-        background: #e91e63;
-        border-color: #e91e63;
-        color: white;
-        animation: heartBeat 0.6s ease;
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #ffffff;
       }
     }
 
-    .flashTimer {
-      position: absolute;
-      bottom: v.$spacing-sm;
-      left: v.$spacing-sm;
+    .imageWrapper {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
-      gap: 4px;
-      background: linear-gradient(135deg, #ff4757, #ff3742);
-      color: white;
-      padding: 4px 8px;
+      justify-content: center;
+      overflow: hidden;
       border-radius: 12px;
-      font-size: v.$font-size-xs;
-      font-weight: bold;
-      backdrop-filter: blur(10px);
-      animation: urgentPulse 1.5s infinite;
+
+      .productImage {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+    }
+
+    .countdownTimer {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      padding: 6px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        bottom: 12px;
+        left: 12px;
+        padding: 4px 8px;
+        font-size: 10px;
+      }
     }
   }
 
   .productInfo {
-    padding: v.$spacing-md;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
-    .productHeader {
-      margin-bottom: v.$spacing-sm;
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      padding: 16px;
+    }
 
-      .productTitle {
-        font-family: v.$font-heading;
-        font-size: v.$font-size-md;
-        color: v.$color-secondary;
-        margin: 0 0 v.$spacing-xs 0;
-        text-transform: uppercase;
-        transition: color 0.3s ease;
-        line-height: 1.2;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+    @include m.media-breakpoint-down(v.$breakpoint-sm) {
+      padding: 12px;
+      gap: 6px;
+    }
+
+  
+
+    .productName {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 0;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        font-size: 15px;
       }
 
-      .rating {
-        display: flex;
-        align-items: center;
-        gap: v.$spacing-xs;
-
-        .stars {
-          display: flex;
-          gap: 2px;
-        }
-
-        .ratingText {
-          font-size: v.$font-size-xs;
-          color: v.$color-text-light;
-          opacity: 0.8;
-        }
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        font-size: 14px;
       }
     }
 
-    .priceSection {
-      margin-bottom: v.$spacing-sm;
+    .priceContainer {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 4px 0;
 
-      .priceContainer {
-        display: flex;
-        align-items: center;
-        gap: v.$spacing-sm;
-        margin-bottom: 4px;
+      .currentPrice {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e293b;
 
-        .currentPrice {
-          font-family: v.$font-heading;
-          font-size: v.$font-size-lg;
-          font-weight: bold;
-          color: v.$color-accent;
-          text-shadow: 0 0 10px rgba(v.$color-accent, 0.3);
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          font-size: 17px;
         }
 
-        .originalPrice {
-          font-size: v.$font-size-sm;
-          color: v.$color-text-light;
-          opacity: 0.6;
-          text-decoration: line-through;
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          font-size: 16px;
         }
       }
 
-      .savings {
-        font-size: v.$font-size-xs;
-        color: #4ecdc4;
-        font-weight: bold;
-        animation: glow 2s ease-in-out infinite alternate;
-      }
-    }
-
-    .stockIndicator {
-      margin-bottom: v.$spacing-sm;
-
-      .inStock {
-        font-size: v.$font-size-xs;
-        color: #4caf50;
+      .originalPrice {
+        font-size: 14px;
+        color: #94a3b8;
+        text-decoration: line-through;
         font-weight: 500;
-      }
 
-      .outOfStock {
-        font-size: v.$font-size-xs;
-        color: #ff5722;
-        font-weight: 500;
-      }
-    }
-
-    .actionButtons {
-      .addToCartBtn {
-        width: 100%;
-        justify-content: center;
-        gap: v.$spacing-xs;
-        position: relative;
-        overflow: hidden;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(white, 0.2), transparent);
-          transition: left 0.5s ease;
-        }
-
-        &:hover::before {
-          left: 100%;
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          font-size: 13px;
         }
       }
     }
-  }
 
-  .shineEffect {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(v.$color-accent, 0.1),
-      transparent
-    );
-    transform: rotate(45deg);
-    opacity: 0;
-    transition: all 0.6s ease;
+    .addToCartBtn {
+      margin-top: auto;
+      background: #374151;
+      color: #ffffff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
 
-    &.active {
-      opacity: 1;
-      animation: shine 0.6s ease;
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      &:hover:not(:disabled) {
+        background: #2d3748;
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        background: #e2e8f0;
+        color: #94a3b8;
+        cursor: not-allowed;
+        transform: none;
+      }
     }
   }
 }
 
-// Animaciones
+// Animations
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -332,55 +267,90 @@
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes heartBeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  75% {
-    transform: scale(1.15);
+// Responsive Grid Support
+@include m.media-breakpoint-down(v.$breakpoint-lg) {
+  .offerCard {
+    .imageContainer {
+      height: 220px;
+    }
   }
 }
 
-@keyframes urgentPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(#ff4757, 0.7);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(#ff4757, 0);
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  .offerCard {
+    .imageContainer {
+      height: 200px;
+    }
   }
 }
 
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px rgba(#4ecdc4, 0.5);
-  }
-  to {
-    text-shadow: 0 0 15px rgba(#4ecdc4, 0.8);
+@include m.media-breakpoint-down(v.$breakpoint-sm) {
+  .offerCard {
+    .imageContainer {
+      height: 160px;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+    }
   }
 }
 
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .offerCard {
+    background: #1e293b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .imageContainer {
+      background: #334155;
+    }
+
+    .favoriteBtn {
+      background: #334155;
+      border-color: #475569;
+      color: #cbd5e1;
+
+      &:hover {
+        background: #475569;
+        border-color: #64748b;
+        color: #e2e8f0;
+      }
+    }
+
+    .productInfo {
+      .category {
+        color: #94a3b8;
+      }
+
+      .ratingValue {
+        color: #f1f5f9;
+      }
+
+      .productName {
+        color: #f1f5f9;
+      }
+
+      .priceContainer .currentPrice {
+        color: #f1f5f9;
+      }
+
+      .addToCartBtn {
+        background: #475569;
+
+        &:hover:not(:disabled) {
+          background: #334155;
+        }
+
+        &:disabled {
+          background: #475569;
+          color: #64748b;
+        }
+      }
+    }
   }
 }

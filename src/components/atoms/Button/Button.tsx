@@ -6,7 +6,7 @@ import styles from "./Button.module.scss";
 interface ButtonProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg";
-  variant?: "primary" | "secondary" | "outline" | "blackBlur";
+  variant?: "primary" | "secondary" | "outline" | "third";
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";

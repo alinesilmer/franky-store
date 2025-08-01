@@ -43,28 +43,30 @@ $transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
 // Sizes
 .sm {
-  padding: v.$spacing-sm v.$spacing-md;
-  font-size: 0.875rem;
+  padding: v.$spacing-sm 1rem;
+  font-size: 1rem;
 }
 .md {
   padding: 1rem 2.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .lg {
   padding: 1.25rem 3rem;
-  font-size: 1.125rem;
+  font-size: 1.4rem;
 }
 
 // Primary: vibrant gradient, soft shadow
 .primary {
-  background: linear-gradient(135deg, v.$color-accent, rgba(v.$color-accent, 0.85));
-  color: v.$color-primary;
+  background: v.$color-primary;
+  color: v.$color-accent;
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.18),
     inset 0 -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid v.$color-accent;
 
   &:hover {
     background: linear-gradient(135deg, rgba(v.$color-accent, 0.85), v.$color-accent);
+    color: v.$color-primary;
     box-shadow:
       0 8px 28px rgba(0, 0, 0, 0.22),
       inset 0 -2px rgba(0, 0, 0, 0.08);

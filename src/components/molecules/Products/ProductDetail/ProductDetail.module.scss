@@ -1,5 +1,4 @@
 
-
 .productDetail {
   min-height: 100vh;
   background-color: v.$color-primary;
@@ -13,6 +12,263 @@
       font-size: v.$font-size-lg;
       color: v.$color-accent;
       font-family: v.$font-heading;
+    }
+  }
+
+  // Size Guide Modal
+  .sizeGuideModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: v.$spacing-lg;
+    animation: fadeIn 0.3s ease;
+
+    @include m.media-breakpoint-down(v.$breakpoint-sm) {
+      padding: v.$spacing-md;
+      align-items: flex-start;
+      padding-top: v.$spacing-xl;
+    }
+
+    .modalContent {
+      background: v.$color-primary;
+      border-radius: 16px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(v.$color-accent, 0.2);
+      animation: slideUp 0.3s ease;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        max-width: 100%;
+        max-height: 85vh;
+      }
+
+      .modalHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: v.$spacing-xl v.$spacing-xl v.$spacing-lg;
+        border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          padding: v.$spacing-lg v.$spacing-lg v.$spacing-md;
+        }
+
+        .modalTitleSection {
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-md;
+
+          .modalIcon {
+            color: v.$color-accent;
+            background: rgba(v.$color-accent, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+          }
+
+          .modalTitle {
+            font-family: v.$font-heading;
+            font-size: v.$font-size-xl;
+            color: v.$color-secondary;
+            margin: 0;
+            text-transform: uppercase;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              font-size: v.$font-size-lg;
+            }
+          }
+        }
+
+        .closeBtn {
+          background: rgba(v.$color-border, 0.5);
+          border: 1px solid rgba(v.$color-accent, 0.2);
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: v.$color-text-light;
+          transition: all v.$transition-speed;
+
+          &:hover {
+            background: rgba(v.$color-accent, 0.1);
+            border-color: v.$color-accent;
+            color: v.$color-accent;
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .modalBody {
+        padding: v.$spacing-xl;
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          padding: v.$spacing-lg;
+        }
+
+        .sizeGuideInfo {
+          margin-bottom: v.$spacing-xl;
+
+          p {
+            color: v.$color-text-light;
+            font-size: v.$font-size-md;
+            line-height: 1.6;
+            margin-bottom: v.$spacing-lg;
+          }
+
+          .measurementTips {
+            background: rgba(v.$color-accent, 0.05);
+            border: 1px solid rgba(v.$color-accent, 0.1);
+            border-radius: 12px;
+            padding: v.$spacing-lg;
+
+            h4 {
+              color: v.$color-accent;
+              font-size: v.$font-size-md;
+              margin: 0 0 v.$spacing-md 0;
+              font-weight: 600;
+            }
+
+            ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+
+              li {
+                color: v.$color-text-light;
+                font-size: v.$font-size-sm;
+                padding: v.$spacing-xs 0;
+                position: relative;
+                padding-left: v.$spacing-md;
+
+                &::before {
+                  content: "•";
+                  position: absolute;
+                  left: 0;
+                  color: v.$color-accent;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+
+        .sizeTable {
+          overflow-x: auto;
+          margin-bottom: v.$spacing-xl;
+          border-radius: 12px;
+          border: 1px solid rgba(v.$color-accent, 0.1);
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(v.$color-border, 0.3);
+
+            thead {
+              background: v.$color-accent;
+
+              th {
+                color: v.$color-primary;
+                font-family: v.$font-heading;
+                font-size: v.$font-size-sm;
+                font-weight: bold;
+                text-transform: uppercase;
+                padding: v.$spacing-md;
+                text-align: center;
+                letter-spacing: 0.5px;
+
+                @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                  padding: v.$spacing-sm;
+                  font-size: v.$font-size-xs;
+                }
+              }
+            }
+
+            tbody {
+              tr {
+                transition: all v.$transition-speed;
+                border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+                &:hover {
+                  background: rgba(v.$color-accent, 0.05);
+                }
+
+                &.selectedRow {
+                  background: rgba(v.$color-accent, 0.1);
+                  border-color: v.$color-accent;
+
+                  .sizeCell {
+                    color: v.$color-accent;
+                    font-weight: bold;
+                  }
+                }
+
+                &:last-child {
+                  border-bottom: none;
+                }
+
+                td {
+                  padding: v.$spacing-md;
+                  text-align: center;
+                  color: v.$color-text-light;
+                  font-size: v.$font-size-sm;
+                  transition: all v.$transition-speed;
+
+                  @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                    padding: v.$spacing-sm;
+                    font-size: v.$font-size-xs;
+                  }
+
+                  &.sizeCell {
+                    font-family: v.$font-heading;
+                    font-weight: bold;
+                    color: v.$color-secondary;
+                    background: rgba(v.$color-primary, 0.5);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .modalFooter {
+          text-align: center;
+          padding-top: v.$spacing-lg;
+          border-top: 1px solid rgba(v.$color-accent, 0.1);
+
+          .helpText {
+            color: v.$color-text-light;
+            font-size: v.$font-size-sm;
+            margin: 0;
+
+            a {
+              color: v.$color-accent;
+              text-decoration: none;
+              font-weight: 500;
+              transition: color v.$transition-speed;
+
+              &:hover {
+                color: v.$color-secondary;
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -33,6 +289,7 @@
         flex-direction: column;
         gap: v.$spacing-sm;
         align-items: flex-start;
+        padding: 0 v.$spacing-md;
       }
     }
 
@@ -51,6 +308,14 @@
         color: v.$color-secondary;
         transform: translateX(-4px);
       }
+
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        font-size: v.$font-size-xs;
+        
+        span {
+          display: none;
+        }
+      }
     }
 
     .breadcrumbPath {
@@ -60,6 +325,10 @@
       font-size: v.$font-size-sm;
       color: v.$color-text-light;
       opacity: 0.8;
+
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        font-size: v.$font-size-xs;
+      }
 
       .currentPage {
         color: v.$color-accent;
@@ -76,6 +345,10 @@
     @include m.media-breakpoint-down(v.$breakpoint-md) {
       padding: 0 v.$spacing-md;
     }
+
+    @include m.media-breakpoint-down(v.$breakpoint-sm) {
+      padding: 0 v.$spacing-sm;
+    }
   }
 
   .productLayout {
@@ -87,6 +360,11 @@
     @include m.media-breakpoint-down(v.$breakpoint-lg) {
       grid-template-columns: 1fr;
       gap: v.$spacing-xl;
+    }
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      gap: v.$spacing-lg;
+      margin: v.$spacing-lg 0;
     }
 
     .imageSection {
@@ -114,6 +392,11 @@
           font-size: v.$font-size-xs;
           font-weight: bold;
           text-transform: uppercase;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            padding: 3px 8px;
+            font-size: 10px;
+          }
         }
 
         .productActions {
@@ -130,6 +413,16 @@
             cursor: pointer;
             @include m.flex-center;
             transition: all v.$transition-speed;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              width: 36px;
+              height: 36px;
+              
+              svg {
+                width: 16px;
+                height: 16px;
+              }
+            }
 
             &:hover {
               background: rgba(v.$color-accent, 0.1);
@@ -149,11 +442,23 @@
 
       .productTitle {
         font-family: v.$font-heading;
-        font-size: v.$font-size-xxl;
+        font-size: 4rem;
         color: v.$color-secondary;
         margin: 0 0 v.$spacing-md 0;
         text-transform: uppercase;
         line-height: 1.2;
+
+        @include m.media-breakpoint-down(v.$breakpoint-lg) {
+          font-size: 3rem;
+        }
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          font-size: 2.5rem;
+        }
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          font-size: 2rem;
+        }
       }
 
       .ratingSection {
@@ -171,6 +476,10 @@
           font-size: v.$font-size-sm;
           color: v.$color-text-light;
           opacity: 0.8;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-xs;
+          }
         }
       }
 
@@ -182,13 +491,30 @@
           align-items: center;
           gap: v.$spacing-md;
           margin-bottom: v.$spacing-xs;
+          flex-wrap: wrap;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            gap: v.$spacing-sm;
+          }
 
           .currentPrice {
             font-family: v.$font-heading;
-            font-size: v.$font-size-xxl;
+            font-size: 4rem;
             font-weight: bold;
             color: v.$color-accent;
             text-shadow: 0 0 10px rgba(v.$color-accent, 0.3);
+
+            @include m.media-breakpoint-down(v.$breakpoint-lg) {
+              font-size: 3rem;
+            }
+
+            @include m.media-breakpoint-down(v.$breakpoint-md) {
+              font-size: 2.5rem;
+            }
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              font-size: 2rem;
+            }
           }
 
           .originalPrice {
@@ -196,6 +522,10 @@
             color: v.$color-text-light;
             opacity: 0.6;
             text-decoration: line-through;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              font-size: v.$font-size-md;
+            }
           }
 
           .discountBadge {
@@ -205,6 +535,11 @@
             border-radius: 12px;
             font-size: v.$font-size-xs;
             font-weight: bold;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              padding: 3px 6px;
+              font-size: 10px;
+            }
           }
         }
 
@@ -212,28 +547,9 @@
           font-size: v.$font-size-sm;
           color: #4ecdc4;
           font-weight: bold;
-        }
-      }
 
-      .deliveryInfo {
-        display: flex;
-        flex-direction: column;
-        gap: v.$spacing-xs;
-        margin-bottom: v.$spacing-xl;
-        padding: v.$spacing-md;
-        background: rgba(v.$color-border, 0.3);
-        border-radius: 12px;
-        border: 1px solid rgba(v.$color-accent, 0.1);
-
-        .deliveryItem {
-          display: flex;
-          align-items: center;
-          gap: v.$spacing-sm;
-          font-size: v.$font-size-sm;
-          color: v.$color-text-light;
-
-          svg {
-            color: v.$color-accent;
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-xs;
           }
         }
       }
@@ -243,10 +559,18 @@
 
         .optionTitle {
           font-family: v.$font-heading;
-          font-size: v.$font-size-md;
+          font-size: v.$font-size-xl;
           color: v.$color-secondary;
           margin: 0 0 v.$spacing-sm 0;
           text-transform: uppercase;
+
+          @include m.media-breakpoint-down(v.$breakpoint-md) {
+            font-size: v.$font-size-lg;
+          }
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-md;
+          }
 
           span {
             color: v.$color-accent;
@@ -258,6 +582,7 @@
           display: flex;
           gap: v.$spacing-sm;
           margin-bottom: v.$spacing-sm;
+          flex-wrap: wrap;
 
           .colorOption {
             width: 44px;
@@ -268,6 +593,11 @@
             transition: all v.$transition-speed;
             background: none;
             padding: 2px;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              width: 36px;
+              height: 36px;
+            }
 
             &:hover {
               transform: scale(1.1);
@@ -295,6 +625,7 @@
           margin-bottom: v.$spacing-sm;
 
           .sizeOption {
+            font-size: 1rem;
             min-width: 50px;
             height: 44px;
             padding: 0 v.$spacing-sm;
@@ -306,6 +637,13 @@
             transition: all v.$transition-speed;
             font-weight: 500;
             @include m.flex-center;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              min-width: 40px;
+              height: 36px;
+              font-size: v.$font-size-sm;
+              padding: 0 v.$spacing-xs;
+            }
 
             &:hover {
               border-color: v.$color-accent;
@@ -329,9 +667,21 @@
           font-size: v.$font-size-sm;
           text-decoration: underline;
           transition: color v.$transition-speed;
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-xs;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-xs;
+          }
 
           &:hover {
             color: v.$color-secondary;
+          }
+
+          svg {
+            width: 16px;
+            height: 16px;
           }
         }
       }
@@ -355,6 +705,16 @@
             @include m.flex-center;
             transition: all v.$transition-speed;
 
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              width: 36px;
+              height: 36px;
+              
+              svg {
+                width: 14px;
+                height: 14px;
+              }
+            }
+
             &:hover:not(:disabled) {
               background: rgba(v.$color-accent, 0.1);
               border-color: v.$color-accent;
@@ -374,6 +734,11 @@
             font-size: v.$font-size-lg;
             color: v.$color-secondary;
             font-weight: bold;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              min-width: 40px;
+              font-size: v.$font-size-md;
+            }
           }
         }
       }
@@ -385,6 +750,7 @@
 
         @include m.media-breakpoint-down(v.$breakpoint-sm) {
           flex-direction: column;
+          gap: v.$spacing-sm;
         }
 
         .addToCartBtn, .buyNowBtn {
@@ -394,6 +760,16 @@
           height: 56px;
           font-weight: bold;
           text-transform: uppercase;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            height: 48px;
+            font-size: v.$font-size-sm;
+            
+            svg {
+              width: 18px;
+              height: 18px;
+            }
+          }
         }
       }
 
@@ -402,12 +778,20 @@
           color: #4caf50;
           font-size: v.$font-size-sm;
           font-weight: 500;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-xs;
+          }
         }
 
         .outOfStock {
           color: #ff5722;
           font-size: v.$font-size-sm;
           font-weight: 500;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-xs;
+          }
         }
       }
     }
@@ -415,6 +799,10 @@
 
   .expandableSections {
     margin: v.$spacing-xxl 0;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      margin: v.$spacing-xl 0;
+    }
 
     .expandableSection {
       border: 1px solid rgba(v.$color-accent, 0.1);
@@ -434,32 +822,58 @@
         cursor: pointer;
         transition: background v.$transition-speed;
 
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          padding: v.$spacing-md;
+        }
+
         &:hover {
           background: rgba(v.$color-accent, 0.05);
         }
 
         h3 {
           font-family: v.$font-heading;
-          font-size: v.$font-size-lg;
+          font-size: v.$font-size-xl;
           color: v.$color-secondary;
           margin: 0;
           text-transform: uppercase;
+
+          @include m.media-breakpoint-down(v.$breakpoint-md) {
+            font-size: v.$font-size-lg;
+          }
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-md;
+          }
         }
 
         svg {
           color: v.$color-accent;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            width: 18px;
+            height: 18px;
+          }
         }
       }
 
       .sectionContent {
-        padding: 0 v.$spacing-lg v.$spacing-lg;
+        padding: v.$spacing-lg v.$spacing-lg v.$spacing-lg;
         border-top: 1px solid rgba(v.$color-accent, 0.1);
         animation: slideDown 0.3s ease;
+
+        @include m.media-breakpoint-down(v.$breakpoint-sm) {
+          padding: v.$spacing-md;
+        }
 
         p {
           color: v.$color-text-light;
           line-height: 1.6;
           margin-bottom: v.$spacing-md;
+          font-size: v.$font-size-md;
+
+          @include m.media-breakpoint-down(v.$breakpoint-sm) {
+            font-size: v.$font-size-sm;
+          }
         }
 
         .featureList {
@@ -472,6 +886,11 @@
             padding: v.$spacing-xs 0;
             position: relative;
             padding-left: v.$spacing-md;
+            font-size: v.$font-size-sm;
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              font-size: v.$font-size-xs;
+            }
 
             &::before {
               content: "✓";
@@ -495,6 +914,11 @@
             border-radius: 12px;
             font-size: v.$font-size-xs;
             border: 1px solid rgba(v.$color-accent, 0.2);
+
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              padding: 3px 6px;
+              font-size: 10px;
+            }
           }
         }
 
@@ -512,8 +936,19 @@
             border-radius: 8px;
             border: 1px solid rgba(v.$color-accent, 0.1);
 
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: v.$spacing-sm;
+              padding: v.$spacing-sm;
+            }
+
             .shippingIcon {
               color: v.$color-accent;
+
+              @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                align-self: center;
+              }
             }
 
             .shippingDetails {
@@ -522,7 +957,13 @@
               h4 {
                 color: v.$color-secondary;
                 margin: 0 0 4px 0;
-                font-size: v.$font-size-sm;
+                font-size: v.$font-size-md;
+                letter-spacing: 1px;
+
+                @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                  font-size: v.$font-size-sm;
+                  text-align: center;
+                }
               }
 
               p {
@@ -530,6 +971,11 @@
                 opacity: 0.8;
                 margin: 0;
                 font-size: v.$font-size-sm;
+
+                @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                  font-size: v.$font-size-xs;
+                  text-align: center;
+                }
               }
             }
 
@@ -537,6 +983,11 @@
               color: v.$color-accent;
               font-weight: bold;
               font-size: v.$font-size-md;
+
+              @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                font-size: v.$font-size-sm;
+                align-self: center;
+              }
             }
           }
         }
@@ -551,15 +1002,30 @@
             align-items: flex-start;
             gap: v.$spacing-md;
 
+            @include m.media-breakpoint-down(v.$breakpoint-sm) {
+              gap: v.$spacing-sm;
+            }
+
             svg {
               color: v.$color-accent;
               margin-top: 4px;
+              flex-shrink: 0;
+
+              @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                width: 18px;
+                height: 18px;
+              }
             }
 
             h4 {
               color: v.$color-secondary;
               margin: 0 0 4px 0;
-              font-size: v.$font-size-sm;
+              font-size: v.$font-size-md;
+              letter-spacing: 1px;
+
+              @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                font-size: v.$font-size-sm;
+              }
             }
 
             p {
@@ -567,11 +1033,35 @@
               opacity: 0.8;
               margin: 0;
               font-size: v.$font-size-sm;
+
+              @include m.media-breakpoint-down(v.$breakpoint-sm) {
+                font-size: v.$font-size-xs;
+              }
             }
           }
         }
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

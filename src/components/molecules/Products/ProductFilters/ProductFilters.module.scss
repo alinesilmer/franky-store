@@ -6,6 +6,7 @@
   transition: all v.$transition-speed;
   position: sticky;
   top: v.$spacing-lg;
+  min-width: 300px;
 
   &.collapsed {
     .filtersContent {

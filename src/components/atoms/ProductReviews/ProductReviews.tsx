@@ -2,8 +2,7 @@
 import type React from "react";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import { Star, ThumbsUp, MoreHorizontal, Filter } from "lucide-react";
-import { Button } from "../Button/Button";
+import { Star, ThumbsUp, Filter } from "lucide-react";
 import styles from "./ProductReviews.module.scss";
 
 interface Review {
@@ -43,7 +42,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
       date: "13 Oct 2024",
       title: "Excelente calidad y diseño",
       comment:
-        "La dedicación de Urban Store a la sostenibilidad y las prácticas éticas resuena fuertemente con los consumidores conscientes, posicionando la marca como una opción responsable en el mundo de la moda.",
+        "La dedicación de Franky Store a la sostenibilidad y las prácticas éticas resuena fuertemente con los consumidores conscientes, posicionando la marca como una opción responsable en el mundo de la moda.",
       helpful: 12,
       images: [
         "https://i.pinimg.com/736x/d9/96/20/d99620e997953a2b6ebc06b901cb6a79.jpg",
@@ -200,9 +199,6 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
                       <div className={styles.reviewDate}>{review.date}</div>
                     </div>
                   </div>
-                  <button className={styles.reviewMenu}>
-                    <MoreHorizontal size={16} />
-                  </button>
                 </div>
 
                 <div className={styles.reviewRating}>
@@ -242,15 +238,6 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className={styles.reviewsFooter}>
-            <Button variant="outline" size="md">
-              Ver Todas las Reseñas
-            </Button>
-            <Button variant="primary" size="md">
-              Escribir Reseña
-            </Button>
           </div>
         </div>
       </div>

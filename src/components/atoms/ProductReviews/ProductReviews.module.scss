@@ -150,7 +150,7 @@
           }
 
           .sortSelect {
-            background: rgba(v.$color-border, 0.3);
+            background: v.$color-primary;
             border: 1px solid rgba(v.$color-accent, 0.2);
             border-radius: 6px;
             padding: v.$spacing-xs v.$spacing-sm;
@@ -234,20 +234,6 @@
               }
             }
 
-            .reviewMenu {
-              background: none;
-              border: none;
-              color: v.$color-text-light;
-              cursor: pointer;
-              padding: v.$spacing-xs;
-              border-radius: 4px;
-              transition: all v.$transition-speed;
-
-              &:hover {
-                background: rgba(v.$color-accent, 0.1);
-                color: v.$color-accent;
-              }
-            }
           }
 
           .reviewRating {
@@ -261,7 +247,7 @@
 
             .reviewTitle {
               font-family: v.$font-heading;
-              font-size: v.$font-size-md;
+              font-size: v.$font-size-lg;
               color: v.$color-secondary;
               margin: 0 0 v.$spacing-xs 0;
             }
@@ -270,6 +256,7 @@
               color: v.$color-text-light;
               line-height: 1.6;
               margin: 0 0 v.$spacing-sm 0;
+              font-size: v.$font-size-sm;
             }
 
             .reviewImages {

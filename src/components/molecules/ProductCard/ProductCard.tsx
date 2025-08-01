@@ -3,6 +3,7 @@ import React from "react";
 import { ShoppingCart, Heart } from "lucide-react";
 import type { Product } from "../../../types/product";
 import styles from "./ProductCard.module.scss";
+import { Button } from "../../atoms/Button/Button";
 
 interface ProductCardProps {
   product: Product;
@@ -14,7 +15,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onProductClick,
-  onAddToCart,
   onToggleFavorite,
 }) => {
   const discountPct = product.originalPrice
@@ -54,16 +54,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         <div className={styles.actions}>
-          <button
-            className={styles.cartBtn}
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddToCart(product.id);
-            }}
-          >
+          <Button variant="third" size="sm" className={styles.cartBtn}>
             <ShoppingCart size={16} />
             <span>Comprar</span>
-          </button>
+          </Button>
           <button
             className={`${styles.favBtn} ${
               product.isFavorite ? styles.favActive : ""
