@@ -24,7 +24,7 @@ const Collection: React.FC = () => {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>NUEVA COLECCIÓN</h2>
+      <h2 className={styles.title}>OFERTAS DEL MES</h2>
       <p className={styles.subtitle}>
         Descubre lo último en moda urbana. Estilo fresco y auténtico para la
         calle.

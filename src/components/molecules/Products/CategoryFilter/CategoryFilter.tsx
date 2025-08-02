@@ -1,4 +1,3 @@
-// CategoryFilter.tsx
 "use client";
 
 import React from "react";
@@ -11,9 +10,7 @@ export interface Category {
 }
 
 interface CategoryFilterProps {
-  /** currently active category */
   selectedCategory: string;
-  /** notify parent of a new category selection */
   onCategoryChange: (categoryId: string) => void;
 }
 
@@ -83,6 +80,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                   src={category.image}
                   alt={category.name}
                   className={styles.categoryImage}
+                  onClick={() => onCategoryChange(category.id)}
                 />
               </div>
               <button

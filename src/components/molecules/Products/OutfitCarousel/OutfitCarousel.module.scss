@@ -139,7 +139,7 @@
         display: flex;
         padding: 0;
         scroll-behavior: smooth;
-        justify-content: space-between; 
+        justify-content: space-evenly; 
 
   &.two-items {
     justify-content: flex-end;

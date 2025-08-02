@@ -308,7 +308,7 @@ export const Navbar: React.FC = () => {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick("/not-found")}>
+                  <button onClick={() => handleNavLinkClick("/about-us")}>
                     Nosotros
                   </button>
                 </li>

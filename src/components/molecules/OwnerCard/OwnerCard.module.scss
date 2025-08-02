@@ -1,0 +1,94 @@
+
+.ownerCard {
+  background-color: v.$color-primary;
+  border-radius: 12px;
+  padding: v.$spacing-md;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 350px; // Ancho máximo para la tarjeta
+  margin: v.$spacing-xl auto; // Centrar y dar espacio
+  overflow: hidden; // Para el efecto de hover
+  transition: all 0.4s ease-in-out; // Transición para el hover
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid v.$color-accent;
+    .shortDescription {
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: 0;
+    }
+    .longDescription {
+      opacity: 1;
+      max-height: 200px; // Ajustar según el contenido
+      margin-top: v.$spacing-sm;
+    }
+  }
+
+  .imageWrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid v.$color-accent; // Borde de acento alrededor de la imagen
+    margin-bottom: v.$spacing-md;
+    flex-shrink: 0; // Evitar que la imagen se encoja
+    box-shadow: 0 0 0 4px rgba(v.$color-accent, 0.3); // Sombra exterior para el borde
+  }
+
+  .ownerImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .infoContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .ownerName {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ownerTitle {
+    font-size: v.$font-size-xl;
+    color: v.$color-accent;
+    margin-bottom: v.$spacing-sm;
+    font-weight: bold;
+  }
+
+  .shortDescription {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    line-height: 1.6;
+    margin-bottom: v.$spacing-md;
+    transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out, margin-bottom 0.3s ease-in-out;
+    max-height: 100px; // Altura inicial para la descripción corta
+    overflow: hidden;
+  }
+
+  .longDescription {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    line-height: 1.6;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
+    text-align: left; // Alinear texto a la izquierda dentro de la descripción larga
+    padding: 0 v.$spacing-sm; // Pequeño padding horizontal
+  }
+}

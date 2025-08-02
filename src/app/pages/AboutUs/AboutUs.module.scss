@@ -1,99 +1,494 @@
 
-
 .aboutUsPage {
-background-color: v.$color-primary;
-color: v.$color-text-light;
+  background-color: v.$color-primary;
+  color: v.$color-text-light; 
+  overflow-x: hidden; 
 }
 
-.hero {
-background-color: v.$color-border;
-padding: v.$spacing-xxl v.$spacing-md;
-text-align: center;
-border-bottom: 1px solid v.$color-border;
-
-h1 {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-xxl;
-  color: v.$color-accent;
-  margin-bottom: v.$spacing-md;
-}
-
-p {
-  font-size: v.$font-size-lg;
-  max-width: 700px;
-  margin: 0 auto;
-}
-}
-
-.contentSection {
-padding: v.$spacing-xl v.$spacing-md;
-border-bottom: 1px solid v.$color-border;
-
-.container {
+.heroSection {
+  background-color: v.$color-primary;
+  padding: v.$spacing-xxl v.$spacing-md;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: v.$spacing-xl;
+  border-bottom: 1px solid v.$color-border;
 
   @include m.media-breakpoint-up(v.$breakpoint-md) {
     flex-direction: row;
+    justify-content: center;
+    padding: v.$spacing-xxl v.$spacing-lg;
+    gap: v.$spacing-xxl;
+  }
+
+  .heroContent {
+    flex: 1;
+    text-align: center;
+    max-width: 600px;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      text-align: left;
+    }
+
+    .heroTitle {
+      font-family: v.$font-heading;
+      font-size: 4.5rem; 
+      color: v.$color-secondary; 
+      margin-bottom: v.$spacing-md;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: 2px;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        font-size: 3.5rem;
+      }
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        font-size: 2.5rem;
+      }
+
+      .highlight {
+        color: v.$color-accent; 
+      }
+    }
+
+    .heroSubtitle {
+      font-size: v.$font-size-lg;
+      color: v.$color-text-light;
+      opacity: 0.9;
+      margin-bottom: v.$spacing-xl;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        font-size: v.$font-size-md;
+      }
+    }
+
+    .heroButtons {
+      display: flex;
+      gap: v.$spacing-md;
+      justify-content: center;
+
+      @include m.media-breakpoint-up(v.$breakpoint-md) {
+        justify-content: flex-start;
+      }
+
+      .button {
+        padding: v.$spacing-md v.$spacing-xl;
+        font-size: v.$font-size-md;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .heroImage {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 500px;
+    height: 400px; 
+    background-color: v.$color-primary;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
     align-items: center;
-    &:nth-child(even) { // Alternar orden de imagen y texto
-      flex-direction: row-reverse;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      height: 600px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px; 
     }
   }
 }
 
-.textBlock {
-  flex: 1;
-  h2 {
-    font-family: v.$font-heading;
+.sectionHeading {
+  font-family: v.$font-heading;
+  font-size: 3rem;
+  color: v.$color-accent;
+  margin-bottom: v.$spacing-xl;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
     font-size: v.$font-size-xl;
-    color: v.$color-secondary;
-    margin-bottom: v.$spacing-sm;
-  }
-  p {
-    font-size: v.$font-size-md;
-    line-height: 1.8;
-    margin-bottom: v.$spacing-md;
   }
 }
 
-.imageBlock {
-  flex: 1;
-  @include m.flex-center;
-  img {
-    max-width: 100%;
-    height: auto;
+.valuesVisionSection {
+  padding: v.$spacing-xxl v.$spacing-md;
+  border-bottom: 1px solid v.$color-border;
+
+  .container {
+    max-width: v.$breakpoint-xl;
+    margin: 0 auto;
+  }
+
+  .valuesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: v.$spacing-lg;
+    justify-items: center;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: v.$spacing-xl;
+    }
+
+    .valueCard {
+      background-color: v.$color-primary;
+      border-radius: 12px;
+      padding: v.$spacing-lg;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: v.$spacing-sm;
+      transition: transform v.$transition-speed ease-in-out, box-shadow v.$transition-speed ease-in-out;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        border: 1px solid v.$color-accent;
+      }
+
+      .valueIcon {
+        color: v.$color-accent; 
+        margin-bottom: v.$spacing-xs;
+      }
+
+      h3 {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-xxl;
+        color: v.$color-secondary;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-size: v.$font-size-md;
+        color: v.$color-text-light;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+.historySection {
+  background-color: v.$color-primary;
+  padding: v.$spacing-xxl v.$spacing-md;
+  border-bottom: 1px solid v.$color-border;
+  text-align: center;
+  display: flex; // Use flex to center content
+  flex-direction: column; // Stack content vertically
+  align-items: center; // Center horizontally
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .historyText {
+    font-size: v.$font-size-lg;
+    line-height: 1.8;
+    color: v.$color-text-light;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto v.$spacing-xl auto; // Add margin below text
+  }
+}
+
+.statsSection {
+  padding: v.$spacing-xxl v.$spacing-md;
+  border-bottom: 1px solid v.$color-border;
+  text-align: center;
+
+  .container {
+    max-width: v.$breakpoint-xl;
+    margin: 0 auto;
+  }
+
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: v.$spacing-lg;
+    justify-items: center;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: v.$spacing-xl;
+    }
+
+    .statCard {
+      background-color: v.$color-primary;
+      border-radius: 12px;
+      padding: v.$spacing-lg;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+
+      .statNumber {
+        font-family: v.$font-heading;
+        font-size: 5rem;
+        color: v.$color-accent;
+        line-height: 1;
+        margin-bottom: v.$spacing-xs;
+      }
+
+      .statDescription {
+        font-size: v.$font-size-lg;
+        color: v.$color-secondary;
+        opacity: 0.8;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.communitySection {
+  padding: v.$spacing-xxl v.$spacing-md;
+  border-bottom: 1px solid v.$color-border;
+  text-align: center;
+
+  .container {
+    max-width: v.$breakpoint-xl;
+    margin: 0 auto;
+  }
+
+  .communityText {
+    font-size: v.$font-size-lg;
+    line-height: 1.8;
+    color: v.$color-text-light;
+    opacity: 0.9;
+    margin-bottom: v.$spacing-xl;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .communityGalleryWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 v.$spacing-xl; // Espacio para los botones de navegación
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      padding: 0 v.$spacing-md;
+    }
+  }
+.communityGallery {
+  display: flex;
+  gap: v.$spacing-md;
+  overflow-x: auto;
+  padding: v.$spacing-sm 0;
+  scroll-behavior: smooth;
+}
+
+.memberCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+
+  .galleryImage {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform v.$transition-speed ease-in-out;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  .galleryUsername {
+    margin-top: v.$spacing-xs;
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xl;
+    color: v.$color-accent;
+    opacity: 0.9;
   }
 }
-}
 
-.callToAction {
-background-color: v.$color-accent;
-color: v.$color-primary;
-padding: v.$spacing-xxl v.$spacing-md;
-text-align: center;
+  .galleryNavBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(v.$color-primary, 0.7);
+    border: none;
+    padding: v.$spacing-xs;
+    border-radius: 50%;
+    cursor: pointer;
+    color: v.$color-secondary;
+    transition: background v.$transition-speed;
+    z-index: 10;
 
-h2 {
-  font-family: v.$font-heading;
-  font-size: v.$font-size-xxl;
-  margin-bottom: v.$spacing-md;
-}
+    &:hover {
+      background: v.$color-primary;
+    }
 
-p {
-  font-size: v.$font-size-lg;
-  margin-bottom: v.$spacing-xl;
-}
+    &.left {
+      left: v.$spacing-sm;
+    }
 
-.ctaButton {
-  @include m.button-style(v.$color-primary, v.$color-accent);
-  padding: v.$spacing-md v.$spacing-xl;
-  font-size: v.$font-size-lg;
-
-  &:hover {
-    background-color: white;
+    &.right {
+      right: v.$spacing-sm;
+    }
   }
 }
+
+.pricingSection {
+  background-color: v.$color-primary;
+  padding: v.$spacing-xxl v.$spacing-md;
+  text-align: center;
+
+  .container {
+    max-width: v.$breakpoint-xl;
+    margin: 0 auto;
+  }
+
+  .pricingSubtitle {
+    font-size: v.$font-size-lg;
+    line-height: 1.8;
+    color: v.$color-text-light;
+    opacity: 0.9;
+    margin-bottom: v.$spacing-xl;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .planGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Ajustado para 3 columnas
+    gap: v.$spacing-lg;
+    justify-items: center;
+    margin-top: v.$spacing-xl;
+
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: v.$spacing-xxl; // Más espacio entre tarjetas en desktop
+    }
+  }
+
+  .planCard {
+    background-color:v.$color-primary;
+    border-radius: 12px;
+    padding: v.$spacing-lg;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform v.$transition-speed ease-in-out, box-shadow v.$transition-speed ease-in-out, border-color v.$transition-speed ease-in-out;
+    border: 2px solid transparent; // Borde transparente por defecto
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      border-color: v.$color-accent; // Borde de acento en hover
+    }
+
+    &.featuredPlan {
+      background-color: v.$color-accent; // Fondo de acento para el plan destacado
+      color: v.$color-primary; // Texto oscuro para el plan destacado
+      transform: scale(1.05); // Ligeramente más grande
+      border-color: v.$color-accent;
+      box-shadow: 0 10px 30px rgba(v.$color-accent, 0.5); // Sombra más pronunciada
+
+      .planName, .planPrice, .priceUnit {
+        color: v.$color-primary; // Asegurar texto oscuro
+      }
+      .featureIcon {
+        color: v.$color-primary; // Iconos oscuros
+      }
+      .planButton {
+        background-color: v.$color-primary; // Botón oscuro
+        color: v.$color-accent; // Texto de acento
+        &:hover {
+          background-color: v.$color-primary;
+          color: v.$color-accent;
+        }
+      }
+    }
+
+    .planHeader {
+      margin-bottom: v.$spacing-lg;
+      width: 100%;
+
+      .planName {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-xl;
+        color: v.$color-secondary;
+        margin-bottom: v.$spacing-xs;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .planPrice {
+        font-family: v.$font-heading;
+        font-size: 3.5rem; // Precio grande
+        color: v.$color-accent;
+        line-height: 1;
+        margin: 0;
+
+        .priceUnit {
+          font-size: v.$font-size-md;
+          color: v.$color-text-light;
+          opacity: 0.7;
+          margin-left: v.$spacing-xs;
+        }
+      }
+    }
+
+    .planFeatures {
+      list-style: none;
+      padding: 0;
+      margin-bottom: v.$spacing-xl;
+      text-align: left;
+      width: 100%;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: v.$spacing-sm;
+        font-size: v.$font-size-md;
+        color: v.$color-text-light;
+        margin-bottom: v.$spacing-sm;
+        line-height: 1.5;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .featureIcon {
+        color: v.$color-accent;
+        flex-shrink: 0;
+      }
+    }
+
+    .planButton {
+      width: 100%;
+      padding: v.$spacing-md v.$spacing-xl;
+      font-size: v.$font-size-lg;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+  }
 }

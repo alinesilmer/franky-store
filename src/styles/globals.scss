@@ -60,3 +60,12 @@ padding: 0 v.$spacing-md;
   padding: 0 v.$spacing-lg;
 }
 }
+
+@font-face {
+  font-family: "AC Brief Encounter";  
+  src: url("/AC-BriefEncounter.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  
+}
