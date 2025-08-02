@@ -1,22 +1,25 @@
 export interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  originalPrice?: number
-  category: string
-  brand: string
-  images: string[]
-  colors: string[]
-  sizes: string[]
-  rating: number
-  reviewCount: number
-  inStock: boolean
-  isNew: boolean
-  isBestSeller: boolean
-  isFavorite: boolean;
-  tags: string[]
-  createdAt: string
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;           
+
+  /* ------------- optional / extended ------------- */
+  images?: string[];        
+  originalPrice?: number;
+  category?: string;
+  brand?: string;
+  colors?: string[];
+  sizes?: string[];
+  rating?: number;
+  reviewCount?: number;
+  inStock?: boolean;
+  isNew?: boolean;
+  isBestSeller?: boolean;
+  isFavorite?: boolean;
+  tags?: string[];
+  createdAt?: string;
 }
 
 export interface ProductFilters {

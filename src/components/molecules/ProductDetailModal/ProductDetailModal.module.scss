@@ -10,7 +10,6 @@
   }
 
   .imageContainer {
-    flex: 1;
     min-width: 250px;
     max-width: 100%;
     @include m.flex-center; // Center image if it's smaller than container
@@ -39,11 +38,19 @@
 
     .price {
       font-family: v.$font-body;
-      font-size: v.$font-size-lg;
+      font-size: v.$font-size-xxl;
       color: v.$color-accent;
       margin-bottom: v.$spacing-sm;
       font-weight: bold;
     }
+
+     .originalPrice {
+    margin-left: v.$spacing-xs;
+    font-size: v.$font-size-sm;          
+    color: v.$color-text-light;          
+    text-decoration: line-through;
+    font-weight: 500;
+  }
 
     .rating {
       display: flex;
@@ -101,6 +108,7 @@
             &:hover {
               background-color: white;
             }
+
           }
 
           .colorSwatch {
@@ -126,4 +134,17 @@
       font-size: v.$font-size-lg;
     }
   }
+}
+
+
+.colorSwatch.active {
+  transform: scale(1.15);
+  border-color: v.$color-accent;
+  box-shadow: 0 0 0 2px rgba(v.$color-accent, 0.6);
+}
+
+.optionValue.active {
+  background-color: v.$color-accent;
+  color: v.$color-primary;
+  box-shadow: 0 0 0 2px v.$color-accent inset;
 }

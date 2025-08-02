@@ -9,13 +9,14 @@ border-top: 1px solid v.$color-border;
 
 h2 {
   font-family: v.$font-heading;
-  font-size: v.$font-size-xl;
+  font-size: 2rem;
   margin-bottom: v.$spacing-sm;
   color: v.$color-accent;
 }
 
 p {
-  font-size: v.$font-size-md;
+  font-size: v.$font-size-lg;
+  color: v.$color-text-light;
   margin-bottom: v.$spacing-lg;
   max-width: 600px;
   margin-left: auto;

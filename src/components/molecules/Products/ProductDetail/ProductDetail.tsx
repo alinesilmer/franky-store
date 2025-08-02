@@ -1,6 +1,7 @@
+// ProductDetail.tsx
 "use client";
-import type React from "react";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -26,10 +27,10 @@ import { PRODUCTS_DATA } from "../../../../lib/productsData";
 import type { Product } from "../../../../types/product";
 import styles from "./ProductDetail.module.scss";
 
-// Size guide data
+// --- Size guide lookup tables ---
 const SIZE_GUIDE_DATA = {
   clothing: {
-    title: "Guía de Tallas - Ropa",
+    title: "Guía de Tallas – Ropa",
     headers: [
       "Talla",
       "Pecho (cm)",
@@ -47,7 +48,7 @@ const SIZE_GUIDE_DATA = {
     ],
   },
   shoes: {
-    title: "Guía de Tallas - Calzado",
+    title: "Guía de Tallas – Calzado",
     headers: ["Talla", "EU", "US", "UK", "Largo pie (cm)"],
     rows: [
       ["35", "35", "5", "2.5", "22.5"],
@@ -65,76 +66,96 @@ const SIZE_GUIDE_DATA = {
 };
 
 const ProductDetail: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();
+  const { productId } = useParams<{ productId?: string }>();
   const navigate = useNavigate();
+
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
-  const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [expandedSections, setExpandedSections] = useState({
+  const [quantity, setQuantity] = useState<number>(1);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [showSizeGuide, setShowSizeGuide] = useState<boolean>(false);
+  const [expandedSections, setExpandedSections] = useState<{
+    description: boolean;
+    shipping: boolean;
+    returns: boolean;
+    care: boolean;
+  }>({
     description: true,
     shipping: false,
     returns: false,
     care: false,
   });
 
+  // Load product from PRODUCTS_DATA (fallback to /products)
   useEffect(() => {
-    if (productId) {
-      const foundProduct = PRODUCTS_DATA.find((p) => p.id === productId);
-      if (foundProduct) {
-        setProduct(foundProduct);
-        setSelectedColor(foundProduct.colors[0]);
-        setSelectedSize(foundProduct.sizes[0]);
-      } else {
-        navigate("/products");
-      }
+    if (!productId) {
+      navigate("/products");
+      return;
     }
+    const found = PRODUCTS_DATA.find((p) => p.id === productId);
+    if (!found) {
+      navigate("/products");
+      return;
+    }
+    setProduct(found);
+    setSelectedColor(found.colors?.[0] ?? "");
+    setSelectedSize(found.sizes?.[0] ?? "");
   }, [productId, navigate]);
 
-  // Close modal when clicking outside
+  // Lock scroll when size guide is open
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const modal = document.querySelector(`.${styles.sizeGuideModal}`);
-      const modalContent = document.querySelector(`.${styles.modalContent}`);
-
-      if (
-        modal &&
-        modalContent &&
-        !modalContent.contains(event.target as Node)
-      ) {
-        setShowSizeGuide(false);
-      }
-    };
-
-    if (showSizeGuide) {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = showSizeGuide ? "hidden" : "auto";
   }, [showSizeGuide]);
 
-  const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+  if (!product) {
+    return (
+      <div className={styles.loading}>
+        <div className={styles.loadingSpinner}>Cargando producto…</div>
+      </div>
+    );
+  }
+
+  // Fallbacks & derived values
+  const images =
+    product.images && product.images.length > 0
+      ? product.images
+      : [product.image];
+  const colors = product.colors ?? [];
+  const sizes = product.sizes ?? [];
+  const rating = product.rating ?? 0;
+  const reviewCount = product.reviewCount ?? 0;
+  const inStock = product.inStock ?? true;
+  const tags = product.tags ?? [];
+  const category = product.category ?? "";
+  const originalPrice = product.originalPrice;
+  const discountPercentage = originalPrice
+    ? Math.round(((originalPrice - product.price) / originalPrice) * 100)
+    : 0;
+
+  // Choose appropriate size guide
+  const getSizeGuideData = () => {
+    const lc = category.toLowerCase();
+    const isShoes =
+      lc.includes("zapato") ||
+      lc.includes("calzado") ||
+      product.name.toLowerCase().includes("zapato");
+    return isShoes ? SIZE_GUIDE_DATA.shoes : SIZE_GUIDE_DATA.clothing;
+  };
+  const sizeGuideData = getSizeGuideData();
+
+  const toggleSection = (sec: keyof typeof expandedSections) => {
+    setExpandedSections((prev) => ({ ...prev, [sec]: !prev[sec] }));
+  };
+
+  const handleQuantityChange = (delta: number) => {
+    setQuantity((q) => Math.max(1, q + delta));
   };
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      alert("Por favor selecciona una talla");
-      return;
-    }
+    if (!selectedSize) return alert("Por favor selecciona una talla");
     console.log("Añadir al carrito:", {
-      productId: product?.id,
+      productId: product.id,
       size: selectedSize,
       color: selectedColor,
       quantity,
@@ -142,44 +163,14 @@ const ProductDetail: React.FC = () => {
   };
 
   const handleBuyNow = () => {
-    if (!selectedSize) {
-      alert("Por favor selecciona una talla");
-      return;
-    }
-    console.log("Comprar ahora:", product?.id);
+    if (!selectedSize) return alert("Por favor selecciona una talla");
+    console.log("Comprar ahora:", product.id);
   };
 
-  const handleQuantityChange = (change: number) => {
-    setQuantity((prev) => Math.max(1, prev + change));
+  const imageGalleryProps = {
+    images,
+    productName: product.name,
   };
-
-  const getSizeGuideData = () => {
-    if (!product) return SIZE_GUIDE_DATA.clothing;
-
-    // Determine if it's shoes or clothing based on category or product type
-    const isShoes =
-      product.category.toLowerCase().includes("zapato") ||
-      product.category.toLowerCase().includes("calzado") ||
-      product.name.toLowerCase().includes("zapato");
-
-    return isShoes ? SIZE_GUIDE_DATA.shoes : SIZE_GUIDE_DATA.clothing;
-  };
-
-  const discountPercentage = product?.originalPrice
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
-      )
-    : 0;
-
-  if (!product) {
-    return (
-      <div className={styles.loading}>
-        <div className={styles.loadingSpinner}>Cargando producto...</div>
-      </div>
-    );
-  }
-
-  const sizeGuideData = getSizeGuideData();
 
   return (
     <div className={styles.productDetail}>
@@ -199,45 +190,31 @@ const ProductDetail: React.FC = () => {
                 <X size={24} />
               </button>
             </div>
-
             <div className={styles.modalBody}>
-              <div className={styles.sizeGuideInfo}>
-                <p>
-                  Encuentra tu talla perfecta con nuestra guía de medidas. Todas
-                  las medidas están en centímetros.
-                </p>
-                <div className={styles.measurementTips}>
-                  <h4>💡 Consejos para medir:</h4>
-                  <ul>
-                    <li>Mide sobre ropa interior o ropa ajustada</li>
-                    <li>Mantén la cinta métrica paralela al suelo</li>
-                    <li>No aprietes demasiado la cinta</li>
-                    <li>Si estás entre dos tallas, elige la mayor</li>
-                  </ul>
-                </div>
-              </div>
-
+              <p>
+                Encuentra tu talla perfecta con nuestra guía de medidas (cm).
+              </p>
               <div className={styles.sizeTable}>
                 <table>
                   <thead>
                     <tr>
-                      {sizeGuideData.headers.map((header, index) => (
-                        <th key={index}>{header}</th>
+                      {sizeGuideData.headers.map((h, i) => (
+                        <th key={i}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {sizeGuideData.rows.map((row, rowIndex) => (
+                    {sizeGuideData.rows.map((row, ri) => (
                       <tr
-                        key={rowIndex}
+                        key={ri}
                         className={
                           selectedSize === row[0] ? styles.selectedRow : ""
                         }
                       >
-                        {row.map((cell, cellIndex) => (
+                        {row.map((cell, ci) => (
                           <td
-                            key={cellIndex}
-                            className={cellIndex === 0 ? styles.sizeCell : ""}
+                            key={ci}
+                            className={ci === 0 ? styles.sizeCell : ""}
                           >
                             {cell}
                           </td>
@@ -247,11 +224,9 @@ const ProductDetail: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-
               <div className={styles.modalFooter}>
                 <p className={styles.helpText}>
-                  ¿Necesitas ayuda? <a href="/contact">Contáctanos</a> y te
-                  ayudaremos a encontrar tu talla perfecta.
+                  ¿Necesitas ayuda? <a href="/contact">Contáctanos</a>
                 </p>
               </div>
             </div>
@@ -270,10 +245,7 @@ const ProductDetail: React.FC = () => {
             <span>Volver a Productos</span>
           </button>
           <div className={styles.breadcrumbPath}>
-            <span>Inicio</span>
-            <span>/</span>
-            <span>Productos</span>
-            <span>/</span>
+            Inicio / Productos /{" "}
             <span className={styles.currentPage}>{product.name}</span>
           </div>
         </div>
@@ -281,24 +253,22 @@ const ProductDetail: React.FC = () => {
 
       <div className={styles.container}>
         <div className={styles.productLayout}>
-          {/* Galería de imágenes */}
+          {/* Image gallery */}
           <div className={styles.imageSection}>
-            <ProductImageGallery
-              images={product.images}
-              productName={product.name}
-            />
+            <ProductImageGallery {...imageGalleryProps} />
           </div>
 
-          {/* Información del producto */}
+          {/* Main info */}
           <div className={styles.productInfo}>
+            {/* Category & actions */}
             <div className={styles.productHeader}>
-              <div className={styles.categoryBadge}>{product.category}</div>
+              <div className={styles.categoryBadge}>{category}</div>
               <div className={styles.productActions}>
                 <button
                   className={`${styles.favoriteBtn} ${
                     isFavorite ? styles.active : ""
                   }`}
-                  onClick={() => setIsFavorite(!isFavorite)}
+                  onClick={() => setIsFavorite((v) => !v)}
                 >
                   <Heart
                     size={20}
@@ -311,34 +281,34 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
 
-            <h1 className={styles.productTitle}>{product.name}</h1>
+            <h2 className={styles.productTitle}>{product.name}</h2>
 
             {/* Rating */}
             <div className={styles.ratingSection}>
               <div className={styles.stars}>
-                {Array.from({ length: 5 }, (_, i) => (
+                {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
                     size={16}
-                    fill={i < Math.floor(product.rating) ? "#fdd835" : "none"}
+                    fill={i < Math.floor(rating) ? "#fdd835" : "none"}
                     color="#fdd835"
                   />
                 ))}
               </div>
               <span className={styles.ratingText}>
-                {product.rating} ({product.reviewCount} reseñas)
+                {rating.toFixed(1)} ({reviewCount} reseñas)
               </span>
             </div>
 
-            {/* Precio */}
+            {/* Price */}
             <div className={styles.priceSection}>
               <div className={styles.priceContainer}>
                 <span className={styles.currentPrice}>
                   ${product.price.toFixed(2)}
                 </span>
-                {product.originalPrice && (
+                {originalPrice && (
                   <span className={styles.originalPrice}>
-                    ${product.originalPrice.toFixed(2)}
+                    ${originalPrice.toFixed(2)}
                   </span>
                 )}
                 {discountPercentage > 0 && (
@@ -347,66 +317,52 @@ const ProductDetail: React.FC = () => {
                   </span>
                 )}
               </div>
-              {product.originalPrice && (
+              {originalPrice && (
                 <div className={styles.savings}>
-                  ¡Ahorras ${(product.originalPrice - product.price).toFixed(2)}
-                  !
+                  ¡Ahorras ${(originalPrice - product.price).toFixed(2)}!
                 </div>
               )}
             </div>
 
-            {/* Selector de color */}
+            {/* Color selector */}
             <div className={styles.optionSection}>
               <h3 className={styles.optionTitle}>
                 Color: <span>{selectedColor}</span>
               </h3>
               <div className={styles.colorOptions}>
-                {product.colors.map((color) => (
+                {colors.map((c) => (
                   <button
-                    key={color}
+                    key={c}
                     className={`${styles.colorOption} ${
-                      selectedColor === color ? styles.selected : ""
+                      selectedColor === c ? styles.selected : ""
                     }`}
-                    onClick={() => setSelectedColor(color)}
-                    title={color}
+                    onClick={() => setSelectedColor(c)}
+                    title={c}
                   >
                     <div
                       className={styles.colorSwatch}
-                      style={{
-                        backgroundColor:
-                          color === "negro"
-                            ? "#000"
-                            : color === "blanco"
-                            ? "#fff"
-                            : color === "gris"
-                            ? "#6b7280"
-                            : color === "azul"
-                            ? "#3b82f6"
-                            : color === "rojo"
-                            ? "#ef4444"
-                            : "#10b981",
-                      }}
+                      style={{ backgroundColor: c }}
                     />
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Selector de talla */}
+            {/* Size selector */}
             <div className={styles.optionSection}>
               <h3 className={styles.optionTitle}>
                 Talla: <span>{selectedSize}</span>
               </h3>
               <div className={styles.sizeOptions}>
-                {product.sizes.map((size) => (
+                {sizes.map((s) => (
                   <button
-                    key={size}
+                    key={s}
                     className={`${styles.sizeOption} ${
-                      selectedSize === size ? styles.selected : ""
+                      selectedSize === s ? styles.selected : ""
                     }`}
-                    onClick={() => setSelectedSize(size)}
+                    onClick={() => setSelectedSize(s)}
                   >
-                    {size}
+                    {s}
                   </button>
                 ))}
               </div>
@@ -414,12 +370,11 @@ const ProductDetail: React.FC = () => {
                 className={styles.sizeGuideBtn}
                 onClick={() => setShowSizeGuide(true)}
               >
-                <Ruler size={16} />
-                Guía de tallas
+                <Ruler size={16} /> Guía de tallas
               </button>
             </div>
 
-            {/* Cantidad */}
+            {/* Quantity */}
             <div className={styles.quantitySection}>
               <h3 className={styles.optionTitle}>Cantidad:</h3>
               <div className={styles.quantityControls}>
@@ -440,7 +395,7 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Botones de acción */}
+            {/* Actions */}
             <div className={styles.actionButtons}>
               <Button
                 variant="third"
@@ -461,11 +416,11 @@ const ProductDetail: React.FC = () => {
               </Button>
             </div>
 
-            {/* Stock status */}
+            {/* Stock */}
             <div className={styles.stockStatus}>
-              {product.inStock ? (
+              {inStock ? (
                 <span className={styles.inStock}>
-                  ✓ En stock - Listo para enviar
+                  ✓ En stock – Listo para enviar
                 </span>
               ) : (
                 <span className={styles.outOfStock}>⚠ Agotado</span>
@@ -474,136 +429,102 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
 
-        {/* Secciones expandibles */}
+        {/* Expandable content */}
         <div className={styles.expandableSections}>
-          {/* Descripción */}
-          <div className={styles.expandableSection}>
-            <button
-              className={styles.sectionHeader}
-              onClick={() => toggleSection("description")}
-            >
-              <h3>Descripción y Características</h3>
-              {expandedSections.description ? (
-                <ChevronUp size={20} />
-              ) : (
-                <ChevronDown size={20} />
-              )}
-            </button>
-            {expandedSections.description && (
-              <div className={styles.sectionContent}>
-                <p>{product.description}</p>
-                <ul className={styles.featureList}>
-                  <li>Material de alta calidad</li>
-                  <li>Diseño urbano y moderno</li>
-                  <li>Corte cómodo y versátil</li>
-                  <li>Fácil cuidado y mantenimiento</li>
-                </ul>
-                <div className={styles.tags}>
-                  {product.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          {(
+            [
+              { key: "description", label: "Descripción y Características" },
+              { key: "shipping", label: "Envío y Entrega" },
+              { key: "returns", label: "Devoluciones y Cambios" },
+            ] as const
+          ).map(({ key, label }) => {
+            const isOpen = expandedSections[key];
+            return (
+              <div className={styles.expandableSection} key={key}>
+                <button
+                  className={styles.sectionHeader}
+                  onClick={() => toggleSection(key)}
+                >
+                  <h3>{label}</h3>
+                  {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
 
-          {/* Envío */}
-          <div className={styles.expandableSection}>
-            <button
-              className={styles.sectionHeader}
-              onClick={() => toggleSection("shipping")}
-            >
-              <h3>Envío y Entrega</h3>
-              {expandedSections.shipping ? (
-                <ChevronUp size={20} />
-              ) : (
-                <ChevronDown size={20} />
-              )}
-            </button>
-            {expandedSections.shipping && (
-              <div className={styles.sectionContent}>
-                <div className={styles.shippingOptions}>
-                  <div className={styles.shippingOption}>
-                    <div className={styles.shippingIcon}>
-                      <Truck size={20} />
-                    </div>
-                    <div className={styles.shippingDetails}>
-                      <h4>Envío Estándar</h4>
-                      <p>3-5 días laborables - Gratis en pedidos +$50</p>
-                    </div>
-                    <span className={styles.shippingPrice}>$5.99</span>
+                {isOpen && (
+                  <div className={styles.sectionContent}>
+                    {key === "description" && (
+                      <>
+                        <p>{product.description}</p>
+                        <ul className={styles.featureList}>
+                          <li>Material de alta calidad</li>
+                          <li>Diseño urbano y moderno</li>
+                          <li>Corte cómodo y versátil</li>
+                          <li>Fácil mantenimiento</li>
+                        </ul>
+                        <div className={styles.tags}>
+                          {tags.map((t) => (
+                            <span key={t} className={styles.tag}>
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                    {key === "shipping" && (
+                      <div className={styles.shippingOptions}>
+                        <div className={styles.shippingOption}>
+                          <Truck size={20} />
+                          <div>
+                            <h4>Envío Estándar</h4>
+                            <p>3-5 días – Gratis +$50</p>
+                          </div>
+                          <span className={styles.shippingPrice}>$5.99</span>
+                        </div>
+                        <div className={styles.shippingOption}>
+                          <Truck size={20} />
+                          <div>
+                            <h4>Envío Express</h4>
+                            <p>1-2 días laborables</p>
+                          </div>
+                          <span className={styles.shippingPrice}>$12.99</span>
+                        </div>
+                      </div>
+                    )}
+                    {key === "returns" && (
+                      <div className={styles.returnPolicy}>
+                        <div className={styles.returnItem}>
+                          <RotateCcw size={20} />
+                          <div>
+                            <h4>30 días para devoluciones</h4>
+                            <p>En perfecto estado</p>
+                          </div>
+                        </div>
+                        <div className={styles.returnItem}>
+                          <Shield size={20} />
+                          <div>
+                            <h4>Garantía de Calidad</h4>
+                            <p>Protegido contra defectos</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className={styles.shippingOption}>
-                    <div className={styles.shippingIcon}>
-                      <Truck size={20} />
-                    </div>
-                    <div className={styles.shippingDetails}>
-                      <h4>Envío Express</h4>
-                      <p>1-2 días laborables</p>
-                    </div>
-                    <span className={styles.shippingPrice}>$12.99</span>
-                  </div>
-                </div>
+                )}
               </div>
-            )}
-          </div>
-
-          {/* Devoluciones */}
-          <div className={styles.expandableSection}>
-            <button
-              className={styles.sectionHeader}
-              onClick={() => toggleSection("returns")}
-            >
-              <h3>Devoluciones y Cambios</h3>
-              {expandedSections.returns ? (
-                <ChevronUp size={20} />
-              ) : (
-                <ChevronDown size={20} />
-              )}
-            </button>
-            {expandedSections.returns && (
-              <div className={styles.sectionContent}>
-                <div className={styles.returnPolicy}>
-                  <div className={styles.returnItem}>
-                    <RotateCcw size={20} />
-                    <div>
-                      <h4>30 días para devoluciones</h4>
-                      <p>
-                        Devuelve tu producto en perfecto estado dentro de 30
-                        días
-                      </p>
-                    </div>
-                  </div>
-                  <div className={styles.returnItem}>
-                    <Shield size={20} />
-                    <div>
-                      <h4>Garantía de calidad</h4>
-                      <p>
-                        Todos nuestros productos tienen garantía de fabricación
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+            );
+          })}
         </div>
-
-        {/* Reseñas */}
-        <ProductReviews
-          productId={product.id}
-          rating={product.rating}
-          reviewCount={product.reviewCount}
-        />
-
-        {/* Recomendaciones */}
-        <ProductRecommendations
-          currentProductId={product.id}
-          category={product.category}
-        />
       </div>
+
+      {/* Reviews & Recommendations */}
+      <ProductReviews
+        productId={product.id}
+        rating={rating}
+        reviewCount={reviewCount}
+      />
+      <ProductRecommendations
+        currentProductId={product.id}
+        category={category}
+      />
     </div>
   );
 };

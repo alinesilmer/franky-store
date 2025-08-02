@@ -1,16 +1,18 @@
 "use client";
-import type React from "react";
-import { useState, useEffect } from "react";
-import { Heart, ShoppingCart, Clock } from "lucide-react";
+
+import React, { useState, useEffect } from "react";
+import { Heart, Clock } from "lucide-react";
+import { Button } from "../../../components/atoms/Button/Button"; // ✅ import
 import type { Product } from "../../../types/product";
 import styles from "./OfferCard.module.scss";
 
-interface OfferCardProps {
+export interface OfferCardProps {
   product: Product;
-  onProductClick: (productId: string) => void;
-  onAddToCart: (productId: string) => void;
-  onAddToFavorites: (productId: string) => void;
+  onProductClick: (id: string) => void;
+  onAddToCart: (id: string) => void;
+  onAddToFavorites: (id: string) => void;
   animationDelay?: number;
+  className?: string;
 }
 
 const OfferCard: React.FC<OfferCardProps> = ({
@@ -19,128 +21,120 @@ const OfferCard: React.FC<OfferCardProps> = ({
   onAddToCart,
   onAddToFavorites,
   animationDelay = 0,
+  className,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(product.isFavorite ?? false);
   const [isVisible, setIsVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(86400); // 24 horas en segundos
+  const [timeLeft, setTimeLeft] = useState(86_400);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), animationDelay * 100);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setIsVisible(true), animationDelay * 100);
+    return () => clearTimeout(t);
   }, [animationDelay]);
 
   useEffect(() => {
     if (product.originalPrice && product.originalPrice > product.price) {
-      const interval = setInterval(() => {
-        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-      }, 1000);
-      return () => clearInterval(interval);
+      const i = setInterval(
+        () => setTimeLeft((s) => (s > 0 ? s - 1 : 0)),
+        1_000
+      );
+      return () => clearInterval(i);
     }
   }, [product.originalPrice, product.price]);
 
-  const formatTime = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hours.toString().padStart(2, "0")}:${minutes
+  const cover = product.images?.[0] ?? product.image;
+  const discount =
+    product.originalPrice && product.originalPrice > 0
+      ? Math.round(
+          ((product.originalPrice - product.price) / product.originalPrice) *
+            100
+        )
+      : 0;
+
+  const fmt = (sec: number) => {
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return `${h.toString().padStart(2, "0")}:${m
       .toString()
-      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  const discountPercentage = product.originalPrice
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
-      )
-    : 0;
-
-  const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    onAddToFavorites(product.id);
-  };
-
-  const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onAddToCart(product.id);
-  };
-
-  const handleCardClick = () => {
-    onProductClick(product.id);
+      .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
   return (
-    <div
-      className={`${styles.offerCard} ${isVisible ? styles.visible : ""}`}
-      onClick={handleCardClick}
+    <article
+      className={`${styles.offerCard} ${isVisible ? styles.visible : ""} ${
+        className ?? ""
+      }`}
       style={
         {
           "--animation-delay": `${animationDelay * 0.1}s`,
         } as React.CSSProperties
       }
+      onClick={() => onProductClick(product.id)}
     >
-      {/* Product Image Container */}
+      {/* ---------- Media ---------- */}
       <div className={styles.imageContainer}>
-        {/* Discount Badge */}
-        {discountPercentage > 0 && (
-          <div className={styles.discountBadge}>{discountPercentage}% off</div>
+        {discount > 0 && (
+          <span className={styles.discountBadge}>{discount}% OFF</span>
         )}
 
-        {/* Favorite Button */}
         <button
           className={`${styles.favoriteBtn} ${isFavorite ? styles.active : ""}`}
-          onClick={handleFavoriteClick}
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFavorite((v) => !v);
+            onAddToFavorites(product.id);
+          }}
+          aria-label={
+            isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"
+          }
         >
           <Heart size={16} fill={isFavorite ? "currentColor" : "none"} />
         </button>
 
-        {/* Product Image */}
         <div className={styles.imageWrapper}>
           <img
-            src={product.images[0] || "/placeholder.svg?height=200&width=200"}
+            src={cover}
             alt={product.name}
             className={styles.productImage}
             loading="lazy"
           />
         </div>
 
-        {/* Countdown Timer for Offers */}
-        {discountPercentage > 0 && timeLeft > 0 && (
-          <div className={styles.countdownTimer}>
+        {discount > 0 && timeLeft > 0 && (
+          <div className={styles.countdownTimer} aria-live="polite">
             <Clock size={12} />
-            <span>{formatTime(timeLeft)}</span>
+            <span>{fmt(timeLeft)}</span>
           </div>
         )}
       </div>
 
-      {/* Product Info */}
+      {/* ---------- Info ---------- */}
       <div className={styles.productInfo}>
-        {/* Product Name */}
         <h3 className={styles.productName}>{product.name}</h3>
 
-        {/* Price */}
         <div className={styles.priceContainer}>
           <span className={styles.currentPrice}>
             ${product.price.toFixed(2)}
           </span>
-          {product.originalPrice && (
+          {product.originalPrice && product.originalPrice > product.price && (
             <span className={styles.originalPrice}>
               ${product.originalPrice.toFixed(2)}
             </span>
           )}
         </div>
 
-        {/* Add to Cart Button */}
-        <button
-          className={styles.addToCartBtn}
-          onClick={handleAddToCartClick}
-          disabled={!product.inStock}
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={product.inStock === false}
+          onClick={() => onAddToCart(product.id)}
+          type="button"
         >
-          <ShoppingCart size={16} />
-          {product.inStock ? "Add to Cart" : "Out of Stock"}
-        </button>
+          {product.inStock === false ? "Sin stock" : "Ver más"}
+        </Button>
       </div>
-    </div>
+    </article>
   );
 };
 

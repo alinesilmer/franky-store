@@ -1,16 +1,17 @@
 
 
 .input {
-  width: 50%;
-  max-width: 200px;
+  width: 100%;
+  max-width: 300px;
   background-color: v.$color-border;
   padding: v.$spacing-sm v.$spacing-md;
   border: 1px solid v.$color-border;
-  border-radius: 8px; // Slightly more rounded
+  border-radius: 8px; 
   color: v.$color-text-light;
   font-family: v.$font-body;
   font-size: v.$font-size-md;
   outline: none;
+  box-sizing: border-box;
   transition: border-color v.$transition-speed v.$transition-ease, box-shadow v.$transition-speed v.$transition-ease;
 
   &:focus {

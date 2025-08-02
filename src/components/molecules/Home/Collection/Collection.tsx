@@ -1,73 +1,74 @@
 "use client";
-import type React from "react";
-import { useState } from "react";
+
+import React, { useState, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./Collection.module.scss";
+
 import OfferCard from "../../../../components/atoms/OfferCard/OfferCard";
 import ProductDetailModal from "../../../../components/molecules/ProductDetailModal/ProductDetailModal";
-import type { Product } from "../../../../types/models";
+import type { Product } from "../../../../types/product";
 import { DUMMY_PRODUCTS } from "../../../../lib/auth";
 
 const Collection: React.FC = () => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selected, setSelected] = useState<Product | null>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  const handleProductClick = (productId: string) => {
-    const product = DUMMY_PRODUCTS.find((p) => p.id === productId);
-    if (product) {
-      setSelectedProduct(product);
-    }
+  const CARD_PLUS_GAP = 320;
+  const PAGE_WIDTH = CARD_PLUS_GAP * 3;
+
+  const slide = (dir: "left" | "right") => {
+    if (!trackRef.current) return;
+    const dx = dir === "left" ? -PAGE_WIDTH : PAGE_WIDTH;
+    trackRef.current.scrollBy({ left: dx, behavior: "smooth" });
   };
-
-  const handleAddToCart = (productId: string) => {
-    console.log("Añadir al carrito:", productId);
-    // Implementar lógica del carrito
-  };
-
-  const handleAddToFavorites = (productId: string) => {
-    console.log("Añadir a favoritos:", productId);
-    // Implementar lógica de favoritos
-  };
-
-  // Convertir DUMMY_PRODUCTS al formato esperado por OfferCard
-  const convertedProducts = DUMMY_PRODUCTS.map((product) => ({
-    ...product,
-    images: [product.image],
-    originalPrice: product.price * 1.3, // Simular precio original más alto
-    reviewCount: Math.floor(Math.random() * 200) + 10,
-    inStock: true,
-    isBestSeller: Math.random() > 0.7,
-    tags: ["urbano", "streetwear"],
-    createdAt: "2024-01-15",
-    category: "camisetas",
-    brand: "Urban Store",
-  }));
 
   return (
     <section className={styles.section}>
-      <div className="container">
-        <h2 className={styles.title}>NUEVA COLECCIÓN</h2>
-        <p className={styles.subtitle}>
-          Descubre lo último en moda urbana. Estilo fresco y auténtico para la
-          calle.
-        </p>
-        <div className={styles.sliderWrapper}>
-          <div className={styles.productGrid}>
-            {convertedProducts.map((product, index) => (
+      <h2 className={styles.title}>NUEVA COLECCIÓN</h2>
+      <p className={styles.subtitle}>
+        Descubre lo último en moda urbana. Estilo fresco y auténtico para la
+        calle.
+      </p>
+
+      <div className={styles.carousel}>
+        {/* viewport masks overflow */}
+        <div className={styles.viewport}>
+          <div className={styles.track} ref={trackRef}>
+            {DUMMY_PRODUCTS.map((p, i) => (
               <OfferCard
-                key={product.id}
-                product={product}
-                onProductClick={handleProductClick}
-                onAddToCart={handleAddToCart}
-                onAddToFavorites={handleAddToFavorites}
-                animationDelay={index * 0.1}
+                key={p.id}
+                product={p}
+                onProductClick={() => setSelected(p)}
+                onAddToCart={(id) => console.log("Carrito →", id)}
+                onAddToFavorites={(id) => console.log("Favorito →", id)}
+                animationDelay={i}
+                className={styles.cardShell}
               />
             ))}
           </div>
         </div>
+
+        {/* arrows outside viewport */}
+        <button
+          className={`${styles.chevron} ${styles.left}`}
+          aria-label="Anterior"
+          onClick={() => slide("left")}
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          className={`${styles.chevron} ${styles.right}`}
+          aria-label="Siguiente"
+          onClick={() => slide("right")}
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
-      {selectedProduct && (
+
+      {selected && (
         <ProductDetailModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
+          product={selected}
+          onClose={() => setSelected(null)}
         />
       )}
     </section>

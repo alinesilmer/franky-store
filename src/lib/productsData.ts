@@ -7,8 +7,10 @@ export const PRODUCTS_DATA: Product[] = [
     name: "Camiseta Urban Vibes",
     description: "Camiseta de algodón premium con diseño urbano exclusivo",
     price: 45.99,
-    category: "camisetas",
+    originalPrice: undefined,
+    category: "Remeras",         
     brand: "Urban Store",
+    image: "https://i.pinimg.com/736x/7b/de/ba/7bdeba12dc862fe2ce95aae1596938d9.jpg",
     images: [
       "https://i.pinimg.com/736x/7b/de/ba/7bdeba12dc862fe2ce95aae1596938d9.jpg",
       "https://i.pinimg.com/736x/14/a5/1a/14a51ac3d873389dcd5dd592456adec0.jpg",
@@ -21,9 +23,9 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: true,
     isBestSeller: false,
+    isFavorite: false,
     tags: ["algodón", "urbano", "cómodo"],
     createdAt: "2024-01-15",
-    isFavorite: false,
   },
   {
     id: "2",
@@ -31,8 +33,9 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Sudadera con capucha y diseño de graffiti auténtico",
     price: 89.99,
     originalPrice: 109.99,
-    category: "sudaderas",
+    category: "Buzos",       
     brand: "Street Art Co.",
+    image: "https://i.pinimg.com/1200x/d2/59/c9/d259c954287f4a28f678220e75c6a8ae.jpg",
     images: [
       "https://i.pinimg.com/1200x/d2/59/c9/d259c954287f4a28f678220e75c6a8ae.jpg",
       "https://i.pinimg.com/736x/32/85/43/328543e5b74a7145ca18fe8c2e62255e.jpg",
@@ -44,9 +47,9 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: false,
     isBestSeller: true,
+    isFavorite: true,
     tags: ["capucha", "graffiti", "streetwear"],
     createdAt: "2024-01-10",
-    isFavorite: true,    
   },
   {
     id: "3",
@@ -54,11 +57,12 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Zapatillas deportivas con diseño urbano y máxima comodidad",
     price: 125.0,
     originalPrice: 149.99,
-    category: "zapatillas",
+    category: "Zapatillas",      // matches your “Zapatillas” filter ID
     brand: "Urban Kicks",
+    image: "https://i.pinimg.com/736x/0b/63/44/0b6344d6f14877b7f04a02467727457b.jpg",
     images: [
       "https://i.pinimg.com/736x/0b/63/44/0b6344d6f14877b7f04a02467727457b.jpg",
-      "https://i.pinimg.com/736x/51/d0/5c/51d05c3c5abef4151e712d91601d86fc.jpg"
+      "https://i.pinimg.com/736x/51/d0/5c/51d05c3c5abef4151e712d91601d86fc.jpg",
     ],
     colors: ["blanco", "negro", "gris"],
     sizes: ["38", "39", "40", "41", "42", "43", "44", "45"],
@@ -67,17 +71,19 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: true,
     isBestSeller: true,
+    isFavorite: true,
     tags: ["deportivo", "cómodo", "urbano"],
     createdAt: "2024-01-20",
-    isFavorite: true,   
   },
   {
     id: "4",
     name: "Jeans City Style",
     description: "Pantalón urbano con corte moderno y detalles únicos",
     price: 67.75,
-    category: "pantalones",
+    originalPrice: undefined,
+    category: "Pantalones",         // matches your “Pantalones” filter ID
     brand: "City Wear",
+    image: "https://i.pinimg.com/736x/0a/f3/a0/0af3a0b01497af797e7b523932c68d02.jpg",
     images: [
       "https://i.pinimg.com/736x/0a/f3/a0/0af3a0b01497af797e7b523932c68d02.jpg",
       "https://i.pinimg.com/1200x/c6/fb/f9/c6fbf9d664b617c74cf956f1edf15c39.jpg",
@@ -90,9 +96,9 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: false,
     isBestSeller: false,
+    isFavorite: false,
     tags: ["moderno", "cómodo", "versátil"],
     createdAt: "2024-01-05",
-    isFavorite: false,
   },
   {
     id: "5",
@@ -100,8 +106,9 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Gorra snapback con bordado exclusivo y ajuste perfecto",
     price: 32.5,
     originalPrice: 42.0,
-    category: "gorras",
+    category: "Gorras",          // matches your “Gorras” filter ID
     brand: "King Caps",
+    image: "https://i.pinimg.com/1200x/eb/dc/d0/ebdcd009310150015654699d5e79cdfd.jpg",
     images: [
       "https://i.pinimg.com/1200x/eb/dc/d0/ebdcd009310150015654699d5e79cdfd.jpg",
       "https://i.pinimg.com/1200x/93/ec/57/93ec575bfca9c6778a731a27dfde669c.jpg",
@@ -114,21 +121,22 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: false,
     isBestSeller: true,
+    isFavorite: false,
     tags: ["snapback", "bordado", "ajustable"],
     createdAt: "2024-01-08",
-    isFavorite: false,
   },
   {
     id: "6",
     name: "Reloj Urban Time",
     description: "Reloj digital con diseño futurista y múltiples funciones",
-    price: 95,
-    category: "accesorios",
+    price: 95.0,
+    originalPrice: undefined,
+    category: "Accesorios",    // matches your “Accesorios” filter ID
     brand: "Tech Time",
+    image: "https://i.pinimg.com/736x/1a/01/95/1a01957c71c4bdd1f7e2549b05020d7d.jpg",
     images: [
       "https://i.pinimg.com/736x/1a/01/95/1a01957c71c4bdd1f7e2549b05020d7d.jpg",
-      "https://i.pinimg.com/736x/71/be/af/71beaf76082b8efc0f12c48a59919f9a.jpg",
-      "https://i.pinimg.com/736x/70/b5/05/70b505be9573f8375952587232d13203.jpg",
+      "https://i.pinimg.com/736x/71/be/af/71beaf76082b8efc0f12c48a59919f9d.jpg",
     ],
     colors: ["negro", "blanco", "gris"],
     sizes: ["U"],
@@ -137,11 +145,13 @@ export const PRODUCTS_DATA: Product[] = [
     inStock: true,
     isNew: true,
     isBestSeller: false,
+    isFavorite: false,
     tags: ["digital", "resistente", "multifunción"],
     createdAt: "2024-01-18",
-    isFavorite: false,
   },
 ];
+
+
 export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
   {
     id: "street-essentials",
@@ -156,7 +166,7 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
         image: "https://i.pinimg.com/736x/3f/43/90/3f4390f53687b99c819800eb1e894852.jpg",
         totalPrice: 189.99,
         originalPrice: 229.99,
-        items: ["Camiseta Urban", "Pantalón Cargo", "Zapatillas Street"],
+        items: ["Camiseta", "Pantalón Cargo", "Zapatillas Street"],
       },
       {
         id: "outfit-2",
@@ -195,7 +205,7 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
         name: "Weekend Luxury",
         image: "https://i.pinimg.com/736x/a7/8f/f2/a78ff29fc28317bf71a6b331f85c45fb.jpg",
         totalPrice: 249.99,
-        items: ["Suéter Cashmere", "Jeans Premium", "Sneakers Limited"],
+        items: ["Suéter", "Jeans Premium", "Sneakers"],
       },
     ],
   },
@@ -210,7 +220,7 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
         name: "Spring Fresh",
         image: "https://i.pinimg.com/736x/83/20/29/8320290bc256aff738b85af1708fb4e0.jpg",
         totalPrice: 179.99,
-        items: ["Camiseta Oversize", "Shorts Cargo", "Sneakers Colorful"],
+        items: ["Camiseta Oversize", "Shorts Cargo", "Sneakers"],
       },
       {
         id: "outfit-7",

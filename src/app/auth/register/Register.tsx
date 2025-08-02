@@ -508,6 +508,12 @@ const Register: React.FC = () => {
                 Crear Cuenta
               </Button>
             </div>
+            <p className={styles.loginLink}>
+              ¿Ya tienes una cuenta?{" "}
+              <a href="#" onClick={() => navigate("/auth/login")}>
+                Ingresa aquí
+              </a>
+            </p>
           </form>
         </div>
       </div>

@@ -1,25 +1,41 @@
 .productFilters {
-  background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
-  border-radius: 16px;
-  border: 1px solid rgba(v.$color-accent, 0.1);
-  overflow: hidden;
-  transition: all v.$transition-speed;
+  // Make sidebar sticky and fill viewport height minus top offset
   position: sticky;
   top: v.$spacing-lg;
-  min-width: 300px;
+  bottom: 0;
+  height: calc(100vh - #{v.$spacing-lg});
+  
+  background: v.$color-border;
+  border: 1px solid rgba(v.$color-accent, 0.1);
+  
+  // Enable vertical scrolling, hide horizontal overflow
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all v.$transition-speed;
+  
+  // Hide scrollbar (WebKit)
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  // Hide scrollbar (IE/Edge)
+  -ms-overflow-style: none;
+  // Hide scrollbar (Firefox)
+  scrollbar-width: none;
 
   &.collapsed {
     .filtersContent {
-      max-height: 0;
       opacity: 0;
       padding: 0 v.$spacing-lg;
+      max-height: 0;
     }
   }
 
   .filtersHeader {
     padding: v.$spacing-lg;
     border-bottom: 1px solid rgba(v.$color-accent, 0.1);
-    background: linear-gradient(135deg, rgba(v.$color-accent, 0.05), rgba(v.$color-secondary, 0.05));
+    background: v.$color-border;
 
     .headerContent {
       display: flex;
@@ -38,7 +54,7 @@
 
         h3 {
           font-family: v.$font-heading;
-          font-size: v.$font-size-lg;
+          font-size: v.$font-size-xl;
           color: v.$color-secondary;
           margin: 0;
           text-transform: uppercase;
@@ -104,7 +120,6 @@
   }
 
   .filtersContent {
-    max-height: 1000px;
     opacity: 1;
     padding: v.$spacing-lg;
     transition: all 0.3s ease;
@@ -142,6 +157,7 @@
           gap: v.$spacing-sm;
           color: v.$color-secondary;
           font-weight: 500;
+          font-size: v.$font-size-md;
 
           svg {
             color: v.$color-accent;
@@ -161,14 +177,15 @@
       }
 
       .sectionContent {
-        padding: 0 v.$spacing-md v.$spacing-md;
+        padding: v.$spacing-md v.$spacing-sm;
         border-top: 1px solid rgba(v.$color-accent, 0.1);
         animation: slideDown 0.3s ease;
+        font-size: v.$font-size-md;
       }
     }
   }
 
-  // Opciones de ordenamiento
+  /* Sort options */
   .sortOptions {
     display: flex;
     flex-direction: column;
@@ -198,37 +215,33 @@
     }
   }
 
-  // Rango de precio
+  /* Price range */
   .priceRange {
     .priceInputs {
       display: flex;
       align-items: center;
-      gap: v.$spacing-sm;
+      justify-content: center;
       margin-bottom: v.$spacing-md;
+      gap: v.$spacing-sm;
 
-      .priceInput {
-        flex: 1;
+      label {
+        display: block;
+        font-size: v.$font-size-sm;
+        color: v.$color-text-light;
+        margin-bottom: 4px;
+      }
 
-        label {
-          display: block;
-          font-size: v.$font-size-xs;
-          color: v.$color-text-light;
-          margin-bottom: 4px;
-        }
+      input {
+        padding: v.$spacing-xs;
+        border: 1px solid rgba(v.$color-accent, 0.2);
+        border-radius: 6px;
+        background: v.$color-primary;
+        color: v.$color-text-light;
+        font-size: v.$font-size-sm;
 
-        input {
-          width: 100%;
-          padding: v.$spacing-xs;
-          border: 1px solid rgba(v.$color-accent, 0.2);
-          border-radius: 6px;
-          background: v.$color-primary;
-          color: v.$color-text-light;
-          font-size: v.$font-size-sm;
-
-          &:focus {
-            outline: none;
-            border-color: v.$color-accent;
-          }
+        &:focus {
+          outline: none;
+          border-color: v.$color-accent;
         }
       }
 
@@ -296,10 +309,10 @@
     }
   }
 
-  // Colores
+  /* Color grid */
   .colorGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: v.$spacing-sm;
 
     .colorOption {
@@ -340,14 +353,15 @@
         font-size: v.$font-size-xs;
         font-weight: bold;
       }
-      // Si el swatch es blanco, sobreescribimos a color primary
+
+      // White swatch adjustment
       &[style*="#ffffff"] .colorCheck {
         color: v.$color-primary;
       }
     }
   }
 
-  // Tallas
+  /* Size grid */
   .sizeGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -378,7 +392,7 @@
     }
   }
 
-  // Marcas
+  /* Brand list */
   .brandList {
     display: flex;
     flex-direction: column;
@@ -403,12 +417,12 @@
 
       .checkboxLabel {
         color: v.$color-text-light;
-        font-size: v.$font-size-sm;
+        font-size: v.$font-size-md;
       }
     }
   }
 
-  // Filtros activos
+  /* Active filters */
   .activeFilters {
     padding: v.$spacing-lg;
     border-top: 1px solid rgba(v.$color-accent, 0.1);
@@ -469,9 +483,93 @@
     }
   }
 
-  // Responsive
+  // Mobile fallback
   @include m.media-breakpoint-down(v.$breakpoint-lg) {
     position: static;
+    height: auto;
     margin-bottom: v.$spacing-lg;
+  }
+}
+
+/* Remove native number input spinners */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Products page layout */
+.productsPage {
+  min-height: 100vh;
+  background-color: v.$color-primary;
+
+  .categorySection {
+    padding: v.$spacing-xl 0;
+    background: white;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+    border-top: 1px solid lightgray;
+  }
+
+  .outfitSection {
+    background-color: v.$color-secondary;
+  }
+
+  .productsSection {
+    .container {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        padding: 0 v.$spacing-md;
+      }
+    }
+
+    .productsLayout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+
+      @include m.media-breakpoint-down(v.$breakpoint-lg) {
+        grid-template-columns: 1fr;
+        gap: v.$spacing-lg;
+      }
+
+      .filtersAside {
+        height: 100%;
+        @include m.media-breakpoint-down(v.$breakpoint-lg) {
+          order: 2;
+        }
+      }
+
+      .productsMain {
+        .productsHeader {
+          margin: v.$spacing-xl;
+          padding-bottom: v.$spacing-lg;
+          border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+          .resultsTitle {
+            font-family: v.$font-heading;
+            font-size: v.$font-size-xxl;
+            color: v.$color-secondary;
+            margin: 0 0 v.$spacing-xs 0;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+
+          .resultsCount {
+            color: v.$color-text-light;
+            opacity: 0.8;
+            font-size: v.$font-size-md;
+            margin: 0;
+          }
+        }
+      }
+    }
   }
 }

@@ -1,11 +1,14 @@
 
 .outfitCarousel {
   background: v.$color-secondary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
   
   .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: v.$spacing-lg v.$spacing-lg;
+    padding: v.$spacing-lg 0;
 
     @include m.media-breakpoint-down(v.$breakpoint-md) {
       padding: 0 v.$spacing-md;
@@ -38,13 +41,6 @@
         -webkit-background-clip: text;
         background-clip: text;
       }
-
-      .carouselSubtitle {
-        font-size: v.$font-size-lg;
-        color: v.$color-text-dark;
-        opacity: 0.8;
-        margin: 0;
-      }
     }
 
     .collectionTabs {
@@ -69,7 +65,7 @@
         cursor: pointer;
         transition: all v.$transition-speed;
         font-size: v.$font-size-sm;
-        font-weight: 500;
+        font-weight: 600;
         white-space: nowrap;
 
         &:hover {
@@ -88,21 +84,20 @@
   }
 
   .collectionSection {
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    gap: v.$spacing-xl;
+    display: flex;
+    gap: v.$spacing-lg;
     padding: v.$spacing-xl;
-     align-items: center;
-        justify-content: center;
+    align-items: center;
 
     @include m.media-breakpoint-down(v.$breakpoint-lg) {
-      grid-template-columns: 1fr;
+      flex-direction: column;
       gap: v.$spacing-lg;
     }
 
     .collectionInfo {
       .collectionImage {
         position: relative;
+        width: 400px;
         height: 500px;
         border-radius: 16px;
         overflow: hidden;
@@ -142,10 +137,14 @@
 
       .outfitsCarousel {
         display: flex;
-        gap: v.$spacing-lg;
-        overflow-x: auto;
-        padding: 0 v.$spacing-xl;
+        padding: 0;
         scroll-behavior: smooth;
+        justify-content: space-between; 
+
+  &.two-items {
+    justify-content: flex-end;
+    gap: v.$spacing-xl;
+  }
 
         &::-webkit-scrollbar {
           height: 6px;
@@ -162,12 +161,10 @@
         }
 
         .outfitCard {
-          flex: 0 0 280px;
-          height: 470px;
+          flex: 0 0 260px;
           background: v.$color-primary;
           border-radius: 16px;
           overflow: hidden;
-          border: 1px solid rgba(v.$color-accent, 0.1);
           transition: all v.$transition-speed;
 
           &:hover {
@@ -257,7 +254,7 @@
               gap: 8px;
 
               .itemTag {
-                font-size: v.$font-size-xs;
+                font-size: v.$font-size-sm;
                 background: rgba(v.$color-accent, 0.1);
                 color: v.$color-accent;
                 padding: 2px 6px;

@@ -12,7 +12,13 @@ background-color: v.$color-primary;
 line-height: 1.6;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+   overflow-y: auto;            /* allow wheel / touch */
+  -ms-overflow-style: none;    /* IE / old Edge */
+  scrollbar-width: none;       /* Firefox */
 }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar { display: none; }
+
 
 a {
 color: inherit;
@@ -54,22 +60,3 @@ padding: 0 v.$spacing-md;
   padding: 0 v.$spacing-lg;
 }
 }
-
-/* Estilos para el scrollbar */
-::-webkit-scrollbar {
-width: 8px;
-}
-
-::-webkit-scrollbar-track {
-background: v.$color-primary;
-}
-
-::-webkit-scrollbar-thumb {
-background: v.$color-accent;
-border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-background: white;
-}
-

@@ -1,6 +1,5 @@
 "use client";
-import type React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { Star, ThumbsUp, Filter } from "lucide-react";
 import styles from "./ProductReviews.module.scss";
@@ -22,6 +21,7 @@ interface ProductReviewsProps {
   rating: number;
   reviewCount: number;
 }
+
 type SortKey = "recent" | "helpful" | "rating";
 
 const ProductReviews: React.FC<ProductReviewsProps> = ({
@@ -30,6 +30,18 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
 }) => {
   const [filterRating, setFilterRating] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<SortKey>("recent");
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
+
+  // Close lightbox on Esc
+  useEffect(() => {
+    if (!lightboxSrc) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxSrc(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [lightboxSrc]);
 
   // Mock reviews data
   const reviews: Review[] = [
@@ -83,10 +95,12 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
     { stars: 1, count: 1, percentage: 1 },
   ];
 
-  const filteredReviews = reviews.filter((review) =>
-    filterRating ? review.rating === filterRating : true
+  // Apply rating filter
+  const filteredReviews = reviews.filter((r) =>
+    filterRating ? r.rating === filterRating : true
   );
 
+  // Sort reviews
   const sortedReviews = [...filteredReviews].sort((a, b) => {
     switch (sortBy) {
       case "helpful":
@@ -101,14 +115,25 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value as SortKey);
   };
+
+  // Toggle like/helpful
+  const toggleLike = (id: string) => {
+    setLikedReviews((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   return (
     <div className={styles.productReviews}>
       <div className={styles.reviewsHeader}>
-        <h2 className={styles.reviewsTitle}>Valoraciones y Reseñas</h2>
+        <h2 className={styles.reviewsTitle}>RESEÑAS</h2>
       </div>
 
       <div className={styles.reviewsLayout}>
-        {/* Resumen de valoraciones */}
+        {/* Rating Summary */}
         <div className={styles.ratingSummary}>
           <div className={styles.overallRating}>
             <div className={styles.ratingScore}>
@@ -129,7 +154,6 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
               ({reviewCount} Nuevas Reseñas)
             </div>
           </div>
-
           <div className={styles.ratingBreakdown}>
             {ratingDistribution.map(({ stars, count, percentage }) => (
               <button
@@ -157,7 +181,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
           </div>
         </div>
 
-        {/* Lista de reseñas */}
+        {/* Reviews List */}
         <div className={styles.reviewsList}>
           <div className={styles.reviewsControls}>
             <div className={styles.sortControls}>
@@ -183,62 +207,91 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
           </div>
 
           <div className={styles.reviewsContainer}>
-            {sortedReviews.map((review) => (
-              <div key={review.id} className={styles.reviewCard}>
-                <div className={styles.reviewHeader}>
-                  <div className={styles.reviewerInfo}>
-                    <img
-                      src={review.userAvatar || "/placeholder.svg"}
-                      alt={review.userName}
-                      className={styles.reviewerAvatar}
-                    />
-                    <div className={styles.reviewerDetails}>
-                      <div className={styles.reviewerName}>
-                        {review.userName}
+            {sortedReviews.map((review) => {
+              const liked = likedReviews.has(review.id);
+              return (
+                <div key={review.id} className={styles.reviewCard}>
+                  <div className={styles.reviewHeader}>
+                    <div className={styles.reviewerInfo}>
+                      <img
+                        src={review.userAvatar}
+                        alt={review.userName}
+                        className={styles.reviewerAvatar}
+                      />
+                      <div className={styles.reviewerDetails}>
+                        <div className={styles.reviewerName}>
+                          {review.userName}
+                        </div>
+                        <div className={styles.reviewDate}>{review.date}</div>
                       </div>
-                      <div className={styles.reviewDate}>{review.date}</div>
                     </div>
                   </div>
-                </div>
 
-                <div className={styles.reviewRating}>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      fill={i < review.rating ? "#fdd835" : "none"}
-                      color="#fdd835"
-                    />
-                  ))}
-                </div>
+                  <div className={styles.reviewRating}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star
+                        key={i}
+                        size={14}
+                        fill={i < review.rating ? "#fdd835" : "none"}
+                        color="#fdd835"
+                      />
+                    ))}
+                  </div>
 
-                <div className={styles.reviewContent}>
-                  <h4 className={styles.reviewTitle}>{review.title}</h4>
-                  <p className={styles.reviewComment}>{review.comment}</p>
+                  <div className={styles.reviewContent}>
+                    <h4 className={styles.reviewTitle}>{review.title}</h4>
+                    <p className={styles.reviewComment}>{review.comment}</p>
 
-                  {review.images && review.images.length > 0 && (
-                    <div className={styles.reviewImages}>
-                      {review.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image || "/placeholder.svg"}
-                          alt={`Review image ${index + 1}`}
-                          className={styles.reviewImage}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
+                    {review.images && (
+                      <div className={styles.reviewImages}>
+                        {review.images.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`Review image ${idx + 1}`}
+                            className={styles.reviewImage}
+                            onClick={() => setLightboxSrc(img)}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
 
-                <div className={styles.reviewActions}>
-                  <button className={styles.helpfulBtn}>
-                    <ThumbsUp size={14} />
-                    <span>({review.helpful})</span>
-                  </button>
+                  <div className={styles.reviewActions}>
+                    <button
+                      onClick={() => toggleLike(review.id)}
+                      className={`${styles.helpfulBtn} ${
+                        liked ? styles.liked : ""
+                      }`}
+                    >
+                      <ThumbsUp
+                        size={14}
+                        fill={liked ? "currentColor" : "none"}
+                      />
+                      <span>({review.helpful + (liked ? 1 : 0)})</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
+          {/* Lightbox */}
+          {lightboxSrc && (
+            <div
+              className={styles.lightboxOverlay}
+              role="dialog"
+              aria-modal="true"
+              onClick={() => setLightboxSrc(null)}
+            >
+              <img
+                src={lightboxSrc}
+                alt="Imagen ampliada"
+                className={styles.lightboxImage}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

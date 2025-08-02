@@ -195,7 +195,7 @@
 
 .question {
   font-family: v.$font-heading;
-  font-size: v.$font-size-lg;
+  font-size: v.$font-size-xl;
   margin: 0;
   flex: 1 1 auto;
   padding-right: v.$spacing-sm;
@@ -226,7 +226,7 @@
 
 .answer {
   font-family: v.$font-body;
-  font-size: v.$font-size-sm;
+  font-size: v.$font-size-md;
   color: v.$color-text-light;
   line-height: 1.7;
   margin: 0;

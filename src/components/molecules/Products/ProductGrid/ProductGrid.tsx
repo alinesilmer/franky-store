@@ -16,7 +16,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onProductClick,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode] = useState<"grid" | "list">("grid");
   const productsPerPage = 12;
 
   const totalPages = Math.ceil(products.length / productsPerPage);
@@ -56,36 +56,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   return (
     <div className={styles.productGrid}>
       <div className={styles.gridHeader}>
-        <div className={styles.viewControls}>
-          <button
-            className={`${styles.viewBtn} ${
-              viewMode === "grid" ? styles.active : ""
-            }`}
-            onClick={() => setViewMode("grid")}
-            title="Vista en cuadrícula"
-          >
-            <div className={styles.gridIcon}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </button>
-          <button
-            className={`${styles.viewBtn} ${
-              viewMode === "list" ? styles.active : ""
-            }`}
-            onClick={() => setViewMode("list")}
-            title="Vista en lista"
-          >
-            <div className={styles.listIcon}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </button>
-        </div>
-
         <div className={styles.resultsInfo}>
           <span className={styles.resultsText}>
             Mostrando {startIndex + 1}-

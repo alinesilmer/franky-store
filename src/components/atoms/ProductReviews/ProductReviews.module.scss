@@ -1,17 +1,18 @@
 
 
 .productReviews {
-  margin: v.$spacing-xxl 0;
+  margin: v.$spacing-xxl v.$spacing-lg;
 
   .reviewsHeader {
     margin-bottom: v.$spacing-xl;
 
     .reviewsTitle {
       font-family: v.$font-heading;
-      font-size: v.$font-size-xxl;
-      color: v.$color-secondary;
+      font-size: 3rem;
+      color: v.$color-accent;
       margin: 0;
       text-transform: uppercase;
+      text-align: center;
     }
   }
 
@@ -60,7 +61,7 @@
         }
 
         .reviewCount {
-          font-size: v.$font-size-sm;
+          font-size: v.$font-size-md;
           color: v.$color-text-light;
           opacity: 0.8;
         }
@@ -155,7 +156,8 @@
             border-radius: 6px;
             padding: v.$spacing-xs v.$spacing-sm;
             color: v.$color-text-light;
-            font-size: v.$font-size-sm;
+            font-size: v.$font-size-md;
+              -webkit-appearance: none;
 
             &:focus {
               outline: none;
@@ -209,8 +211,8 @@
               gap: v.$spacing-sm;
 
               .reviewerAvatar {
-                width: 40px;
-                height: 40px;
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
                 object-fit: cover;
               }
@@ -222,12 +224,12 @@
                   gap: v.$spacing-xs;
                   font-weight: 500;
                   color: v.$color-secondary;
-                  font-size: v.$font-size-sm;
+                  font-size: v.$font-size-md;
 
                 }
 
                 .reviewDate {
-                  font-size: v.$font-size-xs;
+                  font-size: v.$font-size-sm;
                   color: v.$color-text-light;
                   opacity: 0.7;
                 }
@@ -256,7 +258,7 @@
               color: v.$color-text-light;
               line-height: 1.6;
               margin: 0 0 v.$spacing-sm 0;
-              font-size: v.$font-size-sm;
+              font-size: v.$font-size-md;
             }
 
             .reviewImages {
@@ -314,5 +316,52 @@
         }
       }
     }
+  }
+}
+
+/* ――― Lightbox ――― */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: v.$spacing-lg;
+}
+.lightboxImage {
+  max-width: min(92vw, 1200px);
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* ――― Helpful / Like button effect ――― */
+.helpfulBtn {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-xs;
+  background: none;
+  border: 1px solid rgba(v.$color-accent, 0.2);
+  border-radius: 20px;
+  padding: v.$spacing-xs v.$spacing-sm;
+  color: v.$color-text-light;
+  cursor: pointer;
+  font-size: v.$font-size-sm;
+  transition: all v.$transition-speed;
+
+  &:hover {
+    background: rgba(v.$color-accent, 0.1);
+    border-color: v.$color-accent;
+    color: v.$color-accent;
+  }
+
+  &.liked {
+    background: v.$color-accent;
+    border-color: v.$color-accent;
+    color: v.$color-primary;
+    transform: scale(1.05);
   }
 }

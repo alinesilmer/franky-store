@@ -9,7 +9,7 @@ import styles from "./Navbar.module.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { DUMMY_PRODUCTS } from "../../../../lib/auth"; // ⬅️ ajusta si es necesario
-import type { Product } from "../../../../types/models";
+import type { Product } from "../../../../types/product";
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();

@@ -1,6 +1,7 @@
+// OutfitCarousel.tsx
 "use client";
-import type React from "react";
-import { useState, useRef } from "react";
+
+import React, { useState, useRef } from "react";
 import { Button } from "../../../../components/atoms/Button/Button";
 import { Eye } from "lucide-react";
 import type { OutfitCollection } from "../../../../types/product";
@@ -15,30 +16,32 @@ const OutfitCarousel: React.FC<OutfitCarouselProps> = ({ collections }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const currentCol = collections[currentCollection];
+  const isTwo = currentCol.outfits.length === 2;
 
   return (
     <section className={styles.outfitCarousel}>
       <div className={styles.container}>
+        {/* — Header / Tabs */}
         <div className={styles.carouselHeader}>
           <div className={styles.headerContent}>
             <h2 className={styles.carouselTitle}>Outfits Completos</h2>
           </div>
-
           <div className={styles.collectionTabs}>
-            {collections.map((collection, index) => (
+            {collections.map((col, idx) => (
               <button
-                key={collection.id}
+                key={col.id}
                 className={`${styles.collectionTab} ${
-                  index === currentCollection ? styles.active : ""
+                  idx === currentCollection ? styles.active : ""
                 }`}
-                onClick={() => setCurrentCollection(index)}
+                onClick={() => setCurrentCollection(idx)}
               >
-                {collection.name}
+                {col.name}
               </button>
             ))}
           </div>
         </div>
 
+        {/* — Collection Hero */}
         <div className={styles.collectionSection}>
           <div className={styles.collectionInfo}>
             <div className={styles.collectionImage}>
@@ -58,10 +61,17 @@ const OutfitCarousel: React.FC<OutfitCarouselProps> = ({ collections }) => {
             </div>
           </div>
 
+          {/* — Outfits Carousel */}
           <div className={styles.outfitsContainer}>
-            <div className={styles.outfitsCarousel} ref={carouselRef}>
+            <div
+              ref={carouselRef}
+              className={`${styles.outfitsCarousel} ${
+                isTwo ? styles["two-items"] : ""
+              }`}
+            >
               {currentCol.outfits.map((outfit) => (
                 <div key={outfit.id} className={styles.outfitCard}>
+                  {/* Image */}
                   <div className={styles.outfitImage}>
                     <img
                       src={outfit.image || "/placeholder.svg"}
@@ -75,21 +85,22 @@ const OutfitCarousel: React.FC<OutfitCarouselProps> = ({ collections }) => {
                     </div>
                   </div>
 
+                  {/* Info */}
                   <div className={styles.outfitInfo}>
                     <h4 className={styles.outfitName}>{outfit.name}</h4>
                     <p className={styles.outfitPrice}>
                       <span className={styles.totalPrice}>
-                        ${outfit.totalPrice}
+                        ${outfit.totalPrice.toFixed(2)}
                       </span>
-                      {outfit.originalPrice && (
+                      {outfit.originalPrice != null && (
                         <span className={styles.originalPrice}>
-                          ${outfit.originalPrice}
+                          ${outfit.originalPrice.toFixed(2)}
                         </span>
                       )}
                     </p>
                     <div className={styles.outfitItems}>
-                      {outfit.items.slice(0, 3).map((item, index) => (
-                        <span key={index} className={styles.itemTag}>
+                      {outfit.items.slice(0, 3).map((item, i) => (
+                        <span key={i} className={styles.itemTag}>
                           {item}
                         </span>
                       ))}

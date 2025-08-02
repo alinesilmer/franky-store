@@ -17,7 +17,7 @@
 
 .sectionDescription {
     text-align: center;
-  font-size: v.$font-size-md;
+  font-size: v.$font-size-lg;
   margin-bottom: v.$spacing-xl;
   color: v.$color-text-light;
 }
@@ -54,10 +54,11 @@
     color: v.$color-accent;
     font-family: v.$font-heading;
     margin: v.$spacing-sm 0;
+    font-size: 1.5rem;
   }
 
   p {
-    font-size: v.$font-size-sm;
+    font-size: v.$font-size-md;
     color: v.$color-text-light;
   }
 

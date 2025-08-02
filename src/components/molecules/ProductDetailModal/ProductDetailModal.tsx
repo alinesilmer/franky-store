@@ -1,86 +1,119 @@
 "use client";
 
-import type React from "react";
+import React, { useState } from "react";
 import { Star, StarHalf } from "lucide-react";
 import Modal from "../../atoms/Modal/Modal";
-import type { Product } from "../../../types/models";
+import { Button } from "../../atoms/Button/Button";
+import type { Product } from "../../../types/product";
 import styles from "./ProductDetailModal.module.scss";
 
-interface ProductDetailModalProps {
+interface Props {
   product: Product;
   onClose: () => void;
 }
 
-const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
-  product,
-  onClose,
-}) => {
-  const renderStars = (rating: number) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      if (rating >= i) {
-        stars.push(<Star key={i} fill="currentColor" size={20} />);
-      } else if (rating >= i - 0.5) {
-        stars.push(<StarHalf key={i} fill="currentColor" size={20} />);
-      } else {
-        stars.push(<Star key={i} size={20} />);
-      }
-    }
-    return stars;
-  };
+const ProductDetailModal: React.FC<Props> = ({ product, onClose }) => {
+  /* ---------------- state for selections ---------------- */
+  const [size, setSize] = useState<string | null>(product.sizes?.[0] ?? null);
+  const [color, setColor] = useState<string | null>(
+    product.colors?.[0] ?? null
+  );
 
+  /* ---------------- helpers ---------------- */
+  const rating = product.rating ?? 0;
+  const primaryImage =
+    product.image || product.images?.[0] || "/placeholder.svg";
+
+  const renderStars = (value: number) =>
+    Array.from({ length: 5 }, (_, i) => {
+      const n = i + 1;
+      if (value >= n) return <Star key={n} fill="currentColor" size={20} />;
+      if (value >= n - 0.5)
+        return <StarHalf key={n} fill="currentColor" size={20} />;
+      return <Star key={n} size={20} />;
+    });
+
+  /* ---------------- JSX ---------------- */
   return (
     <Modal title={product.name} onClose={onClose}>
       <div className={styles.productDetail}>
+        {/* ---------- Image ---------- */}
         <div className={styles.imageContainer}>
-          <img
-            src={product.image || "/placeholder.svg"}
-            alt={product.name}
-            className={styles.image}
-          />
+          <img src={primaryImage} alt={product.name} className={styles.image} />
         </div>
+
+        {/* ---------- Info ---------- */}
         <div className={styles.info}>
           <h3 className={styles.name}>{product.name}</h3>
-          <p className={styles.price}>${product.price.toFixed(2)}</p>
+
+          <p className={styles.price}>
+            ${product.price.toFixed(2)}
+            {product.originalPrice && product.originalPrice > product.price && (
+              <span className={styles.originalPrice}>
+                ${product.originalPrice.toFixed(2)}
+              </span>
+            )}
+          </p>
+
           <div className={styles.rating}>
-            {renderStars(product.rating)}
-            <span className={styles.ratingText}>
-              ({product.rating.toFixed(1)} / 5)
-            </span>
+            {renderStars(rating)}
+            <span className={styles.ratingText}>({rating.toFixed(1)} / 5)</span>
           </div>
+
           <p className={styles.description}>
             {product.description ||
               "Prenda de alta calidad. Disponible en varias tallas y colores."}
           </p>
 
+          {/* ---------- Options ---------- */}
           <div className={styles.options}>
-            <div className={styles.optionGroup}>
-              <span className={styles.optionLabel}>Talles:</span>
-              <div className={styles.optionValues}>
-                {product.sizes.map((size) => (
-                  <span key={size} className={styles.optionValue}>
-                    {size}
-                  </span>
-                ))}
+            {!!product.sizes?.length && (
+              <div className={styles.optionGroup}>
+                <span className={styles.optionLabel}>Talles:</span>
+                <div className={styles.optionValues}>
+                  {product.sizes.map((s) => (
+                    <span
+                      key={s}
+                      className={`${styles.optionValue} ${
+                        s === size ? styles.active : ""
+                      }`}
+                      onClick={() => setSize(s)}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className={styles.optionGroup}>
-              <span className={styles.optionLabel}>Colores:</span>
-              <div className={styles.optionValues}>
-                {product.colors.map((color) => (
-                  <span
-                    key={color}
-                    className={styles.colorSwatch}
-                    style={{ backgroundColor: color }}
-                    title={color}
-                  />
-                ))}
+            {!!product.colors?.length && (
+              <div className={styles.optionGroup}>
+                <span className={styles.optionLabel}>Colores:</span>
+                <div className={styles.optionValues}>
+                  {product.colors.map((c) => (
+                    <span
+                      key={c}
+                      className={`${styles.colorSwatch} ${
+                        c === color ? styles.active : ""
+                      }`}
+                      style={{ backgroundColor: c }}
+                      onClick={() => setColor(c)}
+                      title={c}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          <button className={styles.addToCartBtn}>Agregar al Carrito</button>
+          {/* ---------- CTA ---------- */}
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => console.log("Add:", { id: product.id, size, color })}
+          >
+            Agregar al Carrito
+          </Button>
         </div>
       </div>
     </Modal>
