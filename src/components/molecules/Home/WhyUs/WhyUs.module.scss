@@ -78,16 +78,32 @@
   }
 }
 
+/* <= md: narrower than full-width (1-col gutters) */
 @include m.media-breakpoint-down(v.$breakpoint-md) {
   .grid {
     grid-auto-rows: 150px;
+    gap: v.$spacing-md; // optional: a bit tighter
 
     > .card {
-      grid-column: 1 / -1 !important;
+      grid-column: 2 / span 10 !important; // leaves 1 column on each side
       grid-row: auto !important;
+      justify-self: center; // keeps it centered within the span
     }
   }
 }
+
+/* <= sm: even narrower (2-col gutters) */
+@include m.media-breakpoint-down(v.$breakpoint-sm) {
+  .grid {
+    grid-auto-rows: 140px; // optional
+    gap: v.$spacing-sm;    // optional
+
+    > .card {
+      grid-column: 3 / span 8 !important; // leaves 2 columns on each side
+    }
+  }
+}
+
 
 .card {
   position: relative;
@@ -158,4 +174,15 @@
   line-height: 1.5;
   text-align: center;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    width: 100%;
+  }
+
+  .container {
+    padding: 0;
+  }
+
 }

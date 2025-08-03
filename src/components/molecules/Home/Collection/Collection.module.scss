@@ -1,14 +1,9 @@
-/* -------------------------------------------------- */
-/*  Collection styles – 3-card centred carousel       */
-/*  Arrows sit completely outside the viewport        */
-/* -------------------------------------------------- */
 $card-width: 300px;
 $gap: 20px;
 $chevron-size: 42px;
-$chevron-offset: 28px;                       // space between card edge & arrow
-$viewport-width: calc(#{$card-width * 3} + #{$gap * 2}); // 960 px
+$chevron-offset: 28px;                             
+$viewport-width: calc(#{$card-width * 3} + #{$gap * 2}); 
 
-/* ---------- Section shell ---------- */
 .section {
   background: v.$color-secondary;
   padding: v.$spacing-xxl 0;
@@ -33,24 +28,21 @@ $viewport-width: calc(#{$card-width * 3} + #{$gap * 2}); // 960 px
   color: v.$color-text-dark;
 }
 
-/* ---------- Carousel ---------- */
 .carousel {
   position: relative;
   display: flex;
-  justify-content: center;        /* centres viewport + cards */
+  justify-content: center;        
   margin-inline: auto;
   max-width: $viewport-width;
   width: 100%;
-  overflow: visible;              /* keep arrows visible */
+  overflow: visible;              
 }
 
-/* viewport masks the extra cards */
 .viewport {
   flex: 0 1 $viewport-width;
   overflow: hidden;
 }
 
-/* track scrolls inside viewport */
 .track {
   display: flex;
   gap: $gap;
@@ -71,38 +63,80 @@ $viewport-width: calc(#{$card-width * 3} + #{$gap * 2}); // 960 px
   }
 }
 
-/* ---------- Chevrons ---------- */
 .chevron {
   position: absolute;
   top: 50%;
-  translate: 0 -50%;
+  transform: translateY(-50%);
   width: $chevron-size;
   height: $chevron-size;
   border-radius: 50%;
-  transform: translateY(-50%);
   background: rgba(v.$color-primary, 0.8);
   border: 2px solid rgba(v.$color-accent, 0.3);
   color: v.$color-accent;
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: background .2s ease;
+  transition: background .2s ease, transform .2s ease;
   z-index: 2;
 
-  &:hover         { background: v.$color-accent;
-        color: v.$color-primary;
-        border-color: v.$color-accent;
-        transform: translateY(-50%) scale(1.1);}
-  &:focus-visible { outline: 3px solid v.$color-accent; outline-offset: 2px; }
-
-  &.left  { left: calc(-#{$chevron-size} - #{$chevron-offset}); }
-  &.right { right: calc(-#{$chevron-size} - #{$chevron-offset}); }
+  &:hover {
+    background: v.$color-accent;
+    color: v.$color-primary;
+    border-color: v.$color-accent;
+    transform: translateY(-50%) scale(1.1);
+  }
+  &:focus-visible {
+    outline: 3px solid v.$color-accent;
+    outline-offset: 2px;
+  }
+  &.left {
+    left: calc(-#{$chevron-size} - #{$chevron-offset});
+  }
+  &.right {
+    right: calc(-#{$chevron-size} - #{$chevron-offset});
+  }
 }
 
-/* ---------- Mobile swipe-only ---------- */
+/* Medium screens: show 2 cards */
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  .carousel {
+    max-width: calc(#{$card-width * 2} + #{$gap});
+  }
+  .viewport {
+    flex: 0 1 auto;
+  }
+}
+
+/* Mobile: 1 card, hide arrows */
 @include m.media-breakpoint-down(v.$breakpoint-sm) {
-  .carousel  { max-width: none; }
-  .viewport  { flex: 1 1 auto; }
-  .track     { gap: v.$spacing-md; padding-block: v.$spacing-md; }
-  .chevron   { display: none; }
+  .carousel {
+    max-width: none;
+  }
+  .viewport {
+    flex: 1 1 auto;
+  }
+  .section {
+    padding: 2rem 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+  }
+  .track {
+    gap: v.$spacing-lg;
+     align-items: center;
+    justify-content: center;
+
+  }
+
+  .chevron {
+    display: none;
+  }
+  /* Make cards full width on mobile */
+  .offerCard {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto v.$spacing-lg;
+  }
 }

@@ -312,11 +312,43 @@ const Register: React.FC = () => {
                   </span>
                 )}
               </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="province" className={styles.label}>
+                  Ciudad
+                </label>
+                <select
+                  id="province"
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                  className={`${styles.selectInput} ${
+                    errors.province ? styles.inputError : ""
+                  }`}
+                  aria-invalid={!!errors.province}
+                  aria-describedby={
+                    errors.province ? "err-province" : undefined
+                  }
+                  required
+                >
+                  <option value="" disabled>
+                    Ciudad
+                  </option>
+                  {provinceOptions.map((p) => (
+                    <option key={p.value} value={p.value}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.province && (
+                  <span id="err-province" className={styles.errorText}>
+                    {errors.province}
+                  </span>
+                )}
+              </div>
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="locality" className={styles.label}>
-                    City
+                    Localidad
                   </label>
                   <select
                     id="locality"
@@ -347,39 +379,6 @@ const Register: React.FC = () => {
                     </span>
                   )}
                 </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="province" className={styles.label}>
-                    Province
-                  </label>
-                  <select
-                    id="province"
-                    value={province}
-                    onChange={(e) => setProvince(e.target.value)}
-                    className={`${styles.selectInput} ${
-                      errors.province ? styles.inputError : ""
-                    }`}
-                    aria-invalid={!!errors.province}
-                    aria-describedby={
-                      errors.province ? "err-province" : undefined
-                    }
-                    required
-                  >
-                    <option value="" disabled>
-                      Provincia
-                    </option>
-                    {provinceOptions.map((p) => (
-                      <option key={p.value} value={p.value}>
-                        {p.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.province && (
-                    <span id="err-province" className={styles.errorText}>
-                      {errors.province}
-                    </span>
-                  )}
-                </div>
               </div>
 
               <div className={styles.formRow}>
@@ -405,7 +404,7 @@ const Register: React.FC = () => {
                   )}
                 </div>
 
-                {/* Street address – now on the right */}
+                {/* Street address */}
                 <div className={styles.formGroup}>
                   <label htmlFor="streetAddress" className={styles.label}>
                     Dirección

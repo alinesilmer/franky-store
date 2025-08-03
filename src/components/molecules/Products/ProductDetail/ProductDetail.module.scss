@@ -394,7 +394,7 @@
           text-transform: uppercase;
 
           @include m.media-breakpoint-down(v.$breakpoint-sm) {
-            padding: 3px 8px;
+            padding: 3px 3rem;
             font-size: 10px;
           }
         }

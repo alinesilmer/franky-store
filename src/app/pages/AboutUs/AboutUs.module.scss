@@ -380,7 +380,7 @@
 
     @include m.media-breakpoint-up(v.$breakpoint-md) {
       grid-template-columns: repeat(3, 1fr);
-      gap: v.$spacing-xxl; // Más espacio entre tarjetas en desktop
+      gap: v.$spacing-xxl; 
     }
   }
 
@@ -440,7 +440,7 @@
 
       .planPrice {
         font-family: v.$font-heading;
-        font-size: 3.5rem; // Precio grande
+        font-size: 3.5rem; 
         color: v.$color-accent;
         line-height: 1;
         margin: 0;

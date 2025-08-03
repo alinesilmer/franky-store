@@ -120,6 +120,7 @@
   background-position: right v.$spacing-md center;
   background-size: 16px;
   transition: border-color v.$transition-speed;
+  margin-bottom: 4px;
 
   &:focus {
     border-color: v.$color-accent;
@@ -256,7 +257,39 @@
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
-  .registerCard { max-width: 92vw; }
-  .cardBody { padding: 1.25rem; }
+   .registerForm {
+    width: 100%;
+    max-width: min(460px, 92vw);
+    margin-inline: auto;    
+    align-items: center;     
+  }
+
+  .formRow {
+    align-items: center;    
+  }
+
+  .formGroup {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;         
+    align-items: stretch;    
+  }
+
+  .formGroup input,
+  .formGroup select {
+    width: 100%;
+  }
+  .cardBody {
+    display: block;                
+    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+  }
+.sectionTitle{
+  text-align: center;
+}
+.passwordHint{
+  text-align: center;
+}
 }
 

@@ -47,7 +47,7 @@
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 10px rgba(v.$color-accent, 0.3);
+    border: 1px solid v.$color-accent;
   }
 
   h3 {

@@ -1,5 +1,3 @@
-
-
 .productDetail {
   display: flex;
   flex-direction: column;
@@ -7,19 +5,31 @@
 
   @include m.media-breakpoint-up(v.$breakpoint-md) {
     flex-direction: row;
+    align-items: flex-start;
+    gap: v.$spacing-xl;
   }
 
   .imageContainer {
     min-width: 250px;
     max-width: 100%;
-    @include m.flex-center; // Center image if it's smaller than container
+    @include m.flex-center;
+
+    /* Wider screens: give the image column a sensible width cap */
+    @include m.media-breakpoint-up(v.$breakpoint-md) {
+      flex: 0 0 40%;
+      max-width: 520px;
+    }
 
     .image {
       width: 100%;
       height: auto;
-      max-height: 400px; // Limit image height
-      object-fit: contain; // Ensure image fits without cropping
+      max-height: 400px;
+      object-fit: contain;
       border-radius: 8px;
+
+      @include m.media-breakpoint-up(v.$breakpoint-md) {
+        max-height: 520px;
+      }
     }
   }
 
@@ -44,19 +54,19 @@
       font-weight: bold;
     }
 
-     .originalPrice {
-    margin-left: v.$spacing-xs;
-    font-size: v.$font-size-sm;          
-    color: v.$color-text-light;          
-    text-decoration: line-through;
-    font-weight: 500;
-  }
+    .originalPrice {
+      margin-left: v.$spacing-xs;
+      font-size: v.$font-size-sm;
+      color: v.$color-text-light;
+      text-decoration: line-through;
+      font-weight: 500;
+    }
 
     .rating {
       display: flex;
       align-items: center;
       gap: v.$spacing-xs;
-      color: v.$color-accent; // Star color
+      color: v.$color-accent;
       margin-bottom: v.$spacing-md;
 
       .ratingText {
@@ -108,7 +118,6 @@
             &:hover {
               background-color: white;
             }
-
           }
 
           .colorSwatch {
@@ -136,15 +145,110 @@
   }
 }
 
-
+/* Active states */
 .colorSwatch.active {
   transform: scale(1.15);
   border-color: v.$color-accent;
   box-shadow: 0 0 0 2px rgba(v.$color-accent, 0.6);
 }
-
 .optionValue.active {
   background-color: v.$color-accent;
   color: v.$color-primary;
   box-shadow: 0 0 0 2px v.$color-accent inset;
 }
+
+/* =========================
+   RESPONSIVE ENHANCEMENTS
+   ========================= */
+
+/* ≤ md: stack, tighten spacing, fluid type, prevent overflow, scrollable options */
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  .productDetail {
+    gap: v.$spacing-md;
+
+    .imageContainer {
+      min-width: 0; /* avoid forcing width on narrow phones */
+      .image {
+        max-height: 320px;
+      }
+    }
+
+    .info {
+      /* Price + original price inline to save vertical space on mobile/tablet */
+      .price, .originalPrice {
+        display: inline-block;
+        vertical-align: baseline;
+      }
+
+      .name {
+        font-size: clamp(1.125rem, 3.5vw, v.$font-size-lg);
+      }
+      .price {
+        font-size: clamp(1.25rem, 5vw, v.$font-size-xl);
+        margin-bottom: v.$spacing-xs;
+      }
+      .originalPrice {
+        font-size: clamp(0.75rem, 2.8vw, v.$font-size-sm);
+      }
+      .description {
+        font-size: clamp(0.875rem, 3.3vw, v.$font-size-sm);
+        margin-bottom: v.$spacing-md;
+      }
+
+      .options {
+        gap: v.$spacing-sm;
+
+        .optionGroup {
+          .optionValues {
+            gap: v.$spacing-xs;
+
+            /* If many options, let the row scroll horizontally on smaller screens */
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px; /* breathing room for scrollbar */
+
+            scroll-snap-type: x proximity;
+
+            .optionValue,
+            .colorSwatch {
+              scroll-snap-align: start;
+            }
+
+            /* Keep tap targets comfy on touch devices */
+            .optionValue {
+              min-height: 36px;
+              min-width: 44px; /* recommended touch width */
+            }
+          }
+        }
+      }
+
+      .addToCartBtn {
+        font-size: v.$font-size-md;
+        padding: v.$spacing-sm;
+      }
+    }
+  }
+}
+
+/* ≤ sm: even tighter layout, smaller image cap */
+@include m.media-breakpoint-down(v.$breakpoint-sm) {
+  .productDetail {
+    gap: v.$spacing-sm;
+
+    .imageContainer .image {
+      max-height: 280px;
+    }
+
+    .info {
+      .name {
+        font-size: clamp(1rem, 5vw, v.$font-size-lg);
+      }
+      .price {
+        font-size: clamp(1.125rem, 6vw, v.$font-size-xl);
+      }
+    }
+  }
+}
+

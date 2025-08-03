@@ -136,6 +136,12 @@
       flex-direction: row;
       gap: v.$spacing-lg;
 
+       @media (max-width: 768px) {
+display: flex;
+      flex-direction: column;
+       }
+        
+
       .contactCard {
           width: 230px;
         background: #2a2a2a;
@@ -234,3 +240,47 @@
       p { color: #ccc; line-height: 1.6; font-size: v.$font-size-md }
       text-align: center;
     }
+
+
+    @media (max-width: 768px) {
+  .contactSection {
+    .contactFlex {
+      flex-direction: column;
+      gap: v.$spacing-lg;
+    }
+
+    .infoDescription,¿
+    .mapContainer,
+     .formWrapper{
+      width: 100%;
+      padding-inline: 1rem;
+    }
+
+    .contactForm{
+      width: 90%;
+    }
+
+
+    .infoDescription {
+      margin-bottom: v.$spacing-lg;
+    }
+
+    .formWrapper {
+      margin-bottom: v.$spacing-lg;
+    }
+
+
+    .mapContainer {
+      margin-top: 0;
+      padding-bottom: v.$spacing-lg;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .contactSection {
+    .contactForm {
+      max-width: 90%;
+    }
+  }
+}

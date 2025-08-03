@@ -50,10 +50,6 @@ p {
   font-size: v.$font-size-lg;
   flex-shrink: 0;
   width: 100%;
-
-  @include m.media-breakpoint-up(v.$breakpoint-sm) {
-    width: auto;
-  }
 }
 
 .message {
@@ -62,4 +58,14 @@ p {
   color: v.$color-accent;
   font-weight: bold;
 }
+}
+
+
+@media (max-width: 768px) {
+  .newsletterForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
