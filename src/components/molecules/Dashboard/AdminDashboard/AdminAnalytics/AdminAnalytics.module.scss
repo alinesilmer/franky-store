@@ -1,0 +1,111 @@
+
+.adminAnalytics {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .timeframeSelector {
+    display: flex;
+    background-color: v.$color-border;
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: v.$spacing-xl;
+    justify-content: center;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .timeframeBtn {
+      padding: v.$spacing-xs v.$spacing-sm;
+      border: none;
+      background: transparent;
+      color: v.$color-text-light;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all v.$transition-speed;
+      font-size: v.$font-size-sm;
+      font-weight: 500;
+
+      &:hover {
+        background-color: rgba(v.$color-accent, 0.1);
+      }
+
+      &.active {
+        background-color: v.$color-accent;
+        color: v.$color-primary;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .analyticsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: v.$spacing-lg;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+
+    .chartCard {
+      background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
+      border: 1px solid rgba(v.$color-accent, 0.1);
+      transition: all v.$transition-speed;
+      min-height: 400px; // Ensure enough space for charts
+
+      &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(v.$color-accent, 0.3);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      .chartContainer {
+        height: 300px; // Fixed height for charts
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative; // For Nivo charts
+      }
+    }
+  }
+}
+
+// Define colors for Nivo charts using SCSS variables
+:export {
+  accentColor: v.$color-accent;
+  secondaryColor: v.$color-secondary;
+  primaryColor: v.$color-primary;
+  textColorLight: v.$color-text-light;
+  borderColor: v.$color-border;
+}

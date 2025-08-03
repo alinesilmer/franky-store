@@ -1,0 +1,151 @@
+
+.clientHelp {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .helpGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; // FAQ takes more space
+    gap: v.$spacing-lg;
+
+    @include m.media-breakpoint-down(v.$breakpoint-lg) {
+      grid-template-columns: 1fr; // Stack columns on smaller screens
+    }
+
+    .faqCard, .contactCard {
+      background: linear-gradient(135deg, v.$color-border, rgba(v.$color-border, 0.8));
+      border: 1px solid rgba(v.$color-accent, 0.1);
+      transition: all v.$transition-speed;
+
+      &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(v.$color-accent, 0.3);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .faqCard {
+      .faqList {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-sm;
+
+        .faqItem {
+          background-color: v.$color-primary;
+          border-radius: 8px;
+          border: 1px solid v.$color-border;
+          overflow: hidden;
+          transition: background-color 0.2s ease-in-out;
+
+          &:hover {
+            background-color: v.$color-primary;
+          }
+
+          .faqQuestionHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: v.$spacing-md;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            color: v.$color-secondary;
+            font-family: v.$font-heading;
+            font-size: v.$font-size-md;
+            transition: color 0.2s ease-in-out;
+
+            &:hover {
+              color: v.$color-accent;
+            }
+
+            svg {
+              color: v.$color-accent;
+              flex-shrink: 0;
+            }
+          }
+
+          .faqAnswerContent {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+
+            &.open {
+              max-height: 200px; // Adjust as needed
+              opacity: 1;
+              padding: 0 v.$spacing-md v.$spacing-md;
+            }
+
+            .faqAnswer {
+              font-size: v.$font-size-sm;
+              color: v.$color-text-light;
+              line-height: 1.6;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .contactCard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .contactDescription {
+        font-size: v.$font-size-md;
+        color: v.$color-text-light;
+        opacity: 0.8;
+        margin-bottom: v.$spacing-lg;
+      }
+
+      .contactOptions {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-sm;
+        width: 100%;
+
+        .button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: v.$spacing-xs;
+          width: 100%;
+          padding: v.$spacing-sm;
+          font-size: v.$font-size-md;
+        }
+      }
+    }
+  }
+}

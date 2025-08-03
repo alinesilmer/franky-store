@@ -1,0 +1,157 @@
+
+.clientProfile {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .profileCard {
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: v.$spacing-lg;
+      gap: v.$spacing-md;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      h3 {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-lg;
+        color: v.$color-secondary;
+        margin: 0;
+      }
+
+      .button {
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
+    .formSection {
+      border-bottom: 1px solid v.$color-border;
+      padding-bottom: v.$spacing-lg;
+      margin-bottom: v.$spacing-lg;
+
+      &:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      h3 {
+        font-family: v.$font-heading;
+        font-size: v.$font-size-md;
+        color: v.$color-accent;
+        margin-bottom: v.$spacing-md;
+        text-transform: uppercase;
+      }
+    }
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: v.$spacing-xs;
+      margin-bottom: v.$spacing-md;
+
+      .label {
+        font-size: v.$font-size-sm;
+        color: v.$color-text-light;
+        font-weight: 500;
+      }
+
+      .input {
+        background-color: v.$color-primary;
+        border: 1px solid v.$color-border;
+        color: v.$color-text-light;
+        &:focus {
+          border-color: v.$color-accent;
+        }
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          background-color:v.$color-primary;
+        }
+      }
+    }
+
+    .formRow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: v.$spacing-lg;
+
+      @include m.media-breakpoint-down(v.$breakpoint-sm) {
+        grid-template-columns: 1fr;
+        gap: v.$spacing-md;
+      }
+    }
+
+    .statusMessage {
+      margin-top: v.$spacing-md;
+      padding: v.$spacing-sm;
+      border-radius: 8px;
+      text-align: center;
+      font-size: v.$font-size-md;
+      font-weight: 500;
+
+      &.success {
+        background-color: rgba(#4caf50, 0.2);
+        color: #4caf50;
+      }
+      &.error {
+        background-color: rgba(#e53935, 0.2);
+        color: #e53935;
+      }
+    }
+
+    .buttonGroup {
+      display: flex;
+      justify-content: flex-end;
+      gap: v.$spacing-md;
+      margin-top: v.$spacing-xl;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button {
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

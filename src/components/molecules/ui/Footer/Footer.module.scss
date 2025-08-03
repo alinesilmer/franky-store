@@ -7,13 +7,13 @@
 .footer {
   background-color: v.$color-primary;
   color: v.$color-text-light;
-  padding: v.$spacing-xl v.$spacing-lg 0;
+  padding: v.$spacing-xl v.$spacing-xxl;
   border-top: 1px solid v.$color-border;
   font-size: v.$font-size-md;
 
   .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     gap: v.$spacing-lg;
 
@@ -25,9 +25,12 @@
   }
 
   .logoWrapper {
-    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: v.$spacing-xs;
     @include m.media-breakpoint-down(v.$breakpoint-md) {
-      margin-bottom: v.$spacing-lg;
+      margin-bottom: v.$spacing-sm;
+      justify-content: center;
     }
   }
 
@@ -40,17 +43,20 @@
       font-size: v.$font-size-lg;
       color: v.$color-secondary;
       margin-bottom: v.$spacing-sm;
+      text-align: center;
     }
 
     ul {
       padding: 0;
       li {
         margin-bottom: v.$spacing-xs;
+         text-align: center;
         a {
           color: v.$color-text-light;
           transition: color v.$transition-speed v.$transition-ease;
           &:hover {
             color: v.$color-accent;
+             text-align: center;
           }
         }
       }
@@ -59,7 +65,7 @@
     .socialIcons {
       display: flex;
       gap: v.$spacing-md;
-      justify-content: flex-start;
+      justify-content: center;
 
       @include m.media-breakpoint-down(v.$breakpoint-md) {
         justify-content: center;
@@ -97,6 +103,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  
 
   @include m.media-breakpoint-down(v.$breakpoint-md) {
     flex-direction: column;

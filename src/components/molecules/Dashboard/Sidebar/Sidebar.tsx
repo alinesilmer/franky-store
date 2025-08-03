@@ -15,6 +15,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import styles from "./Sidebar.module.scss";
+import { Logo } from "../../../atoms/Logo/Logo";
 
 interface SidebarProps {
   userRole: string | null;
@@ -125,12 +126,9 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
     <aside className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
         <div className={styles.logo}>
-          <div className={styles.logoIcon}>
-            <span>U</span>
-          </div>
+          <Logo />
           <div className={styles.logoText}>
-            <h2>Urban Store</h2>
-            <p>{userRole === "admin" ? "Admin Panel" : "Mi Cuenta"}</p>
+            <p>{userRole === "admin" ? "Admin" : "Mi Cuenta"}</p>
           </div>
         </div>
       </div>

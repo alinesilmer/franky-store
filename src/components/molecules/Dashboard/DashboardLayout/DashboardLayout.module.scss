@@ -1,9 +1,8 @@
 
-
 .dashboardContainer {
   display: flex;
   min-height: 100vh;
-  background-color: v.$color-primary; // Main background for the dashboard
+  background-color: v.$color-primary;
 
   @include m.media-breakpoint-down(v.$breakpoint-md) {
     flex-direction: column;
@@ -13,14 +12,14 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background-color:  v.$color-primary; 
+    background-color: v.$color-primary;
   }
 
   .mainContent {
     flex-grow: 1;
     padding: v.$spacing-lg;
-    overflow-y: auto; // Enable scrolling for main content
-    
+    overflow-y: auto;
+
     @include m.media-breakpoint-down(v.$breakpoint-md) {
       padding: v.$spacing-md;
     }

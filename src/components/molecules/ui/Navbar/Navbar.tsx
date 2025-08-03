@@ -2,17 +2,18 @@
 
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Search, Menu, X, User, ShoppingCart, Heart } from "lucide-react";
+import { Search, Menu, X, User, Heart, ShoppingBag } from "lucide-react";
 import { Logo } from "../../../atoms/Logo/Logo";
 import { Input } from "../../../atoms/Input/Input";
 import styles from "./Navbar.module.scss";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { DUMMY_PRODUCTS } from "../../../../lib/auth"; // ⬅️ ajusta si es necesario
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { DUMMY_PRODUCTS } from "../../../../lib/auth";
 import type { Product } from "../../../../types/product";
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -21,9 +22,31 @@ export const Navbar: React.FC = () => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const searchRef = useRef<HTMLDivElement | null>(null);
 
-  // TODO: reemplazar por tu estado real de autenticación
-  const isLogged = false;
-  const userTarget = isLogged ? "/auth/dashboard" : "/auth/login";
+  // --- Auth state from localStorage ---
+  const [isLogged, setIsLogged] = useState<boolean>(() => {
+    try {
+      return !!localStorage.getItem("userRole");
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    setIsLogged(!!localStorage.getItem("userRole"));
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "userRole") setIsLogged(!!e.newValue);
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const dashboardRoot = "/dashboard";
+  const userTarget = isLogged ? dashboardRoot : "/auth/login";
+  // Where should the shopping bag go? If you have a /cart route, use that. Otherwise:
+  const bagTarget = isLogged ? `${dashboardRoot}/orders` : "/products";
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -62,9 +85,7 @@ export const Navbar: React.FC = () => {
     if (!isSearchOpen) return;
     const onDown = (e: MouseEvent) => {
       if (!searchRef.current) return;
-      if (!searchRef.current.contains(e.target as Node)) {
-        setIsSearchOpen(false);
-      }
+      if (!searchRef.current.contains(e.target as Node)) setIsSearchOpen(false);
     };
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
@@ -89,7 +110,6 @@ export const Navbar: React.FC = () => {
 
   const handleSelectProduct = (p: Product) => {
     setIsSearchOpen(false);
-    // Navega con un parámetro claro. En tu página /products podés leer productId o q.
     navigate(
       `/products?productId=${encodeURIComponent(p.id)}&q=${encodeURIComponent(
         searchQuery.trim()
@@ -104,21 +124,9 @@ export const Navbar: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  const menuVariants = {
-    hidden: { x: "100%" },
-    visible: {
-      x: "0%",
-      transition: { type: "spring", stiffness: 100, damping: 20 } as const,
-    },
-    exit: {
-      x: "100%",
-      transition: { duration: 0.25 },
-    },
-  };
-
   return (
     <nav className={styles.navbar}>
-      {/* Left: búsqueda */}
+      {/* Left: búsqueda (hidden on mobile in CSS) */}
       <div
         className={`${styles.leftSection} ${
           isSearchOpen ? styles.searchOpen : ""
@@ -165,7 +173,6 @@ export const Navbar: React.FC = () => {
                 <Search size={20} />
               </button>
 
-              {/* Results */}
               <AnimatePresence initial={false}>
                 {results.length > 0 && (
                   <motion.ul
@@ -217,30 +224,37 @@ export const Navbar: React.FC = () => {
         <Logo size="medium" />
       </Link>
 
-      {/* Right: iconos + menú */}
+      {/* Right: icons. On mobile we show ONLY the bagButton via CSS */}
       <div className={styles.rightSection}>
+        {/* Desktop / tablet icons (hidden on mobile via CSS) */}
         {isLogged ? (
           <>
             <Link
-              to="/cart"
-              className={styles.iconButton}
-              aria-label="Carrito de Compras"
+              to={bagTarget}
+              className={`${styles.iconButton} ${styles.bagButton}`}
+              aria-label="Bolsa"
+              title="Bolsa"
             >
-              <ShoppingCart size={24} />
+              <ShoppingBag size={24} />
             </Link>
+
+            <span className={styles.divider} aria-hidden="true" />
 
             <Link
               to={userTarget}
               className={styles.iconButton}
-              aria-label="Mi Cuenta"
+              aria-label="Mi cuenta (Dashboard)"
+              title="Mi cuenta"
             >
               <User size={24} />
             </Link>
 
+            <span className={styles.divider} aria-hidden="true" />
             <Link
-              to="/favorites"
+              to={`${dashboardRoot}/favorites`}
               className={styles.iconButton}
               aria-label="Favoritos"
+              title="Favoritos"
             >
               <Heart size={24} />
             </Link>
@@ -249,14 +263,16 @@ export const Navbar: React.FC = () => {
           <Link
             to={userTarget}
             className={styles.iconButton}
-            aria-label="Mi Cuenta"
+            aria-label="Mi Cuenta (Iniciar sesión)"
+            title="Iniciar sesión"
           >
             <User size={24} />
           </Link>
         )}
 
+        {/* Hamburger (hidden on mobile per your request) */}
         <button
-          className={styles.iconButton}
+          className={`${styles.iconButton} ${styles.menuButton}`}
           onClick={() => setIsMenuOpen(true)}
           aria-label="Abrir Menú"
           type="button"
@@ -265,7 +281,7 @@ export const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Backdrop + Menú móvil */}
+      {/* Backdrop + Menú móvil (still works if you re-enable the hamburger on mobile) */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
@@ -277,7 +293,7 @@ export const Navbar: React.FC = () => {
               animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              onClick={closeMenu}
+              onClick={() => setIsMenuOpen(false)}
             />
 
             <motion.div
@@ -286,15 +302,15 @@ export const Navbar: React.FC = () => {
               role="dialog"
               aria-modal="true"
               aria-label="Menú de navegación"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={menuVariants}
+              initial={{ x: "100%" }}
+              animate={{ x: "0%" }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 className={styles.closeMenuButton}
-                onClick={closeMenu}
+                onClick={() => setIsMenuOpen(false)}
                 aria-label="Cerrar Menú"
                 type="button"
               >

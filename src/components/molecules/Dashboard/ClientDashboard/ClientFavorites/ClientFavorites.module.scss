@@ -1,0 +1,135 @@
+
+.clientFavorites {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .favoritesOverviewCard {
+    .favoriteProductsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: v.$spacing-lg;
+      justify-items: center;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: v.$spacing-md;
+      }
+
+      .favoriteProductCard {
+        background-color: v.$color-primary;
+        border-radius: 12px;
+        padding: v.$spacing-md;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: v.$spacing-sm;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        width: 100%; // Ensure it takes full grid column width
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .productImage {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid rgba(v.$color-accent, 0.1);
+        }
+
+        .productInfo {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .productName {
+          font-family: v.$font-heading;
+          font-size: v.$font-size-md;
+          color: v.$color-secondary;
+          margin: 0 0 4px 0;
+        }
+
+        .productPrice {
+          font-size: v.$font-size-sm;
+          color: v.$color-accent;
+          font-weight: bold;
+          margin: 0;
+        }
+
+        .removeButton {
+          margin-top: v.$spacing-sm;
+          display: flex;
+          align-items: center;
+          gap: v.$spacing-xs;
+          padding: 6px 12px;
+          font-size: v.$font-size-sm;
+          color: #e53935; // Red for remove
+          border-color: rgba(#e53935, 0.5);
+          &:hover {
+            background-color: rgba(#e53935, 0.1);
+          }
+        }
+      }
+    }
+
+    .noFavorites {
+      text-align: center;
+      padding: v.$spacing-xl;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: v.$spacing-md;
+
+      .noFavoritesIcon {
+        color: v.$color-accent;
+        opacity: 0.5;
+      }
+
+      p {
+        font-size: v.$font-size-md;
+        color: v.$color-text-light;
+        opacity: 0.8;
+        max-width: 400px;
+      }
+
+      .button {
+        margin-top: v.$spacing-sm;
+      }
+    }
+  }
+}

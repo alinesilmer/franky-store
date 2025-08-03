@@ -12,6 +12,7 @@ import Contact from "./app/pages/Contact/Contact";
 import Login from "./app/auth/login/Login";
 import Register from "./app/auth/register/Register";
 import Dashboard from "./app/auth/dashboard/Dashboard";
+import DashboardRouter from "./components/molecules/Dashboard/DashboardRouter/DashboardRouter";
 import "./styles/globals.scss";
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/*" element={<DashboardRouter />} />{" "}
           <Route
             path="*"
             element={

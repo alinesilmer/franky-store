@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "../../../../components/atoms/Button/Button";
-import DashboardCard from "../../../../components/atoms/DashboardCard/DashboardCard";
+
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Package,
   Truck,
@@ -11,6 +11,8 @@ import {
   Heart,
   ShoppingBag,
 } from "lucide-react";
+import DashboardCard from "../../../../components/atoms/DashboardCard/DashboardCard";
+import { Button } from "../../../../components/atoms/Button/Button";
 import styles from "./ClientDashboard.module.scss";
 
 interface ClientDashboardProps {
@@ -18,7 +20,6 @@ interface ClientDashboardProps {
   userEmail: string;
 }
 
-// 1) Definimos tipos explícitos
 type OrderStatus = "pending" | "shipped" | "delivered";
 type TabKey = "all" | OrderStatus;
 
@@ -27,7 +28,6 @@ interface OrderItem {
   quantity: number;
   price: string;
 }
-
 interface Order {
   id: string;
   date: string;
@@ -38,7 +38,6 @@ interface Order {
   trackingNumber: string | null;
   estimatedDelivery: string;
 }
-
 interface FavoriteProduct {
   id: string;
   name: string;
@@ -46,14 +45,19 @@ interface FavoriteProduct {
   image: string;
 }
 
+const LS_FAVORITES_KEY = "client.favorites";
+
 const ClientDashboard: React.FC<ClientDashboardProps> = ({
   userName,
   userEmail,
 }) => {
-  // 2) Usamos nuestro TabKey
+  // prefer props, but fall back to localStorage (in case component used outside DashboardRouter)
+  const displayName = userName || localStorage.getItem("userName") || "Usuario";
+  const displayEmail =
+    userEmail || localStorage.getItem("userEmail") || "usuario@example.com";
+
   const [activeTab, setActiveTab] = useState<TabKey>("all");
 
-  // 3) Array de tabs correctamente tipado
   const tabs: { key: TabKey; label: string }[] = [
     { key: "all", label: "Todos" },
     { key: "pending", label: "Procesando" },
@@ -61,7 +65,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     { key: "delivered", label: "Entregados" },
   ];
 
-  // 4) Datos tipados
   const orderHistory: Order[] = [
     {
       id: "#2024001",
@@ -100,31 +103,60 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     },
   ];
 
-  const favoriteProducts: FavoriteProduct[] = [
-    {
-      id: "1",
-      name: "Camiseta 'Neon Dreams'",
-      price: "$42.00",
-      image: "/placeholder.svg",
-    },
-    {
-      id: "2",
-      name: "Chaqueta 'Urban Legend'",
-      price: "$89.99",
-      image: "/placeholder.svg",
-    },
-    {
-      id: "3",
-      name: "Zapatillas 'Street Runner'",
-      price: "$125.00",
-      image: "/placeholder.svg",
-    },
-  ];
+  const [favorites, setFavorites] = useState<FavoriteProduct[]>(() => {
+    try {
+      const raw = localStorage.getItem(LS_FAVORITES_KEY);
+      if (raw) return JSON.parse(raw) as FavoriteProduct[];
+    } catch (err) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("Failed to get favorites to localStorage:", err);
+      }
+    }
+    return [
+      {
+        id: "1",
+        name: "Camiseta 'Neon Dreams'",
+        price: "$42.00",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        id: "2",
+        name: "Chaqueta 'Urban Legend'",
+        price: "$89.99",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        id: "3",
+        name: "Zapatillas 'Street Runner'",
+        price: "$125.00",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ];
+  });
 
-  // 5) Eliminamos el cast: tab.key ya es TabKey
-  const filteredOrders = orderHistory.filter(
-    (order) => activeTab === "all" || order.status === activeTab
+  useEffect(() => {
+    try {
+      localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(favorites));
+    } catch (err) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("Failed to write favorites to localStorage:", err);
+      }
+    }
+  }, [favorites]);
+
+  const filteredOrders = useMemo(
+    () =>
+      orderHistory.filter(
+        (order) => activeTab === "all" || order.status === activeTab
+      ),
+    [activeTab]
   );
+
+  const toggleFavorite = (id: string) => {
+    setFavorites((prev) =>
+      prev.some((f) => f.id === id) ? prev.filter((f) => f.id !== id) : prev
+    );
+  };
 
   const getStatusIcon = (status: OrderStatus) => {
     switch (status) {
@@ -139,13 +171,24 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     }
   };
 
+  const totalGastado = useMemo(
+    () =>
+      orderHistory
+        .reduce(
+          (sum, order) => sum + Number.parseFloat(order.total.replace("$", "")),
+          0
+        )
+        .toFixed(2),
+    []
+  );
+
   return (
     <div className={styles.clientDashboard}>
       <div className={styles.dashboardHeader}>
         <div className={styles.welcomeSection}>
           <h1 className={styles.pageTitle}>Mi Dashboard</h1>
           <p className={styles.welcomeText}>
-            ¡Hola {userName}! Aquí tienes un resumen de tu actividad
+            ¡Hola {displayName}! Aquí tienes un resumen de tu actividad
           </p>
         </div>
         <div className={styles.quickStats}>
@@ -159,9 +202,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
           <div className={styles.statItem}>
             <Heart size={20} />
             <div>
-              <span className={styles.statNumber}>
-                {favoriteProducts.length}
-              </span>
+              <span className={styles.statNumber}>{favorites.length}</span>
               <span className={styles.statLabel}>Favoritos</span>
             </div>
           </div>
@@ -199,7 +240,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
                           styles[order.status]
                         }`}
                       >
-                        {getStatusIcon(order.status)}
+                        {getStatusIcon(order.status)}{" "}
                         <span>{order.statusText}</span>
                       </div>
                     </div>
@@ -253,26 +294,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
             <DashboardCard title="Mi Perfil" className={styles.profileCard}>
               <div className={styles.profileHeader}>
                 <div className={styles.avatar}>
-                  <span>{userName.charAt(0).toUpperCase()}</span>
+                  <span>{displayName.charAt(0).toUpperCase()}</span>
                 </div>
                 <div className={styles.profileInfo}>
-                  <h3>{userName}</h3>
-                  <p>{userEmail}</p>
+                  <h3>{displayName}</h3>
+                  <p>{displayEmail}</p>
                 </div>
               </div>
 
               <div className={styles.profileStats}>
                 <div className={styles.profileStat}>
-                  <span className={styles.statValue}>
-                    $
-                    {orderHistory
-                      .reduce(
-                        (sum, order) =>
-                          sum + Number.parseFloat(order.total.replace("$", "")),
-                        0
-                      )
-                      .toFixed(2)}
-                  </span>
+                  <span className={styles.statValue}>${totalGastado}</span>
                   <span className={styles.statLabel}>Total Gastado</span>
                 </div>
                 <div className={styles.profileStat}>
@@ -298,7 +330,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
               className={styles.favoritesCard}
             >
               <div className={styles.favoritesList}>
-                {favoriteProducts.map((product) => (
+                {favorites.map((product) => (
                   <div key={product.id} className={styles.favoriteItem}>
                     <div className={styles.productImage}>
                       <img
@@ -312,7 +344,12 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
                         {product.price}
                       </span>
                     </div>
-                    <button className={styles.favoriteBtn}>
+                    <button
+                      className={styles.favoriteBtn}
+                      onClick={() => toggleFavorite(product.id)}
+                      title="Quitar de favoritos"
+                      aria-label={`Quitar ${product.name} de favoritos`}
+                    >
                       <Heart size={16} fill="currentColor" />
                     </button>
                   </div>

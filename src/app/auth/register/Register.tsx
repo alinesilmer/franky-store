@@ -15,29 +15,51 @@ interface Option {
   value: string;
   label: string;
 }
-
 interface Country {
   cca2: string;
   name: { common: string };
 }
-
 interface ProvinceItem {
   id: number;
   nombre: string;
 }
-
 interface ProvinciaResponse {
   provincias: ProvinceItem[];
 }
-
 interface MunicipioItem {
   id: number;
   nombre: string;
 }
-
 interface MunicipiosResponse {
   municipios: MunicipioItem[];
 }
+
+type StoredUser = {
+  id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  password: string;
+  role: "client" | "admin";
+};
+
+const saveUser = (user: StoredUser) => {
+  const raw = localStorage.getItem("users");
+  const list: StoredUser[] = raw ? JSON.parse(raw) : [];
+  list.push(user);
+  localStorage.setItem("users", JSON.stringify(list));
+};
+
+const userExists = (username: string, email: string) => {
+  try {
+    const list: StoredUser[] = JSON.parse(
+      localStorage.getItem("users") || "[]"
+    );
+    return list.some((u) => u.username === username || u.email === email);
+  } catch {
+    return false;
+  }
+};
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -159,9 +181,26 @@ const Register: React.FC = () => {
       return;
     }
 
+    // Comprobar duplicados en localStorage (usuario o email)
+    if (userExists(username, email)) {
+      setErrorBanner("El usuario o correo ya está registrado.");
+      return;
+    }
+
+    // Guardar usuario local (rol por defecto: client)
+    const newUser: StoredUser = {
+      id: crypto?.randomUUID?.() ?? String(Date.now()),
+      username,
+      fullName: fullName || username,
+      email,
+      password,
+      role: "client",
+    };
+    saveUser(newUser);
+
     /* ✅ Success path */
     setShowSuccess(true);
-    setTimeout(() => navigate("/auth/login"), 2000); // redirect after 2 s
+    setTimeout(() => navigate("/auth/login"), 1500);
   };
 
   return (
@@ -312,6 +351,7 @@ const Register: React.FC = () => {
                   </span>
                 )}
               </div>
+
               <div className={styles.formGroup}>
                 <label htmlFor="province" className={styles.label}>
                   Ciudad
@@ -425,6 +465,7 @@ const Register: React.FC = () => {
                 </div>
               </div>
             </div>
+
             {/* Cuenta */}
             <div className={styles.formSection}>
               <h2 className={styles.sectionTitle}>Cuenta</h2>
@@ -464,7 +505,7 @@ const Register: React.FC = () => {
                   <div className={styles.passwordWrapper}>
                     <Input
                       id="password"
-                      type={showPwd ? "text" : "password"} // ⬅️ dynamic type
+                      type={showPwd ? "text" : "password"}
                       placeholder="********"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -475,8 +516,6 @@ const Register: React.FC = () => {
                       }
                       required
                     />
-
-                    {/* eye button */}
                     <button
                       type="button"
                       className={styles.eyeBtn}
@@ -488,7 +527,6 @@ const Register: React.FC = () => {
                       {showPwd ? <Eye size={18} /> : <EyeOff size={18} />}
                     </button>
                   </div>
-
                   {errors.password && (
                     <span id="err-password" className={styles.errorText}>
                       {errors.password}
@@ -507,6 +545,7 @@ const Register: React.FC = () => {
                 Crear Cuenta
               </Button>
             </div>
+
             <p className={styles.loginLink}>
               ¿Ya tienes una cuenta?{" "}
               <a href="#" onClick={() => navigate("/auth/login")}>

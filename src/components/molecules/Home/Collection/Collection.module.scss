@@ -112,9 +112,6 @@ $viewport-width: calc(#{$card-width * 3} + #{$gap * 2});
   .carousel {
     max-width: none;
   }
-  .viewport {
-    flex: 1 1 auto;
-  }
   .section {
     padding: 2rem 5.5rem;
     display: flex;
@@ -126,7 +123,6 @@ $viewport-width: calc(#{$card-width * 3} + #{$gap * 2});
   .track {
     gap: v.$spacing-lg;
      align-items: center;
-    justify-content: center;
 
   }
 

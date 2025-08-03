@@ -1,9 +1,11 @@
 "use client";
+
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "../../../../components/atoms/Button/Button";
 import DashboardCard from "../../../../components/atoms/DashboardCard/DashboardCard";
 import ProductCard from "../../../../components/molecules/ProductCard/ProductCard";
+import type { Product } from "../../../../types/product";
 import { DUMMY_PRODUCTS } from "../../../../lib/auth";
 import {
   BarChart3,
@@ -20,53 +22,113 @@ interface AdminDashboardProps {
   userEmail: string;
 }
 
+const LS_PRODUCTS_KEY = "admin.products";
+
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ userName }) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<
     "week" | "month" | "year"
   >("month");
 
+  // Load products from localStorage (fallback to DUMMY_PRODUCTS)
+  const [products, setProducts] = useState<Product[]>(() => {
+    try {
+      const raw = localStorage.getItem(LS_PRODUCTS_KEY);
+      if (raw) return JSON.parse(raw) as Product[];
+    } catch (err) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("Failed to write products to localStorage:", err);
+      }
+    }
+    return DUMMY_PRODUCTS;
+  });
+
+  // Persist when products change
+  useEffect(() => {
+    try {
+      localStorage.setItem(LS_PRODUCTS_KEY, JSON.stringify(products));
+    } catch (err) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("Failed to write ´rpdcts to localStorage:", err);
+      }
+    }
+  }, [products]);
+
   const handleEditProduct = (productId: string) => {
+    // Example edit (rename). Replace with your modal later.
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === productId ? { ...p, name: p.name + " (edit)" } : p
+      )
+    );
     console.log(`Editar producto: ${productId}`);
   };
 
   const handleDeleteProduct = (productId: string) => {
+    setProducts((prev) => prev.filter((p) => p.id !== productId));
     console.log(`Eliminar producto: ${productId}`);
   };
 
   const handleAddProduct = () => {
+    const newProduct: Product = {
+      id: crypto?.randomUUID?.() ?? String(Date.now()),
+      name: "Nuevo Producto",
+      description: "Descripción temporal",
+      price: 99.99,
+      image: "/placeholder.svg",
+      originalPrice: 129.99,
+      colors: ["#fdd835", "#ffffff"],
+      sizes: ["S", "M", "L"],
+      inStock: true,
+      isNew: true,
+      isFavorite: false,
+      tags: ["nuevo", "demo"],
+      createdAt: new Date().toISOString(),
+    };
+    setProducts((prev) => [newProduct, ...prev]);
     console.log("Añadir nuevo producto");
   };
 
-  const statsData = [
-    {
-      title: "Ventas Totales",
-      value: "$12,847",
-      change: "+12.5%",
-      icon: DollarSign,
-      trend: "up",
-    },
-    {
-      title: "Pedidos",
-      value: "156",
-      change: "+8.2%",
-      icon: ShoppingCart,
-      trend: "up",
-    },
-    {
-      title: "Productos",
-      value: "89",
-      change: "+2.1%",
-      icon: Package,
-      trend: "up",
-    },
-    {
-      title: "Clientes",
-      value: "1,247",
-      change: "+15.3%",
-      icon: Users,
-      trend: "up",
-    },
-  ];
+  const handleToggleFavorite = (productId: string) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === productId ? { ...p, isFavorite: !p.isFavorite } : p
+      )
+    );
+  };
+
+  const statsData = useMemo(
+    () => [
+      {
+        title: "Ventas Totales",
+        value: "$12,847",
+        change: "+12.5%",
+        icon: DollarSign,
+        trend: "up",
+      },
+      {
+        title: "Pedidos",
+        value: "156",
+        change: "+8.2%",
+        icon: ShoppingCart,
+        trend: "up",
+      },
+      {
+        title: "Productos",
+        value: String(products.length),
+        change: "+2.1%",
+        icon: Package,
+        trend: "up",
+      },
+      {
+        title: "Clientes",
+        value: "1,247",
+        change: "+15.3%",
+        icon: Users,
+        trend: "up",
+      },
+    ],
+    [products.length]
+  );
 
   const recentOrders = [
     {
@@ -169,16 +231,23 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userName }) => {
                   Añadir Producto
                 </Button>
               </div>
+
               <div className={styles.productGrid}>
-                {DUMMY_PRODUCTS.slice(0, 4).map((product) => (
+                {products.slice(0, 4).map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
+                    onProductClick={handleEditProduct}
+                    onAddToCart={(id) =>
+                      console.log("Admin add-to-cart (noop):", id)
+                    }
+                    onToggleFavorite={handleToggleFavorite}
                     onEdit={handleEditProduct}
                     onDelete={handleDeleteProduct}
                   />
                 ))}
               </div>
+
               <div className={styles.viewAllProducts}>
                 <Button variant="outline" size="sm">
                   Ver Todos los Productos

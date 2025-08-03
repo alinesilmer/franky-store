@@ -1,0 +1,219 @@
+
+.adminOrders {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .ordersOverviewCard {
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: v.$spacing-lg;
+      gap: v.$spacing-md;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .searchFilterGroup {
+        display: flex;
+        gap: v.$spacing-md;
+        flex-grow: 1;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          flex-direction: column;
+          width: 100%;
+        }
+      }
+
+      .searchBar {
+        position: relative;
+        flex-grow: 1;
+        max-width: 400px;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          max-width: 100%;
+        }
+
+        .searchIcon {
+          position: absolute;
+          left: v.$spacing-sm;
+          top: 50%;
+          transform: translateY(-50%);
+          color: v.$color-text-light;
+        }
+
+        .input {
+          width: 100%;
+          padding-left: v.$spacing-xl;
+          background-color: v.$color-primary;
+          border: 1px solid v.$color-border;
+          color: v.$color-text-light;
+          &:focus {
+            border-color: v.$color-accent;
+          }
+        }
+      }
+
+      .statusFilter {
+        padding: v.$spacing-sm v.$spacing-md;
+        background-color: v.$color-primary;
+        border: 1px solid v.$color-border;
+        border-radius: 8px;
+        color: v.$color-text-light;
+        font-size: v.$font-size-sm;
+        appearance: none; // Remove default arrow
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e0e0e0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right v.$spacing-md center;
+        background-size: 16px;
+        cursor: pointer;
+        transition: border-color v.$transition-speed;
+
+        &:focus {
+          border-color: v.$color-accent;
+        }
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          width: 100%;
+        }
+      }
+    }
+
+    .ordersTableContainer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+
+      .ordersTable {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        min-width: 800px; // Ensure table doesn't shrink too much
+
+        th,
+        td {
+          padding: v.$spacing-sm v.$spacing-md;
+          text-align: left;
+          vertical-align: middle;
+        }
+
+        th {
+          background-color: v.$color-primary;
+          color: v.$color-accent;
+          font-family: v.$font-heading;
+          font-size: v.$font-size-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          border-bottom: 1px solid v.$color-border;
+          &:first-child { border-top-left-radius: 8px; }
+          &:last-child { border-top-right-radius: 8px; }
+        }
+
+        td {
+          background-color: v.$color-primary;
+          color: v.$color-text-light;
+          font-size: v.$font-size-sm;
+          border-bottom: 1px solid v.$color-border;
+          &:first-child { border-bottom-left-radius: 8px; }
+          &:last-child { border-bottom-right-radius: 8px; }
+        }
+
+        tbody tr {
+          transition: background-color 0.2s ease-in-out;
+          &:hover {
+            background-color: v.$color-primary;
+          }
+        }
+
+        .customerName {
+          font-weight: 500;
+          color: v.$color-secondary;
+          margin-bottom: 4px;
+        }
+
+        .customerEmail {
+          font-size: v.$font-size-xs;
+          color: v.$color-text-light;
+          opacity: 0.7;
+        }
+
+        .orderStatusBadge {
+          padding: 4px 10px;
+          border-radius: 16px;
+          font-size: v.$font-size-xs;
+          font-weight: bold;
+          text-transform: uppercase;
+          display: inline-block;
+
+          &.pendiente {
+            background-color: rgba(#ff9800, 0.2);
+            color: #ff9800;
+          }
+          &.procesando {
+            background-color: rgba(#2196f3, 0.2);
+            color: #2196f3;
+          }
+          &.enviado {
+            background-color: rgba(v.$color-accent, 0.2);
+            color: v.$color-accent;
+          }
+          &.entregado {
+            background-color: rgba(#4caf50, 0.2);
+            color: #4caf50;
+          }
+          &.cancelado {
+            background-color: rgba(#e53935, 0.2);
+            color: #e53935;
+          }
+        }
+
+        .actions {
+          display: flex;
+          gap: v.$spacing-xs;
+          .button {
+            padding: 6px 10px;
+            svg {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .noResults {
+          text-align: center;
+          padding: v.$spacing-lg;
+          color: v.$color-text-light;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}

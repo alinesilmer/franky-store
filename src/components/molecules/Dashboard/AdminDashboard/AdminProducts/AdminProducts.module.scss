@@ -1,0 +1,189 @@
+
+.adminProducts {
+  padding: v.$spacing-lg;
+  color: v.$color-text-light;
+
+  .pageTitle {
+    font-family: v.$font-heading;
+    font-size: v.$font-size-xxl;
+    color: v.$color-secondary;
+    margin-bottom: v.$spacing-xs;
+    background: linear-gradient(135deg, v.$color-secondary, v.$color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-xl;
+      text-align: center;
+    }
+  }
+
+  .pageSubtitle {
+    font-size: v.$font-size-md;
+    color: v.$color-text-light;
+    opacity: 0.8;
+    margin-bottom: v.$spacing-xl;
+
+    @include m.media-breakpoint-down(v.$breakpoint-md) {
+      font-size: v.$font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .productsOverviewCard {
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: v.$spacing-lg;
+      gap: v.$spacing-md;
+
+      @include m.media-breakpoint-down(v.$breakpoint-md) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .searchBar {
+        position: relative;
+        flex-grow: 1;
+        max-width: 400px;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          max-width: 100%;
+        }
+
+        .searchIcon {
+          position: absolute;
+          left: v.$spacing-sm;
+          top: 50%;
+          transform: translateY(-50%);
+          color: v.$color-text-light;
+        }
+
+        .input {
+          width: 100%;
+          padding-left: v.$spacing-xl;
+          background-color: v.$color-primary;
+          border: 1px solid v.$color-border;
+          color: v.$color-text-light;
+          &:focus {
+            border-color: v.$color-accent;
+          }
+        }
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        gap: v.$spacing-xs;
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
+    .productsTableContainer {
+      overflow-x: auto; // Enable horizontal scrolling for table on small screens
+      -webkit-overflow-scrolling: touch;
+
+      .productsTable {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px; // Space between rows
+        min-width: 700px; // Ensure table doesn't shrink too much
+
+        th,
+        td {
+          padding: v.$spacing-sm v.$spacing-md;
+          text-align: left;
+          vertical-align: middle;
+        }
+
+        th {
+          background-color: v.$color-primary;
+          color: v.$color-accent;
+          font-family: v.$font-heading;
+          font-size: v.$font-size-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          border-bottom: 1px solid v.$color-border;
+          &:first-child { border-top-left-radius: 8px; }
+          &:last-child { border-top-right-radius: 8px; }
+        }
+
+        td {
+          background-color: v.$color-primary;
+          color: v.$color-text-light;
+          font-size: v.$font-size-sm;
+          border-bottom: 1px solid v.$color-border;
+          &:first-child { border-bottom-left-radius: 8px; }
+          &:last-child { border-bottom-right-radius: 8px; }
+        }
+
+        tbody tr {
+          transition: background-color 0.2s ease-in-out;
+          &:hover {
+            background-color:v.$color-primary;
+          }
+        }
+
+        .productImage {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid rgba(v.$color-accent, 0.1);
+        }
+
+        .colorSwatches {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          .colorSwatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid rgba(v.$color-text-light, 0.2);
+          }
+        }
+
+        .actions {
+          display: flex;
+          gap: v.$spacing-xs;
+          .button {
+            padding: 6px 10px;
+            svg {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .noResults {
+          text-align: center;
+          padding: v.$spacing-lg;
+          color: v.$color-text-light;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  .editProductModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: v.$color-border;
+    padding: v.$spacing-xl;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    h3 {
+      color: v.$color-secondary;
+      margin-bottom: v.$spacing-md;
+    }
+    // Add styles for form fields within the modal
+  }
+}

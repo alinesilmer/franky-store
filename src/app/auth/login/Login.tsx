@@ -1,3 +1,5 @@
+"use client";
+
 import type React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,25 +13,71 @@ import {
 } from "../../../lib/auth";
 import styles from "./Login.module.scss";
 
+type StoredUser = {
+  id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  password: string;
+  role: "client" | "admin";
+};
+
+const DASHBOARD_PATH = "/dashboard";
+
+const loadUsers = (): StoredUser[] => {
+  try {
+    return JSON.parse(localStorage.getItem("users") || "[]");
+  } catch {
+    return [];
+  }
+};
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const setAuthAndGo = (
+    role: "admin" | "client",
+    name: string,
+    email: string
+  ) => {
+    localStorage.setItem("userRole", role);
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    navigate(DASHBOARD_PATH, { replace: true });
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      localStorage.setItem("userRole", "admin");
-      navigate("/auth/dashboard");
-    } else if (username === CLIENT_USERNAME && password === CLIENT_PASSWORD) {
-      localStorage.setItem("userRole", "client");
-      navigate("/auth/dashboard");
-    } else {
-      setError("Usuario o contraseña incorrectos.");
+    // 1) Try localStorage users first
+    const users = loadUsers();
+    const found = users.find(
+      (u) => u.username === username && u.password === password
+    );
+    if (found) {
+      setAuthAndGo(
+        found.role ?? "client",
+        found.fullName || found.username,
+        found.email
+      );
+      return;
     }
+
+    // 2) Fallback to hardcoded admin/client
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+      setAuthAndGo("admin", "Admin", "admin@franky.com");
+      return;
+    }
+    if (username === CLIENT_USERNAME && password === CLIENT_PASSWORD) {
+      setAuthAndGo("client", "Cliente", "client@franky.com");
+      return;
+    }
+
+    setError("Usuario o contraseña incorrectos.");
   };
 
   return (
@@ -66,6 +114,8 @@ const Login: React.FC = () => {
             Regístrate aquí
           </a>
         </p>
+
+        {/* Credenciales de prueba (hardcoded) */}
         <div className={styles.testCredentials}>
           <h3>Credenciales de Prueba:</h3>
           <p>

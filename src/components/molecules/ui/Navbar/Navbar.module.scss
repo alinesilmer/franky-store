@@ -198,6 +198,15 @@
     }
   }
 
+  .divider {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  margin: 0 5px;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(2px);
+}
+
   /* ------------------------------------
    * BACKDROP
    * ---------------------------------- */
@@ -290,3 +299,69 @@
     }
   }
 }
+
+
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  .navbar {
+    grid-template-columns: 1fr max-content 1fr;
+    align-items: center;
+    padding: v.$spacing-xs v.$spacing-md;
+    min-height: 56px;
+  }
+
+  .navbar .logoLink {
+    justify-self: center;
+    position: relative; 
+  }
+
+  .navbar .leftSection {
+    display: flex !important;
+    align-items: center;
+    min-width: 0;          
+    overflow: visible;    
+    gap: v.$spacing-xs;
+
+    .searchContainer {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .searchInput {
+      width: 100%;        
+      min-width: 0;        
+    }
+
+    &.searchOpen .searchContainer {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .searchResults {
+      width: min(92vw, 460px);
+    }
+  }
+
+  .navbar .rightSection {
+    justify-self: end;
+    display: flex !important;
+    align-items: center;
+    gap: v.$spacing-sm;
+  }
+
+  .navbar .rightSection .iconButton {
+    display: none !important;
+  }
+
+  .navbar .rightSection .bagButton,
+  .navbar .rightSection .menuButton {
+    display: flex !important;
+  }
+
+  .navbar .rightSection .bagButton { order: 1; }
+  .navbar .rightSection .menuButton { order: 2; }
+
+  .navbar .divider {
+    display: none !important;
+  }
+}
+

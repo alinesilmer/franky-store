@@ -13,36 +13,22 @@
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, v.$color-accent, transparent);
-  }
-
-  @include m.media-breakpoint-down(v.$breakpoint-md) {
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: v.$spacing-md;
-
-    .navigation {
-      display: none;
-    }
   }
 
   .sidebarHeader {
     padding: v.$spacing-xl v.$spacing-lg v.$spacing-lg;
     border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+    position: relative;
+    z-index: 2;
 
     .logo {
       display: flex;
       align-items: center;
       gap: v.$spacing-md;
+      flex-direction: column;
 
       .logoIcon {
         width: 48px;
@@ -58,17 +44,10 @@
       }
 
       .logoText {
-        h2 {
-          font-family: v.$font-heading;
-          font-size: v.$font-size-lg;
-          color: v.$color-secondary;
-          margin: 0 0 4px 0;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-        }
 
         p {
-          font-size: v.$font-size-xs;
+          font-family: v.$font-heading;
+          font-size: v.$font-size-xxl;
           color: v.$color-accent;
           margin: 0;
           text-transform: uppercase;
@@ -77,12 +56,19 @@
         }
       }
     }
+
+    /* Optional mobile menu toggle button (hidden on desktop) */
+    .menuToggle {
+      display: none;
+    }
   }
 
   .navigation {
     flex: 1;
     padding: v.$spacing-lg 0;
     overflow-y: auto;
+    position: relative;
+    z-index: 1;
 
     .navList {
       list-style: none;
@@ -99,11 +85,42 @@
           gap: v.$spacing-md;
           padding: v.$spacing-md;
           border-radius: 12px;
-          color: v.$color-text-light;
           text-decoration: none;
           transition: all v.$transition-speed;
           position: relative;
           overflow: hidden;
+
+          /* --- DEFAULT STATE: WHITE TEXT --- */
+          color: v.$color-secondary; /* link text */
+          
+          .navItemIcon {
+            width: 24px;
+            height: 24px;
+            @include m.flex-center;
+            color: v.$color-secondary; /* icon is white */
+            transition: all v.$transition-speed;
+            flex-shrink: 0;
+          }
+
+          .navItemContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .navItemName {
+              font-size: v.$font-size-md;
+              font-weight: 500;
+              color: v.$color-secondary; /* name is white */
+              transition: color v.$transition-speed;
+            }
+
+            .navItemDescription {
+              font-size: v.$font-size-sm;
+              color: rgba(v.$color-secondary, 0.75); /* subtle white */
+              transition: color v.$transition-speed;
+            }
+          }
 
           &::before {
             content: "";
@@ -112,29 +129,23 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(v.$color-accent, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(v.$color-accent, 0.12), transparent);
             transition: left 0.5s ease;
           }
 
           &:hover {
-            background: linear-gradient(135deg, rgba(v.$color-accent, 0.1), rgba(v.$color-accent, 0.05));
+            background: linear-gradient(135deg, rgba(v.$color-accent, 0.08), rgba(v.$color-accent, 0.04));
             transform: translateX(4px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 
-            &::before {
-              left: 100%;
-            }
+            &::before { left: 100%; }
 
-            .navItemIcon {
-              transform: scale(1.1);
-              color: v.$color-accent;
-            }
-
-            .navItemName {
-              color: v.$color-secondary;
-            }
+            .navItemIcon { transform: scale(1.1); color: v.$color-accent; }
+            /* Keep text white on hover */
+            .navItemName { color: v.$color-secondary; }
           }
 
+          /* --- ACTIVE STATE: ACCENT BG + PRIMARY TEXT --- */
           &.active {
             background: linear-gradient(135deg, v.$color-accent, #ffeb3b);
             color: v.$color-primary;
@@ -152,7 +163,7 @@
             }
 
             .navItemDescription {
-              color: rgba(v.$color-primary, 0.8);
+              color: rgba(v.$color-primary, 0.85);
             }
 
             .activeIndicator {
@@ -167,33 +178,11 @@
             }
           }
 
-          .navItemIcon {
-            width: 24px;
-            height: 24px;
-            @include m.flex-center;
-            color: v.$color-text-light;
-            transition: all v.$transition-speed;
-            flex-shrink: 0;
-          }
-
-          .navItemContent {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-
-            .navItemName {
-              font-size: v.$font-size-md;
-              font-weight: 500;
-              color: v.$color-text-light;
-              transition: color v.$transition-speed;
-            }
-
-            .navItemDescription {
-              font-size: v.$font-size-xs;
-              color: rgba(v.$color-text-light, 0.6);
-              transition: color v.$transition-speed;
-            }
+          /* Focus ring for keyboard users */
+          &:focus-visible {
+            outline: 2px solid v.$color-accent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(v.$color-accent, 0.35);
           }
         }
       }
@@ -233,7 +222,6 @@
           font-weight: 500;
           display: block;
         }
-
         p {
           font-size: v.$font-size-xs;
           color: v.$color-accent;
@@ -245,22 +233,108 @@
   }
 }
 
-// Custom scrollbar for navigation
+/* Custom scrollbar for the navigation area */
 .navigation {
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb {
     background: rgba(v.$color-accent, 0.3);
     border-radius: 2px;
   }
+  &::-webkit-scrollbar-thumb:hover { background: rgba(v.$color-accent, 0.5); }
+}
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(v.$color-accent, 0.5);
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+/* ≤ lg: slightly narrower aside */
+@include m.media-breakpoint-down(v.$breakpoint-lg) {
+  .sidebar { width: 240px; }
+}
+
+/* ≤ md: convert to top bar + collapsible menu */
+@include m.media-breakpoint-down(v.$breakpoint-md) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+    flex-direction: column;
+    padding: 0;
+
+    .sidebarHeader {
+      padding: v.$spacing-md v.$spacing-lg;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo {
+        gap: v.$spacing-sm;
+        .logoIcon { width: 40px; height: 40px; border-radius: 10px; }
+        .logoText h2 { font-size: v.$font-size-md; }
+        .logoText p { font-size: v.$font-size-xs; }
+      }
+
+      /* Show a burger/toggle button on mobile if you use it */
+      .menuToggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; height: 40px;
+        border-radius: 8px;
+        border: 1px solid rgba(v.$color-accent, 0.2);
+        background: rgba(v.$color-accent, 0.06);
+        color: v.$color-secondary;
+        transition: background v.$transition-speed;
+
+        &:hover { background: rgba(v.$color-accent, 0.12); }
+        &:focus-visible {
+          outline: 2px solid v.$color-accent;
+          outline-offset: 2px;
+        }
+      }
+    }
+
+    /* Collapsed by default */
+    .navigation {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: linear-gradient(180deg, v.$color-primary 0%, rgba(v.$color-primary, 0.98) 100%);
+      border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: v.$spacing-sm 0;
+      z-index: 10;
+
+      .navList .navListItem { padding: 0 v.$spacing-sm; }
+      .navList .navListItem .navItem {
+        padding: v.$spacing-sm v.$spacing-md;
+        border-radius: 10px;
+      }
+      /* Keep the list compact: hide long descriptions on phones */
+      .navList .navListItem .navItem .navItemContent .navItemDescription { display: none; }
+    }
+
+    /* Toggle this class with JS to open the menu */
+    &.is-open { .navigation { display: block; } }
+  }
+}
+
+/* ≤ sm: larger tap targets, tighter spacing */
+@include m.media-breakpoint-down(v.$breakpoint-sm) {
+  .sidebar {
+    .sidebarHeader { padding: v.$spacing-sm v.$spacing-md; }
+
+    .navigation .navList .navListItem .navItem {
+      padding: v.$spacing-md;
+      gap: v.$spacing-sm;
+
+      .navItemIcon { width: 22px; height: 22px; }
+      .navItemContent .navItemName { font-size: v.$font-size-md; }
+    }
   }
 }

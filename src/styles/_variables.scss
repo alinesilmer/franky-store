@@ -10,6 +10,16 @@ $color-accent-hover: #ffd000;
 $color-primary-hover: #003366;
 
 
+//OTROS COLORES
+$color-success: #4caf50;
+
+$color-warning: #ff9800;
+
+$color-danger: #e53935;
+
+$color-info: #2196f3;
+
+
 // Fuentes
 $font-heading: 'Bebas Neue', sans-serif; // Fuente impactante para títulos
 $font-body: 'Roboto', sans-serif; // Fuente legible para el cuerpo
@@ -42,3 +52,8 @@ $breakpoint-xl: 1280px;
 // Transiciones
 $transition-speed: 0.1s;
 $transition-ease: ease-in-out;
+
+// Radio de bordes
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
