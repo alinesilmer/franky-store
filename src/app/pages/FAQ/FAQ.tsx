@@ -4,6 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import styles from "./FAQ.module.scss";
+import faqImage from "../../../assets/images/faq.jpg";
 
 export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -62,7 +63,7 @@ export const FAQ: React.FC = () => {
             <div className={styles.imageCluster}>
               <div className={styles.imageWrapper}>
                 <img
-                  src="https://i.pinimg.com/736x/c7/99/75/c79975e9cafed10bc41cfdbc13da66c3.jpg"
+                  src={faqImage}
                   alt="Cliente explorando preguntas frecuentes"
                   loading="lazy"
                   decoding="async"

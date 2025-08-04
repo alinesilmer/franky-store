@@ -4,33 +4,42 @@ import { useState, useEffect } from "react";
 import { Button } from "../../../../components/atoms/Button/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./ProductsHero.module.scss";
+// Vite turns these imports into URL strings
+import Hero from "../../../../assets/images/ProductsHero1.jpg";
+import Hero2 from "../../../../assets/images/ProductsHero2.jpg";
+import Hero3 from "../../../../assets/images/ProductsHero3.jpg";
+
+type Slide = {
+  id: number;
+  title: string;
+  subtitle: string;
+  image: string; // <- URL string
+  cta: string;
+};
 
 const ProductsHero: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const heroSlides = [
+  const heroSlides: Slide[] = [
     {
       id: 1,
       title: "Nueva Colección Urbana",
       subtitle: "Descubre el Estilo de la Calle",
-      image:
-        "https://i.pinimg.com/1200x/3e/f4/6d/3ef46d22d547b59deb3f0bd27a7e6623.jpg",
+      image: Hero,
       cta: "Explorar Colección",
     },
     {
       id: 2,
       title: "Streetwear Premium",
       subtitle: "Calidad que Marca la Diferencia",
-      image:
-        "https://i.pinimg.com/736x/d2/6f/57/d26f57a4d38442abf14add9b91592ba0.jpg",
+      image: Hero2,
       cta: "Ver Productos",
     },
     {
       id: 3,
       title: "Tendencias de Temporada",
       subtitle: "Lo Último en Moda Urbana",
-      image:
-        "https://i.pinimg.com/1200x/96/c7/1d/96c71d3ee7683b477ed2ff97d67352ac.jpg",
+      image: Hero3,
       cta: "Comprar Ahora",
     },
   ];

@@ -1,8 +1,9 @@
+@use "sass:color";
 
 .aboutUsPage {
   background-color: v.$color-primary;
-  color: v.$color-text-light; 
-  overflow-x: hidden; 
+  color: v.$color-text-light;
+  overflow-x: hidden;
 }
 
 .heroSection {
@@ -32,8 +33,8 @@
 
     .heroTitle {
       font-family: v.$font-heading;
-      font-size: 4.5rem; 
-      color: v.$color-secondary; 
+      font-size: 4.5rem;
+      color: v.$color-secondary;
       margin-bottom: v.$spacing-md;
       text-transform: uppercase;
       line-height: 1.1;
@@ -47,7 +48,7 @@
       }
 
       .highlight {
-        color: v.$color-accent; 
+        color: v.$color-accent;
       }
     }
 
@@ -86,7 +87,7 @@
     flex-shrink: 0;
     width: 100%;
     max-width: 500px;
-    height: 400px; 
+    height: 400px;
     background-color: v.$color-primary;
     border-radius: 12px;
     overflow: hidden;
@@ -99,11 +100,13 @@
       height: 600px;
     }
 
-    img {
+    img,
+    .heroVideo {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px; 
+      border-radius: 12px;
+      display: block;
     }
   }
 }
@@ -144,6 +147,7 @@
 
     .valueCard {
       background-color: v.$color-primary;
+      border: 1px solid v.$color-border;
       border-radius: 12px;
       padding: v.$spacing-lg;
       text-align: center;
@@ -152,59 +156,137 @@
       flex-direction: column;
       align-items: center;
       gap: v.$spacing-sm;
-      transition: transform v.$transition-speed ease-in-out, box-shadow v.$transition-speed ease-in-out;
+      transition: transform v.$transition-speed ease-in-out,
+        box-shadow v.$transition-speed ease-in-out,
+        border-color v.$transition-speed ease-in-out;
 
       &:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         border: 1px solid v.$color-accent;
+
+        .valueMedia img {
+          transform: scale(1.05);
+        }
       }
 
-      .valueIcon {
-        color: v.$color-accent; 
-        margin-bottom: v.$spacing-xs;
+      .valueMedia {
+        width: 100%;
+        aspect-ratio: 16 / 16; 
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid v.$color-border;
+        background: v.$color-border;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        margin-bottom: v.$spacing-sm;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          aspect-ratio: 4 / 3; 
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform v.$transition-speed ease-in-out;
+        }
       }
 
       h3 {
         font-family: v.$font-heading;
         font-size: v.$font-size-xxl;
-        color: v.$color-secondary;
+        color: v.$color-accent;
         margin: 0;
         text-transform: uppercase;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          font-size: v.$font-size-xl;
+        }
       }
 
       p {
         font-size: v.$font-size-md;
         color: v.$color-text-light;
         line-height: 1.6;
+
+        @include m.media-breakpoint-down(v.$breakpoint-md) {
+          font-size: v.$font-size-sm;
+        }
+      }
+    }
+  }
+}
+.historySection {
+  background-color: v.$color-primary;
+  padding: v.$spacing-xxl v.$spacing-md;
+  border-bottom: 1px solid v.$color-border;
+  text-align: center; /* keeps the section title centered */
+  display: block;
+
+  .container {
+    /* a bit wider so text + card fit nicely side-by-side */
+    max-width: v.$breakpoint-xl;
+    margin: 0 auto;
+  }
+
+  .topSection {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .historyWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: v.$spacing-xxl;
+    margin-top: v.$spacing-lg;
+  }
+
+  .historyText {
+    flex: 1 1 55%;
+    font-size: v.$font-size-lg;
+    line-height: 1.8;
+    color: v.$color-text-light;
+    opacity: 0.9;
+    text-align: justify;
+    margin: 0;
+    max-width: none;
+  }
+
+  .bottomSection {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: flex-start;
+
+    > * {
+      width: 100%;
+      max-width: 460px;
+    }
+  }
+
+  /* Responsive: stack on small screens */
+  @include m.media-breakpoint-down(v.$breakpoint-md) {
+    .historyWrapper {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .historyText {
+      margin-bottom: v.$spacing-lg;
+    }
+
+    .bottomSection {
+      justify-content: center;
+
+      > * {
+        max-width: 520px;
       }
     }
   }
 }
 
-.historySection {
-  background-color: v.$color-primary;
-  padding: v.$spacing-xxl v.$spacing-md;
-  border-bottom: 1px solid v.$color-border;
-  text-align: center;
-  display: flex; // Use flex to center content
-  flex-direction: column; // Stack content vertically
-  align-items: center; // Center horizontally
-
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .historyText {
-    font-size: v.$font-size-lg;
-    line-height: 1.8;
-    color: v.$color-text-light;
-    opacity: 0.9;
-    max-width: 800px;
-    margin: 0 auto v.$spacing-xl auto; // Add margin below text
-  }
-}
 
 .statsSection {
   padding: v.$spacing-xxl v.$spacing-md;
@@ -281,47 +363,48 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0 v.$spacing-xl; // Espacio para los botones de navegación
+    padding: 0 v.$spacing-xl;
 
     @include m.media-breakpoint-down(v.$breakpoint-md) {
       padding: 0 v.$spacing-md;
     }
   }
-.communityGallery {
-  display: flex;
-  gap: v.$spacing-md;
-  overflow-x: auto;
-  padding: v.$spacing-sm 0;
-  scroll-behavior: smooth;
-}
 
-.memberCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
+  .communityGallery {
+    display: flex;
+    gap: v.$spacing-md;
+    overflow-x: auto;
+    padding: v.$spacing-sm 0;
+    scroll-behavior: smooth;
+  }
 
-  .galleryImage {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: transform v.$transition-speed ease-in-out;
+  .memberCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
 
-    &:hover {
-      transform: scale(1.03);
+    .galleryImage {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform v.$transition-speed ease-in-out;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+
+    .galleryUsername {
+      margin-top: v.$spacing-xs;
+      font-family: v.$font-heading;
+      font-size: v.$font-size-xl;
+      color: v.$color-accent;
+      opacity: 0.9;
     }
   }
-
-  .galleryUsername {
-    margin-top: v.$spacing-xs;
-    font-family: v.$font-heading;
-    font-size: v.$font-size-xl;
-    color: v.$color-accent;
-    opacity: 0.9;
-  }
-}
 
   .galleryNavBtn {
     position: absolute;
@@ -373,19 +456,19 @@
 
   .planGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Ajustado para 3 columnas
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: v.$spacing-lg;
     justify-items: center;
     margin-top: v.$spacing-xl;
 
     @include m.media-breakpoint-up(v.$breakpoint-md) {
       grid-template-columns: repeat(3, 1fr);
-      gap: v.$spacing-xxl; 
+      gap: v.$spacing-xxl;
     }
   }
 
   .planCard {
-    background-color:v.$color-primary;
+    background-color: v.$color-primary;
     border-radius: 12px;
     padding: v.$spacing-lg;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -393,31 +476,35 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: transform v.$transition-speed ease-in-out, box-shadow v.$transition-speed ease-in-out, border-color v.$transition-speed ease-in-out;
-    border: 2px solid transparent; // Borde transparente por defecto
+    transition: transform v.$transition-speed ease-in-out,
+      box-shadow v.$transition-speed ease-in-out,
+      border-color v.$transition-speed ease-in-out;
+    border: 2px solid transparent;
 
     &:hover {
       transform: translateY(-8px);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-      border-color: v.$color-accent; // Borde de acento en hover
+      border-color: v.$color-accent;
     }
 
     &.featuredPlan {
-      background-color: v.$color-accent; // Fondo de acento para el plan destacado
-      color: v.$color-primary; // Texto oscuro para el plan destacado
-      transform: scale(1.05); // Ligeramente más grande
+      background-color: v.$color-accent;
+      color: v.$color-primary;
+      transform: scale(1.05);
       border-color: v.$color-accent;
-      box-shadow: 0 10px 30px rgba(v.$color-accent, 0.5); // Sombra más pronunciada
+      box-shadow: 0 10px 30px rgba(v.$color-accent, 0.5);
 
-      .planName, .planPrice, .priceUnit {
-        color: v.$color-primary; // Asegurar texto oscuro
+      .planName,
+      .planPrice,
+      .priceUnit {
+        color: v.$color-primary;
       }
       .featureIcon {
-        color: v.$color-primary; // Iconos oscuros
+        color: v.$color-primary;
       }
       .planButton {
-        background-color: v.$color-primary; // Botón oscuro
-        color: v.$color-accent; // Texto de acento
+        background-color: v.$color-primary;
+        color: v.$color-accent;
         &:hover {
           background-color: v.$color-primary;
           color: v.$color-accent;
@@ -440,7 +527,7 @@
 
       .planPrice {
         font-family: v.$font-heading;
-        font-size: 3.5rem; 
+        font-size: 3.5rem;
         color: v.$color-accent;
         line-height: 1;
         margin: 0;

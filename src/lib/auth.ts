@@ -7,6 +7,12 @@ export const CLIENT_PASSWORD = "clientepass";
 
 const make = (p: Omit<Product, "image"> & { image: string }): Product => p;
 
+import offer from "../assets/images/Offer1.jpg";
+import offer2 from "../assets/images/Offer2.jpg";
+import offer3 from "../assets/images/Offer3.jpg";
+import offer4 from "../assets/images/Offer4.jpg";
+import offer5 from "../assets/images/Offer5.jpg";
+
 export const DUMMY_PRODUCTS: Product[] = [
   make({
     id: "1",
@@ -16,11 +22,7 @@ export const DUMMY_PRODUCTS: Product[] = [
     price: 35,
     originalPrice: 45,
     image:
-      "https://i.pinimg.com/736x/03/75/a1/0375a1d05f1602de63eb75e9f8c1ed33.jpg",
-    images: [
-      "https://i.pinimg.com/736x/03/75/a1/0375a1d05f1602de63eb75e9f8c1ed33.jpg",
-      "https://i.pinimg.com/736x/67/b1/89/67b189c4abc.jpg",
-    ],
+      offer,
     category: "Camisetas",
     brand: "Urban Store",
     colors: ["#000000", "#ffffff", "#e63946"],
@@ -42,7 +44,7 @@ export const DUMMY_PRODUCTS: Product[] = [
     price: 55,
     originalPrice: 72,
     image:
-      "https://i.pinimg.com/1200x/29/6e/3d/296e3d42d0063684c865d160fa0edaec.jpg",
+      offer2,
     category: "Sudaderas",
     brand: "Urban Store",
     colors: ["#2a9d8f", "#264653", "#f4a261"],
@@ -60,7 +62,7 @@ export const DUMMY_PRODUCTS: Product[] = [
     price: 25,
     originalPrice: 30,
     image:
-      "https://i.pinimg.com/1200x/7c/1e/09/7c1e0985cb7578ce8d2b70354f30b66f.jpg",
+      offer3,
     category: "Accesorios",
     brand: "Street King",
     colors: ["#000000", "#ffffff"],
@@ -77,7 +79,7 @@ export const DUMMY_PRODUCTS: Product[] = [
     price: 65,
     originalPrice: 80,
     image:
-      "https://i.pinimg.com/1200x/45/c4/12/45c4124392e77995898be819258547a0.jpg",
+      offer4,
     category: "Pantalones",
     brand: "Explorer Gear",
     colors: ["#8d99ae", "#2b2d42"],
@@ -95,7 +97,7 @@ export const DUMMY_PRODUCTS: Product[] = [
     price: 85,
     originalPrice: 110,
     image:
-      "https://i.pinimg.com/1200x/77/f2/6c/77f26c15e222aa70e92ded86caa01c3f.jpg",
+     offer5,
     category: "Chaquetas",
     brand: "Urban Store",
     colors: ["#1d3557", "#457b9d"],

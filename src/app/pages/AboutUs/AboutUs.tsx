@@ -2,7 +2,6 @@
 
 import type React from "react";
 import { useRef } from "react";
-import { Target, Lightbulb, Users } from "lucide-react";
 import { Button } from "../../../components/atoms/Button/Button";
 import OwnerCard from "../../../components/molecules/OwnerCard/OwnerCard";
 import styles from "./AboutUs.module.scss";
@@ -10,14 +9,41 @@ import { Link } from "react-router-dom";
 import FrankyStore from "../../../assets/videos/frankystore.mp4";
 import Owner from "../../../assets/images/Owner.png";
 import PricingPlansSection from "../../../components/molecules/PricingPlanSection/PricingPlanSection";
+import Innovation from "../../../assets/images/innovacion.jpg";
+import Community from "../../../assets/images/comunidad.jpg";
+import Vision from "../../../assets/images/vision.jpg";
 
 interface Member {
   src: string;
   username: string;
 }
 
+interface ValueItem {
+  title: string;
+  text: string;
+  image: string;
+}
+
 export const AboutUs: React.FC = () => {
   const galleryRef = useRef<HTMLDivElement>(null);
+
+  const values: ValueItem[] = [
+    {
+      title: "Visión",
+      text: "Ser el referente global en moda urbana, inspirando autenticidad y autoexpresión a través de diseños innovadores y una comunidad vibrante.",
+      image: Vision,
+    },
+    {
+      title: "Innovación",
+      text: "Constantemente buscamos nuevas tendencias y tecnologías para ofrecer prendas únicas que definan el futuro del streetwear.",
+      image: Innovation,
+    },
+    {
+      title: "Comunidad",
+      text: "Fomentamos un espacio donde la individualidad se celebra y las conexiones se fortalecen, construyendo una tribu unida por el estilo.",
+      image: Community,
+    },
+  ];
 
   // Lista de miembros de la comunidad
   const members: Member[] = [
@@ -89,33 +115,21 @@ export const AboutUs: React.FC = () => {
       <section className={styles.valuesVisionSection}>
         <div className="container">
           <h2 className={styles.sectionHeading}>Nuestros Valores y Visión</h2>
+
           <div className={styles.valuesGrid}>
-            <div className={styles.valueCard}>
-              <Target size={48} className={styles.valueIcon} />
-              <h3>Visión</h3>
-              <p>
-                Ser el referente global en moda urbana, inspirando autenticidad
-                y autoexpresión a través de diseños innovadores y una comunidad
-                vibrante.
-              </p>
-            </div>
-            <div className={styles.valueCard}>
-              <Lightbulb size={48} className={styles.valueIcon} />
-              <h3>Innovación</h3>
-              <p>
-                Constantemente buscamos nuevas tendencias y tecnologías para
-                ofrecer prendas únicas que definan el futuro del streetwear.
-              </p>
-            </div>
-            <div className={styles.valueCard}>
-              <Users size={48} className={styles.valueIcon} />
-              <h3>Comunidad</h3>
-              <p>
-                Fomentamos un espacio donde la individualidad se celebra y las
-                conexiones se fortalecen, construyendo una tribu unida por el
-                estilo.
-              </p>
-            </div>
+            {values.map((val) => (
+              <div key={val.title} className={styles.valueCard}>
+                <div className={styles.valueMedia}>
+                  <img
+                    src={val.image}
+                    alt={`Imagen ${val.title}`}
+                    loading="lazy"
+                  />
+                </div>
+                <h3>{val.title}</h3>
+                <p>{val.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -127,27 +141,30 @@ export const AboutUs: React.FC = () => {
             <h2 className={styles.sectionHeading}>
               La Historia de Franky Store
             </h2>
-            <p className={styles.historyText}>
-              Franky Store nació en [Año de Fundación] de un sueño en las calles
-              de [Ciudad de Origen], con la visión de traer la auténtica cultura
-              urbana a tu armario. Lo que comenzó como una pequeña iniciativa,
-              impulsada por la pasión por el hip-hop y el streetwear, ha crecido
-              hasta convertirse en un referente para quienes buscan expresar su
-              identidad a través de la moda. Cada colección es un capítulo de
-              nuestra evolución, un reflejo de la energía vibrante de la ciudad
-              y la creatividad sin límites.
-            </p>
-          </div>
 
-          <div className={styles.bottomSection}>
-            {/* Owner Card */}
-            <OwnerCard
-              name="Franco 'Huevo'"
-              title="Fundador"
-              imageSrc={Owner}
-              shortDescription="Un apasionado del streetwear y la cultura urbana, Franky fundó la tienda con la misión de fusionar moda y expresión."
-              longDescription="Desde sus humildes comienzos diseñando camisetas en su garaje, Franky ha liderado Franky Crew con una visión inquebrantable. Su amor por el arte callejero, la música hip-hop y la moda auténtica se refleja en cada pieza de la colección. Cree firmemente que la ropa es una forma de arte y una extensión de la personalidad, y se dedica a empoderar a la comunidad a través del estilo."
-            />
+            <div className={styles.historyWrapper}>
+              {/* LEFT: Description */}
+              <p className={styles.historyText}>
+                Franky Store nació en [Año de Fundación] de un sueño en las
+                calles de Corrientes, con la visión de traer la auténtica
+                cultura urbana a tu armario. Lo que comenzó como una pequeña
+                iniciativa, impulsada por la pasión por el hip-hop y el
+                streetwear, ha crecido hasta convertirse en un referente para
+                quienes buscan expresar su identidad a través de la moda. Cada
+                colección es un capítulo de nuestra evolución, un reflejo de la
+                energía vibrante de la ciudad y la creatividad sin límites.
+              </p>
+            </div>
+            {/* RIGHT: OwnerCard */}
+            <div className={styles.bottomSection}>
+              <OwnerCard
+                name="Franco 'Huevo'"
+                title="Fundador"
+                imageSrc={Owner}
+                shortDescription="Un apasionado del streetwear y la cultura urbana, Franky fundó la tienda con la misión de fusionar moda y expresión."
+                longDescription="Desde sus humildes comienzos diseñando camisetas en su garaje, Franky ha liderado Franky Crew con una visión inquebrantable. Su amor por el arte callejero, la música hip-hop y la moda auténtica se refleja en cada pieza de la colección. Cree firmemente que la ropa es una forma de arte y una extensión de la personalidad, y se dedica a empoderar a la comunidad a través del estilo."
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -195,6 +212,7 @@ export const AboutUs: React.FC = () => {
                     src={member.src}
                     alt={member.username}
                     className={styles.galleryImage}
+                    loading="lazy"
                   />
                   <span className={styles.galleryUsername}>
                     {member.username}

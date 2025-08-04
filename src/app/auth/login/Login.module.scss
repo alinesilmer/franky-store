@@ -1,12 +1,14 @@
 
 
 .loginPage {
-  @include m.flex-center;
+   @include m.flex-center;
   min-height: calc(100vh - 140px);
   background-color: v.$color-primary;
   padding: v.$spacing-xl;
-  background-image: url("https://i.pinimg.com/1200x/52/b4/cb/52b4cb0a7b36cfb8cef7e89a66d3365a.jpg");
+  background-image: url("@/assets/images/loginImage.jpg"); /* ← add extension */
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .loginCard {

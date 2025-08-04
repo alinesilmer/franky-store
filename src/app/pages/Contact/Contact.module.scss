@@ -1,6 +1,3 @@
-/* -------------------------------------------------------- */
-/*  GLOBAL TOKENS (imported elsewhere: v.$spacing-md, m.… ) */
-/* -------------------------------------------------------- */
 
 /* ------------  PAGE WRAPPER ------------ */
 .pageWrapper {
@@ -18,8 +15,7 @@
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
-    url("https://i.pinimg.com/1200x/41/a5/5e/41a55e0c6490d8114286df88b1c2364c.jpg") center/cover;
+    url("@/assets/images/contact.jpg") center/cover;
 
   .heroContent {
     text-align: center;
@@ -28,6 +24,7 @@
       font-size: clamp(3rem, 8vw, 7rem);
       margin: 0;
       text-transform: uppercase;
+      text-shadow: 1px 1px 1px black;
     }
   }
 }

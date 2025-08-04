@@ -17,8 +17,10 @@ import styles from "./Products.module.scss";
 const Products: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [filteredProducts, setFilteredProducts] =
     useState<Product[]>(PRODUCTS_DATA);
+
   const [currentFilters, setCurrentFilters] = useState<FilterType>({
     category: searchParams.get("category") || "todos",
     priceRange: [0, 500],
@@ -30,7 +32,11 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     applyFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFilters]);
+
+  /** safely convert optional createdAt to a sortable timestamp */
+  const toTs = (d?: string) => (d ? new Date(d).getTime() : 0);
 
   const applyFilters = () => {
     let filtered = [...PRODUCTS_DATA];
@@ -49,24 +55,29 @@ const Products: React.FC = () => {
         product.price <= currentFilters.priceRange[1]
     );
 
-    // Filtrar por colores
+    // Filtrar por colores (product.colors es opcional)
     if (currentFilters.colors.length > 0) {
-      filtered = filtered.filter((product) =>
-        product.colors.some((color) => currentFilters.colors.includes(color))
+      filtered = filtered.filter(
+        (product) =>
+          product.colors?.some((color) =>
+            currentFilters.colors.includes(color)
+          ) ?? false
       );
     }
 
-    // Filtrar por tallas
+    // Filtrar por tallas (product.sizes es opcional)
     if (currentFilters.sizes.length > 0) {
-      filtered = filtered.filter((product) =>
-        product.sizes.some((size) => currentFilters.sizes.includes(size))
+      filtered = filtered.filter(
+        (product) =>
+          product.sizes?.some((size) => currentFilters.sizes.includes(size)) ??
+          false
       );
     }
 
-    // Filtrar por marcas
+    // Filtrar por marcas (product.brand es opcional)
     if (currentFilters.brands.length > 0) {
       filtered = filtered.filter((product) =>
-        currentFilters.brands.includes(product.brand)
+        currentFilters.brands.includes(product.brand ?? "")
       );
     }
 
@@ -79,16 +90,13 @@ const Products: React.FC = () => {
         filtered.sort((a, b) => b.price - a.price);
         break;
       case "mas-popular":
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
         break;
       case "mas-nuevo":
-        filtered.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
+        filtered.sort((a, b) => toTs(b.createdAt) - toTs(a.createdAt));
         break;
       default:
-        // Relevancia - mantener orden original
+        // "relevancia": mantener orden original
         break;
     }
 

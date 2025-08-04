@@ -5,6 +5,10 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./PromotionSection.module.scss";
+import offer from "../assets/images/Offer1.jpg";
+import offer2 from "../assets/images/Offer2.jpg";
+import offer3 from "../assets/images/Offer3.jpg";
+import offer4 from "../assets/images/Offer4.jpg";
 
 interface PromotionItem {
   id: string;
@@ -20,32 +24,28 @@ const PROMOTIONS: PromotionItem[] = [
     name: "CAMPERA URBAN",
     originalPrice: 29000,
     discountedPrice: 18000,
-    image:
-      "https://i.pinimg.com/736x/92/0a/b6/920ab628bb7f66b9e762ed4968757615.jpg",
+    image: offer,
   },
   {
     id: "promo2",
     name: "SUDADERA GRAFFITI",
     originalPrice: 35000,
     discountedPrice: 25000,
-    image:
-      "https://i.pinimg.com/736x/5e/df/df/5edfdf6f4b6c1e227b8494388b053ac2.jpg",
+    image: offer2,
   },
   {
     id: "promo3",
     name: "PANTALÓN CARGO",
     originalPrice: 45000,
     discountedPrice: 30000,
-    image:
-      "https://i.pinimg.com/736x/24/d5/11/24d5110b08173bd516292d3149569c4d.jpg",
+    image: offer3,
   },
   {
     id: "promo4",
     name: "ZAPATILLAS RETRO",
     originalPrice: 50000,
     discountedPrice: 38000,
-    image:
-      "https://i.pinimg.com/736x/5d/e3/98/5de398fa561154137add1af1170adf79.jpg",
+    image: offer4,
   },
 ];
 

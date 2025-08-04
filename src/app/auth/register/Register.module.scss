@@ -4,13 +4,12 @@
   position: relative;
   background-color: v.$color-primary;
   padding: v.$spacing-xl;
-  
 
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("https://i.pinimg.com/1200x/df/f1/bf/dff1bf332909d67af57bdfa9d7962ee8.jpg");
+    background-image: url("@/assets/images/register.jpg"); 
     background-size: cover;
     background-position: center;
     transform: scale(1.05);
@@ -18,7 +17,6 @@
     pointer-events: none;
   }
 }
-
 
 .registerCard {
   position: relative;

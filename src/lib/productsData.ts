@@ -1,22 +1,32 @@
 import type { Product, OutfitCollection } from "../types/product"
 
+import urbanvibes from "../assets/images/products/UrbanVibes.jpg"
+import urbanvibes2 from "../assets/images/products/UrbanVibes2.jpg"
+import shoes1 from "../assets/images/products/shoes1.jpg";
+import shoes2 from "../assets/images/products/shoes2.jpg";
+import shoes3 from "../assets/images/products/shoes3.jpg";
+import shoes4 from "../assets/images/products/shoes4.jpg";
+import buzo1 from "../assets/images/products/buzo.jpg"
+import buzo2 from "../assets/images/products/buzo2.jpg"
+import jean1 from "../assets/images/products/jean1.jpg"
+import jean2 from "../assets/images/products/jean2.jpg"
+import jean3 from "../assets/images/products/jean3.jpg"
 
 export const PRODUCTS_DATA: Product[] = [
   {
     id: "1",
-    name: "Camiseta Urban Vibes",
-    description: "Camiseta de algodón premium con diseño urbano exclusivo",
+    name: "Remera Urban Vibes",
+    description: "Remera de algodón premium con diseño urbano exclusivo",
     price: 45.99,
     originalPrice: undefined,
     category: "Remeras",         
     brand: "Urban Store",
-    image: "https://i.pinimg.com/736x/7b/de/ba/7bdeba12dc862fe2ce95aae1596938d9.jpg",
+    image: urbanvibes,
     images: [
-      "https://i.pinimg.com/736x/7b/de/ba/7bdeba12dc862fe2ce95aae1596938d9.jpg",
-      "https://i.pinimg.com/736x/14/a5/1a/14a51ac3d873389dcd5dd592456adec0.jpg",
-      "https://i.pinimg.com/736x/2d/7c/9a/2d7c9a417c98ba0f76ff677b26b779ba.jpg",
+      urbanvibes,
+      urbanvibes2,
     ],
-    colors: ["negro", "blanco", "gris"],
+    colors: ["purple", "white", "black"],
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     rating: 4.8,
     reviewCount: 124,
@@ -29,18 +39,18 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "2",
-    name: "Sudadera Retro Flow",
-    description: "Sudadera con capucha y diseño de graffiti auténtico",
+    name: "Buzo Retro Flow",
+    description: "Buzo con capucha y diseño de graffiti auténtico",
     price: 89.99,
     originalPrice: 109.99,
     category: "Buzos",       
     brand: "Street Art Co.",
-    image: "https://i.pinimg.com/1200x/d2/59/c9/d259c954287f4a28f678220e75c6a8ae.jpg",
+    image: buzo1,
     images: [
-      "https://i.pinimg.com/1200x/d2/59/c9/d259c954287f4a28f678220e75c6a8ae.jpg",
-      "https://i.pinimg.com/736x/32/85/43/328543e5b74a7145ca18fe8c2e62255e.jpg",
+      buzo1,
+      buzo2,
     ],
-    colors: ["negro", "gris", "azul"],
+    colors: ["black", "gray", "blue"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     rating: 4.6,
     reviewCount: 89,
@@ -57,14 +67,16 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Zapatillas deportivas con diseño urbano y máxima comodidad",
     price: 125.0,
     originalPrice: 149.99,
-    category: "Zapatillas",      // matches your “Zapatillas” filter ID
+    category: "Zapatillas",     
     brand: "Urban Kicks",
-    image: "https://i.pinimg.com/736x/0b/63/44/0b6344d6f14877b7f04a02467727457b.jpg",
+    image: shoes1,
     images: [
-      "https://i.pinimg.com/736x/0b/63/44/0b6344d6f14877b7f04a02467727457b.jpg",
-      "https://i.pinimg.com/736x/51/d0/5c/51d05c3c5abef4151e712d91601d86fc.jpg",
+    shoes1,
+    shoes2,
+    shoes3,
+    shoes4
     ],
-    colors: ["blanco", "negro", "gris"],
+    colors: ["white", "black", "gray", "blue"],
     sizes: ["38", "39", "40", "41", "42", "43", "44", "45"],
     rating: 4.9,
     reviewCount: 203,
@@ -81,15 +93,15 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Pantalón urbano con corte moderno y detalles únicos",
     price: 67.75,
     originalPrice: undefined,
-    category: "Pantalones",         // matches your “Pantalones” filter ID
+    category: "Pantalones",         
     brand: "City Wear",
-    image: "https://i.pinimg.com/736x/0a/f3/a0/0af3a0b01497af797e7b523932c68d02.jpg",
+    image: jean1,
     images: [
-      "https://i.pinimg.com/736x/0a/f3/a0/0af3a0b01497af797e7b523932c68d02.jpg",
-      "https://i.pinimg.com/1200x/c6/fb/f9/c6fbf9d664b617c74cf956f1edf15c39.jpg",
-      "https://i.pinimg.com/1200x/97/62/7e/97627e6e6ab2ddb89018aff3c56015ca.jpg",
+      jean1,
+      jean2,
+      jean3,
     ],
-    colors: ["negro", "azul", "gris"],
+    colors: ["black", "blue", "gray"],
     sizes: ["28", "30", "32", "34", "36", "38"],
     rating: 4.4,
     reviewCount: 67,
@@ -106,7 +118,7 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Gorra snapback con bordado exclusivo y ajuste perfecto",
     price: 32.5,
     originalPrice: 42.0,
-    category: "Gorras",          // matches your “Gorras” filter ID
+    category: "Gorras",          
     brand: "King Caps",
     image: "https://i.pinimg.com/1200x/eb/dc/d0/ebdcd009310150015654699d5e79cdfd.jpg",
     images: [
@@ -151,6 +163,16 @@ export const PRODUCTS_DATA: Product[] = [
   },
 ];
 
+import Outfit1 from "../assets/images/FullOutfit1.jpg";
+import Outfit2 from "../assets/images/FullOutfit2.jpg";
+import Outfit3 from "../assets/images/FullOutfit3.jpg";
+import fulloutmodel from "../assets/images/fulloutmodel1.jpg"
+import fulloutmodel2 from "../assets/images/fulloutmodel2.jpg"
+import fulloutmodel3 from "../assets/images/fulloutmodel3.jpg"
+import fulloutmodel4 from "../assets/images/fulloutmodel4.jpg"
+import fulloutmodel5 from "../assets/images/fulloutmodel5.jpg"
+import fulloutmodel6 from "../assets/images/fulloutmodel6.jpg"
+import fulloutmodel7 from "../assets/images/fulloutmodel7.jpg"
 
 export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
   {
@@ -158,30 +180,30 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
     name: "Street Essentials",
     description: "Lo esencial para tu look urbano diario",
     heroImage:
-      "https://i.pinimg.com/1200x/28/52/48/285248308e0ce6658d9728408842c9f0.jpg",
+      Outfit1,
     outfits: [
       {
         id: "outfit-1",
         name: "Urban Classic",
-        image: "https://i.pinimg.com/736x/3f/43/90/3f4390f53687b99c819800eb1e894852.jpg",
+        image: fulloutmodel,
         totalPrice: 189.99,
         originalPrice: 229.99,
-        items: ["Camiseta", "Pantalón Cargo", "Zapatillas Street"],
+        items: ["Buzo", "Pantalón Cargo", "Zapatillas Street"],
       },
       {
         id: "outfit-2",
         name: "Street Comfort",
-        image: "https://i.pinimg.com/736x/3e/7c/26/3e7c263526ec597612cf4db5de88c89f.jpg",
+        image: fulloutmodel3,
         totalPrice: 159.99,
         originalPrice: 199.99,
-        items: ["Sudadera Básica", "Joggers", "Sneakers"],
+        items: ["Remera", "Jean Baggy", "Sneakers"],
       },
       {
         id: "outfit-3",
         name: "Night Vibes",
-        image: "https://i.pinimg.com/1200x/34/cc/d7/34ccd7968b83f687f37fb8d9100be6bb.jpg",
+        image: fulloutmodel7,
         totalPrice: 219.99,
-        items: ["Hoodie Premium", "Jeans Slim", "Botas Urban", "Gorra"],
+        items: ["Buzo Premium", "Jean Baggy", "Botas Urban"],
       },
     ],
   },
@@ -190,22 +212,22 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
     name: "Premium Collection",
     description: "Piezas exclusivas para ocasiones especiales",
     heroImage:
-      "https://i.pinimg.com/736x/d6/19/06/d61906755efb4316c81d65d98e04948a.jpg",
+     Outfit2,
     outfits: [
       {
         id: "outfit-4",
-        name: "Executive Street",
-        image: "https://i.pinimg.com/1200x/eb/03/67/eb0367217a73f126883c4c98526816db.jpg",
+        name: "Baseball Street",
+        image: fulloutmodel4,
         totalPrice: 299.99,
         originalPrice: 359.99,
-        items: ["Chaqueta Premium", "Camisa Urban", "Pantalón Formal", "Zapatos"],
+        items: ["Oversize Premium", "Bermuda", "Zapatillas"],
       },
       {
         id: "outfit-5",
         name: "Weekend Luxury",
-        image: "https://i.pinimg.com/736x/a7/8f/f2/a78ff29fc28317bf71a6b331f85c45fb.jpg",
+        image: fulloutmodel5,
         totalPrice: 249.99,
-        items: ["Suéter", "Jeans Premium", "Sneakers"],
+        items: ["Camisa Luxury", "Jeans", "Sneakers"],
       },
     ],
   },
@@ -213,22 +235,22 @@ export const OUTFIT_COLLECTIONS: OutfitCollection[] = [
     id: "seasonal-trends",
     name: "Tendencias de Temporada",
     description: "Los looks más actuales de la temporada",
-    heroImage: "https://i.pinimg.com/1200x/18/2a/a6/182aa697ec1d980a5fc4ac24494b5a79.jpg",
+    heroImage: Outfit3,
     outfits: [
       {
         id: "outfit-6",
         name: "Spring Fresh",
-        image: "https://i.pinimg.com/736x/83/20/29/8320290bc256aff738b85af1708fb4e0.jpg",
+        image: fulloutmodel6,
         totalPrice: 179.99,
-        items: ["Camiseta Oversize", "Shorts Cargo", "Sneakers"],
+        items: ["Camiseta Oversize", "Joggings", "Sneakers"],
       },
       {
         id: "outfit-7",
         name: "Summer Vibes",
-        image: "https://i.pinimg.com/736x/0a/de/3b/0ade3b0550462117ee62e5bac035cc87.jpg",
+        image: fulloutmodel2,
         totalPrice: 139.99,
         originalPrice: 169.99,
-        items: ["Tank Top", "Bermudas", "Sandalias Urban"],
+        items: ["Remera Oversize", "Bermuda", "Sneakers"],
       },
     ],
   },
